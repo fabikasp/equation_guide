@@ -17,48 +17,63 @@
 	<body>
 		<div class="d-flex align-items-center min-vh-100">
   		<div class="container text-center">
-    		<div class="row form-group">
-					<input
-						class="
-							form-control
-							equation-guide-input
-							equation-guide-equation-part-input
-							mr-2
-							text-center
-						"
-						type="text"
-						placeholder="Linke Seite der Gleichung"
-						required
-					/>
-					<input
-						id="equation-guide-equals-sign-input"
-						class="
-							form-control
-							equation-guide-input
-							text-center
-							font-weight-bold
-						"
-						type="text"
-						value="="
-						readonly
-					/>
-					<input
-						class="
-							form-control
-							equation-guide-input
-							equation-guide-equation-part-input
-							ml-2
-							text-center
-						"
-						type="text"
-						placeholder="Rechte Seite der Gleichung"
-						required
-					/>
-				</div>
-				<div></div> <!-- Rechenschritte -->
-				<div class="row">
-					<!-- Buttons Hilfe, Zurück, Neustart -->
-				</div>
+				<form>
+	    		<div class="row form-group">
+						<input
+							class="
+								form-control
+								equation-guide-input
+								equation-guide-equation-part-input
+								mr-2
+								text-center
+							"
+							type="text"
+							placeholder="Linke Seite der Gleichung"
+							required
+						/>
+						<input
+							id="equation-guide-equals-sign-input"
+							class="
+								form-control
+								equation-guide-input
+								text-center
+								font-weight-bold
+							"
+							type="text"
+							value="="
+							readonly
+						/>
+						<input
+							class="
+								form-control
+								equation-guide-input
+								equation-guide-equation-part-input
+								ml-2
+								text-center
+							"
+							type="text"
+							placeholder="Rechte Seite der Gleichung"
+							required
+						/>
+					</div>
+
+					<div></div> <!-- Rechenschritte -->
+
+					<div class="row justify-content-center">
+						<a
+							class="btn btn-secondary equation-guide-button mr-4"
+							href="../../index.html"
+						>
+							Zurück
+						</a>
+						<button class="btn btn-primary equation-guide-button" type="submit">
+							Start
+						</button>
+						<button class="btn btn-warning equation-guide-button ml-4">
+							Hilfe
+						</button>
+					</div>
+				</form>
   		</div>
 		</div>
 	</body>
