@@ -1,16 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-
-		<link href="../stylesheets/bootstrap.min.css" rel="stylesheet">
-  	<script src="../scripts/bootstrap.min.js"></script>
-		<script src="../scripts/jquery.min.js"></script>
-
-		<title>EquationGuide</title>
-	</head>
-	<body>
-		<p class="text-primary">Hier werden Gleichungen umgestellt.</p>
-	</body>
-</html>
+<div class="row form-group">
+	<input
+		class="
+			form-control
+			equation-guide-input
+			equation-guide-equation-part-input
+			mr-2
+			text-center
+		"
+		type="text"
+		placeholder="Linke Seite der Gleichung"
+		required
+	/>
+	<input
+		id="equation-guide-equals-sign-input"
+		class="
+			form-control
+			equation-guide-input
+			text-center
+			font-weight-bold
+		"
+		type="text"
+		value="="
+		readonly
+	/>
+	<input
+		class="
+			form-control
+			equation-guide-input
+			equation-guide-equation-part-input
+			ml-2
+			text-center
+		"
+		type="text"
+		placeholder="Rechte Seite der Gleichung"
+		required
+	/>
+</div>

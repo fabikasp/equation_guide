@@ -11,13 +11,14 @@
   	<script src="../scripts/bootstrap.min.js"></script>
 		<script src="../scripts/popper.min.js"></script>
 		<script src="../scripts/jquery.min.js"></script>
+		<script src="../scripts/event-handlers.js"></script>
 
 		<title>EquationGuide</title>
 	</head>
 	<body>
 		<div class="d-flex align-items-center min-vh-100">
   		<div class="container text-center">
-				<form>
+				<form id="start-form">
 	    		<div class="row form-group">
 						<input
 							class="
@@ -57,7 +58,7 @@
 						/>
 					</div>
 
-					<div></div> <!-- Rechenschritte -->
+					<div id="equation-rearrangement"></div>
 
 					<div class="row justify-content-center">
 						<a
@@ -69,9 +70,9 @@
 						<button class="btn btn-primary equation-guide-button" type="submit">
 							Start
 						</button>
-						<button class="btn btn-warning equation-guide-button ml-4">
+						<a class="btn btn-warning equation-guide-button ml-4" href="#">
 							Hilfe
-						</button>
+						</a>
 					</div>
 				</form>
   		</div>
