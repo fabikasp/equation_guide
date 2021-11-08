@@ -1,0 +1,17 @@
+#index-equation-guide-headline {
+  font-family: "Optima";
+  font-size: 130px;
+}
+
+#index-separation-line {
+  width: 5px;
+  background-color: black;
+}
+
+.index-button {
+  width: 100%;
+}
+
+.index-span {
+  font-family: "Optima";
+}
