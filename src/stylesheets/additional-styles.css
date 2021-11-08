@@ -19,3 +19,16 @@
 .index-navbar-span {
   font-size: 18px;
 }
+
+.equation-guide-input {
+  font-size: 20px;
+  font-family: "Arial";
+}
+
+#equation-guide-equals-sign-input {
+  width: 3.5%;
+}
+
+.equation-guide-equation-part-input {
+  width: 47.5%;
+}
