@@ -1,6 +1,6 @@
 $(document).ready(function () {
   /* start button functionality */
-  $("#start-button").on("click", function(event) {
+  $(document).on("click", "#start-button", function(event) {
     var leftEquationPart = $("#left-equation-input").val();
     var rightEquationPart = $("#right-equation-input").val();
 
@@ -35,6 +35,7 @@ $(document).ready(function () {
 
     $(".arithmetic-operation-select").last().attr("readonly", true);
     $(".rearrangement-step-input").last().attr("readonly", true);
+    $(".rearrangement-button").last().attr("disabled", true);
 
     $.getScript("../scripts/functions.js", function() {
       var rearrangementValid = rearrangementIsValid();
@@ -49,6 +50,21 @@ $(document).ready(function () {
           rightEquationPart: rightEquationPart
         })
       );
+    });
+
+    event.preventDefault();
+  });
+
+  /* restart button functionality */
+  $(document).on("click", "#restart-button", function(event) {
+    $(".equation-rearrangement-step-div").remove();
+    $("#left-equation-input").attr("readonly", false);
+    $("#left-equation-input").val("");
+    $("#right-equation-input").attr("readonly", false);
+    $("#right-equation-input").val("");
+
+    $.getScript("../scripts/templates.js", function() {
+      $("#restart-button").replaceWith(StartButtonTemplate);
     });
 
     event.preventDefault();
