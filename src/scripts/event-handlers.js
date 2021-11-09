@@ -4,10 +4,13 @@ $(document).ready(function () {
 
     $(".equation-guide-equation-part-input").prop("readonly", true);
 
-    var template = "<p>Test</p>"
-    // https://stackoverflow.com/questions/18673860/defining-a-html-template-to-append-using-jquery
-    console.log(template)
-    $("#equation-rearrangement").append(template);
+    $("#equation-rearrangement").append(
+      $("#equation-rearrangement-template").html()
+    );
+
+    $("#start-button").replaceWith(
+      $("#restart-button-template").html()
+    );
 
     event.preventDefault();
   });

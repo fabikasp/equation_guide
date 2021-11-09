@@ -67,9 +67,15 @@
 						>
 							Zurück
 						</a>
-						<button class="btn btn-primary equation-guide-button" type="submit">
+
+						<button
+							id="start-button"
+							class="btn btn-primary equation-guide-button"
+							type="submit"
+						>
 							Start
 						</button>
+
 						<a class="btn btn-warning equation-guide-button ml-4" href="#">
 							Hilfe
 						</a>
@@ -77,5 +83,20 @@
 				</form>
   		</div>
 		</div>
+
+		<!-- Templates -->
+		<template id="equation-rearrangement-template">
+			<p>Test-Component</p>
+		</template>
+
+		<template id="restart-button-template">
+			<button
+				id="restart-button"
+				class="btn btn-primary equation-guide-button"
+			>
+				Neustart
+			</button>
+		</template>
+
 	</body>
 </html>
