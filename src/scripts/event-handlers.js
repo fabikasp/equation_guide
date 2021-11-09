@@ -25,16 +25,16 @@ $(document).ready(function () {
   });
 
   /* rearrangement button functionality */
-  $(".rearrangement-button").on("click", function(event) {
-    alert("test123");
-    var leftEquationPart = "";
-    var rightEquationPart = "";
-    var arithmeticOperation = "";
-    var rearrangementStep = "";
-
-    alert("test");
+  $(document).on("click", ".rearrangement-button", function(event) {
+    var leftEquationPart = $(".left-rearrangement-input").last().val();
+    var rightEquationPart = $(".right-rearrangement-input").last().val();
+    var arithmeticOperation = $(".arithmetic-operation-select option:selected")
+      .last()
+      .text();
+    var rearrangementStep = $(".rearrangement-step-input").last().val();
 
     $(".arithmetic-operation-select").last().attr("readonly", true);
+    $(".rearrangement-step-input").last().attr("readonly", true);
 
     $.getScript("../scripts/functions.js", function() {
       var rearrangementValid = rearrangementIsValid();

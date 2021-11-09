@@ -2,13 +2,13 @@ RearrangementTemplate = ({ leftEquationPart, rightEquationPart }) => `
   <div class="row form-group justify-content-center">
     <!-- inputs for defining the rearranged equation -->
     <input
-      name="left-rearrangement-input"
       class="
         form-control
         equation-input
         w-25
         mr-2
         text-center
+        left-rearrangement-input
       "
       value="${leftEquationPart}"
       type="text"
@@ -29,13 +29,13 @@ RearrangementTemplate = ({ leftEquationPart, rightEquationPart }) => `
     />
 
     <input
-      name="right-rearrangement-input"
       class="
         form-control
         equation-input
         w-25
         ml-2
         text-center
+        right-rearrangement-input
       "
       value="${rightEquationPart}"
       type="text"
@@ -75,7 +75,6 @@ RearrangementTemplate = ({ leftEquationPart, rightEquationPart }) => `
     <!-- rearrangement button -->
     <button
       class="btn btn-success equation-guide-button rearrangement-button ml-2"
-      type="submit"
     >
       Umformen
     </button>
