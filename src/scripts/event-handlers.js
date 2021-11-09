@@ -1,22 +1,55 @@
 $(document).ready(function () {
-  $("#start-form").on("submit", function(event) {
-    $.getScript("../scripts/functions.js", function() {
-      var equationValid = startEquationValid();
-    });
+  /* start button functionality */
+  $("#start-button").on("click", function(event) {
+    var leftEquationPart = $("#left-equation-input").val();
+    var rightEquationPart = $("#right-equation-input").val();
 
-    console.log(event)
+    $.getScript("../scripts/functions.js", function() {
+      var equationValid = startEquationIsValid();
+    });
 
     $.getScript("../scripts/templates.js", function() {
       $("#equation-rearrangement-div").append(
-        RearrangementTemplate(
-          {leftEquationPart: "test", rightEquationPart: "test"}
-        )
+        RearrangementTemplate({
+          leftEquationPart: leftEquationPart,
+          rightEquationPart: rightEquationPart
+        })
       );
 
       $("#start-button").replaceWith(RestartButtonTemplate);
     });
 
-    $(".equation-guide-equation-part-input").attr("readonly", true);
+    $(".equation-input").attr("readonly", true);
+
+    event.preventDefault();
+  });
+
+  /* rearrangement button functionality */
+  $(".rearrangement-button").on("click", function(event) {
+    alert("test123");
+    var leftEquationPart = "";
+    var rightEquationPart = "";
+    var arithmeticOperation = "";
+    var rearrangementStep = "";
+
+    alert("test");
+
+    $(".arithmetic-operation-select").last().attr("readonly", true);
+
+    $.getScript("../scripts/functions.js", function() {
+      var rearrangementValid = rearrangementIsValid();
+
+      performRearrangement();
+    });
+
+    $.getScript("../scripts/templates.js", function() {
+      $("#equation-rearrangement-div").append(
+        RearrangementTemplate({
+          leftEquationPart: leftEquationPart,
+          rightEquationPart: rightEquationPart
+        })
+      );
+    });
 
     event.preventDefault();
   });
