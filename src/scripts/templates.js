@@ -1,4 +1,4 @@
-const RearrangementTemplate = ({ leftEquationPart, rightEquationPart }) => `
+RearrangementTemplate = ({ leftEquationPart, rightEquationPart }) => `
   <form>
     <div class="row form-group justify-content-center">
       <!-- inputs for defining the rearranged equation -->
@@ -102,5 +102,3 @@ RestartButtonTemplate = `
     Neustart
   </button>
 `;
-
-exports = { RearrangementTemplate, StartButtonTemplate, RestartButtonTemplate };
