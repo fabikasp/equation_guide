@@ -1,10 +1,12 @@
 $(document).ready(function () {
-  $("#tester").on("submit", function(event) {
+  $("#start-form").on("submit", function(event) {
+    $.getScript("../scripts/functions.js", function() {
+      var equationValid = startEquationValid();
+    });
 
-    //TODO: Validierung
     console.log(event)
 
-    $.getScript("../scripts/templates.js",function() {
+    $.getScript("../scripts/templates.js", function() {
       $("#equation-rearrangement-div").append(
         RearrangementTemplate(
           {leftEquationPart: "test", rightEquationPart: "test"}
