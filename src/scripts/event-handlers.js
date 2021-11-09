@@ -1,13 +1,13 @@
-const RearrangeEquationTemplate = ({ leftEquationPart, rightEquationPart }) => `
-  <form id="rearrange-form">
+const RearrangementTemplate = ({ leftEquationPart, rightEquationPart }) => `
+  <form>
     <div class="row form-group justify-content-center">
       <!-- inputs for defining the rearranged equation -->
       <input
-        id="equation-guide-left-rearrange-input"
+        name="left-rearrangement-input"
         class="
           form-control
-          equation-guide-input
-          equation-guide-equation-part-input
+          equation-input
+          w-25
           mr-2
           text-center
         "
@@ -17,12 +17,12 @@ const RearrangeEquationTemplate = ({ leftEquationPart, rightEquationPart }) => `
       />
 
       <input
-        id="equation-guide-equals-sign-input"
         class="
           form-control
-          equation-guide-input
+          equation-input
           text-center
           font-weight-bold
+          equals-sign-input
         "
         type="text"
         value="="
@@ -30,10 +30,11 @@ const RearrangeEquationTemplate = ({ leftEquationPart, rightEquationPart }) => `
       />
 
       <input
+        name="right-rearrangement-input"
         class="
           form-control
-          equation-guide-input
-          equation-guide-equation-part-input
+          equation-input
+          w-25
           ml-2
           text-center
         "
@@ -44,8 +45,13 @@ const RearrangeEquationTemplate = ({ leftEquationPart, rightEquationPart }) => `
 
       <!-- dropdown for selecting the arithmetic operation -->
       <select
-        id="equation-guide-select"
-        class="bootstrap-select form-control equation-guide-input ml-2"
+        class="
+          bootstrap-select
+          form-control
+          equation-input
+          ml-2
+          arithmetic-operation-select
+        "
       >
         <option value="add" selected="selected">+</option>
         <option value="sub">-</option>
@@ -57,8 +63,8 @@ const RearrangeEquationTemplate = ({ leftEquationPart, rightEquationPart }) => `
       <input
         class="
           form-control
-          equation-guide-input
-          equation-guide-rearrangement-step-input
+          equation-input
+          rearrangement-step-input
           ml-2
           text-center
         "
@@ -69,8 +75,7 @@ const RearrangeEquationTemplate = ({ leftEquationPart, rightEquationPart }) => `
 
       <!-- rearrangement button -->
       <button
-        id="equation-guide-rearrange-button"
-        class="btn btn-success equation-guide-button ml-2"
+        class="btn btn-success equation-guide-button rearrangement-button ml-2"
         type="submit"
       >
         Umformen
@@ -79,21 +84,39 @@ const RearrangeEquationTemplate = ({ leftEquationPart, rightEquationPart }) => `
   </form>
 `;
 
+StartButtonTemplate = `
+  <button
+    id="start-button"
+    class="btn btn-primary equation-guide-button"
+    type="submit"
+  >
+    Start
+  </button>
+`;
+
+RestartButtonTemplate = `
+  <button
+    id="restart-button"
+    class="btn btn-primary equation-guide-button"
+  >
+    Neustart
+  </button>
+`;
+
 $(document).ready(function () {
   $("#start-form").on("submit", function(event) {
-    // Validieren
 
-    $(".equation-guide-equation-part-input").prop("readonly", true);
+    //TODO: Validierung
 
-    $("#equation-rearrangement").append(
-      RearrangeEquationTemplate(
+    $(".equation-guide-equation-part-input").attr("readonly", true);
+
+    $("#equation-rearrangement-div").append(
+      RearrangementTemplate(
         {leftEquationPart: "test", rightEquationPart: "test"}
       )
     );
 
-    $("#start-button").replaceWith(
-      $("#restart-button-template").html()
-    );
+    $("#start-button").replaceWith(RestartButtonTemplate);
 
     event.preventDefault();
   });

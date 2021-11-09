@@ -1,21 +1,17 @@
-#index-equation-guide-headline {
+#equation-guide-headline {
   font-family: "Optima";
   font-size: 130px;
 }
 
-#index-separation-line {
+#separation-line {
   width: 5px;
   background-color: black;
 }
 
-.index-button {
+.feature-button {
   width: 100%;
 }
 
-.index-span {
+.button-span {
   font-family: "Optima";
-}
-
-.index-navbar-span {
-  font-size: 18px;
 }

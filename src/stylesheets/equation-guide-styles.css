@@ -1,17 +1,13 @@
-.equation-guide-input {
+.equation-input {
   font-size: 20px;
   font-family: "Arial";
 }
 
-#equation-guide-equals-sign-input {
+.equals-sign-input {
   width: 4%;
 }
 
-.equation-guide-equation-part-input {
-  width: 25%;
-}
-
-#equation-guide-select {
+.arithmetic-operation-select {
   width: 4%;
 }
 
@@ -19,10 +15,10 @@
   width: 15%;
 }
 
-#equation-guide-rearrange-button {
+.rearrangement-button {
   width: 8%;
 }
 
-.equation-guide-rearrangement-step-input {
+.rearrangement-step-input {
   width: 15%;
 }
