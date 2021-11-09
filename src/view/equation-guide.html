@@ -7,7 +7,7 @@
 		<link rel="icon" type="image/png" href="../img/favicon.png"/>
 
 		<link href="../stylesheets/bootstrap.min.css" rel="stylesheet">
-		<link href="../stylesheets/additional-styles.css" rel="stylesheet">
+		<link href="../stylesheets/equation-guide-styles.css" rel="stylesheet">
 		<script src="../scripts/jquery.min.js"></script>
   	<script src="../scripts/bootstrap.min.js"></script>
 		<script src="../scripts/popper.min.js"></script>
@@ -17,10 +17,12 @@
 	</head>
 	<body>
 		<div class="d-flex align-items-center min-vh-100">
-  		<div class="container text-center">
+  		<div class="container text-center min-vw-100">
 				<form id="start-form">
-	    		<div class="row form-group">
+	    		<div class="row form-group justify-content-center">
+						<!-- inputs for defining the equation -->
 						<input
+							id="equation-guide-left-equation-input"
 							class="
 								form-control
 								equation-guide-input
@@ -32,6 +34,7 @@
 							placeholder="Linke Seite der Gleichung"
 							required
 						/>
+
 						<input
 							id="equation-guide-equals-sign-input"
 							class="
@@ -44,7 +47,9 @@
 							value="="
 							readonly
 						/>
+
 						<input
+							id="equation-guide-right-equation-input"
 							class="
 								form-control
 								equation-guide-input
@@ -58,8 +63,10 @@
 						/>
 					</div>
 
-					<div id="equation-rearrangement"></div>
+					<!-- section for rearranging the equation -->
+					<div id="equation-rearrangement" class="mt-4"></div>
 
+					<!-- button section -->
 					<div class="row justify-content-center">
 						<a
 							class="btn btn-secondary equation-guide-button mr-4"
@@ -83,11 +90,6 @@
 				</form>
   		</div>
 		</div>
-
-		<!-- Templates -->
-		<template id="equation-rearrangement-template">
-			<p>Test-Component</p>
-		</template>
 
 		<template id="restart-button-template">
 			<button
