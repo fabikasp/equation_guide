@@ -1,4 +1,10 @@
 $(document).ready(function () {
+  $.getScript("../scripts/templates.js", function() {
+    $(StartButtonTemplate).insertAfter($("#back-button"));
+  });
+
+  $('.rearrangement-button').dblclick(false);
+
   /* start button functionality */
   $(document).on("click", "#start-button", function(event) {
     var leftEquationPart = $("#left-equation-input").val();
