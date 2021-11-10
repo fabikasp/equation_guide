@@ -1,4 +1,8 @@
 $(document).ready(function () {
+  $.getScript("../scripts/templates.js", function() {
+    $(StartButtonTemplate).insertAfter($("#back-button"));
+  });
+
   /* start button functionality */
   $(document).on("click", "#start-button", function(event) {
     var leftEquationPart = $("#left-equation-input").val();
