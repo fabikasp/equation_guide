@@ -100,3 +100,9 @@ RestartButtonTemplate = `
     Neustart
   </button>
 `;
+
+ErrorAlertTemplate = ({ errorText }) => `
+  <div class="alert alert-danger mt-4 error-alert">
+    ${errorText}
+  </div>
+`;
