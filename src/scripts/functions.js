@@ -1,21 +1,21 @@
 function evaluateStartEquations(leftEquationPart, rightEquationPart) {
   let result = {
-  	"left" : true,
-  	"right" : true,
+  	"leftEquationValid" : true,
+  	"rightEquationValid" : true,
   	"errorMessages" : []
   }
 
   if (leftEquationPart == "") {
-    result.left = false;
+    result.leftEquationValid = false;
     result.errorMessages.push(
-      "Der linke Teil der Gleichung darf nicht leer sein."
+      "Der linke Teil der Gleichung darf nicht leer sein"
     );
   }
 
   if (rightEquationPart == "") {
-    result.right = false;
+    result.rightEquationValid = false;
     result.errorMessages.push(
-      "Der rechte Teil der Gleichung darf nicht leer sein."
+      "Der rechte Teil der Gleichung darf nicht leer sein"
     );
   }
 
