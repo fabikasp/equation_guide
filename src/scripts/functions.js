@@ -27,7 +27,7 @@ function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
     );
   }
 
-  $.getScript("../scripts/nerdamer.js", function() {
+  $.getScript("../scripts/lib/nerdamer.js", function() {
     equationResult = nerdamer.solveEquations(
       leftEquationPart + "=" + rightEquationPart,
       variable
