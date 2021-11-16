@@ -27,21 +27,23 @@ function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
     );
   }
 
-  $.getScript("../scripts/lib/nerdamer.js", function() {
-    equationResult = nerdamer.solveEquations(
-      leftEquationPart + "=" + rightEquationPart,
-      variable
-    );
+  if (leftEquationPart != "" && rightEquationPart != "" && variable != "") {
+    try {
+      equationResult = nerdamer.solveEquations(
+        leftEquationPart + "=" + rightEquationPart,
+        variable
+      );
 
-    alert(equationResult);
-
-    if (equationResult == 500) {
+      if (equationResult == "") {
+        throw new Error("Equation is not valid");
+      }
+    } catch (e) {
       result.leftEquationValid = false;
       result.rightEquationValid = false;
       result.variableValid = false;
       result.errorMessages.push("Die Gleichung ist nicht lösbar");
     }
-  });
+  }
 
   return result;
 }
