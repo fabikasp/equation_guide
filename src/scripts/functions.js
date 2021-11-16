@@ -42,7 +42,6 @@ function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
         throw new Error("Die Gleichung wird nicht unterstützt");
       }
     } catch (e) {
-      alert(e.message);
       if (e.name == "NerdamerValueError") {
         result.errorMessages.push("Die Gleichung wird nicht unterstützt");
       } else {
