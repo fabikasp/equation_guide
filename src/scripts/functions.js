@@ -1,8 +1,9 @@
-function evaluateStartEquations(leftEquationPart, rightEquationPart) {
+function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
   let result = {
-  	"leftEquationValid" : true,
-  	"rightEquationValid" : true,
-  	"errorMessages" : []
+  	"leftEquationValid": true,
+  	"rightEquationValid": true,
+    "variableValid": true,
+  	"errorMessages": []
   }
 
   if (leftEquationPart == "") {
@@ -18,6 +19,29 @@ function evaluateStartEquations(leftEquationPart, rightEquationPart) {
       "Der rechte Teil der Gleichung darf nicht leer sein"
     );
   }
+
+  if (variable == "") {
+    result.variableValid = false;
+    result.errorMessages.push(
+      "Die Variable, nach der umgeformt werden soll, darf nicht leer sein"
+    );
+  }
+
+  $.getScript("../scripts/nerdamer.js", function() {
+    equationResult = nerdamer.solveEquations(
+      leftEquationPart + "=" + rightEquationPart,
+      variable
+    );
+
+    alert(equationResult);
+
+    if (equationResult == 500) {
+      result.leftEquationValid = false;
+      result.rightEquationValid = false;
+      result.variableValid = false;
+      result.errorMessages.push("Die Gleichung ist nicht lösbar");
+    }
+  });
 
   return result;
 }

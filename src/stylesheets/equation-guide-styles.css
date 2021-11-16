@@ -3,6 +3,10 @@
   font-family: "Arial";
 }
 
+#variable-input {
+  width: 8%;
+}
+
 .equals-sign-input {
   width: 4%;
 }
