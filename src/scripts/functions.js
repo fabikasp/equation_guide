@@ -29,19 +29,23 @@ function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
 
   if (leftEquationPart != "" && rightEquationPart != "" && variable != "") {
     try {
+      if (leftEquationPart == rightEquationPart) {
+        throw new Error("Die Gleichung ist nicht umformbar");
+      }
+
       equationResult = nerdamer.solveEquations(
         leftEquationPart + "=" + rightEquationPart,
         variable
       );
 
       if (equationResult == "") {
-        throw new Error("Equation is not valid");
+        throw new Error("Die Gleichung ist nicht lösbar");
       }
     } catch (e) {
       result.leftEquationValid = false;
       result.rightEquationValid = false;
       result.variableValid = false;
-      result.errorMessages.push("Die Gleichung ist nicht lösbar");
+      result.errorMessages.push(e.message);
     }
   }
 
