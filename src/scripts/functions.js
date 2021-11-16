@@ -39,13 +39,19 @@ function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
       );
 
       if (equationResult == "") {
-        throw new Error("Die Gleichung ist nicht lösbar");
+        throw new Error("Die Gleichung wird nicht unterstützt");
       }
     } catch (e) {
+      alert(e.message);
+      if (e.name == "NerdamerValueError") {
+        result.errorMessages.push("Die Gleichung wird nicht unterstützt");
+      } else {
+        result.errorMessages.push(e.message);
+      }
+
       result.leftEquationValid = false;
       result.rightEquationValid = false;
       result.variableValid = false;
-      result.errorMessages.push(e.message);
     }
   }
 
