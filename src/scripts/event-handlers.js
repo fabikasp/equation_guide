@@ -32,12 +32,17 @@ $(document).ready(function () {
 
       if (!startEquationEvaluation.leftEquationValid) {
         $("#left-equation-input").addClass("is-invalid");
+        $("#left-equation-input").focus();
       } else {
         $("#left-equation-input").removeClass("is-invalid");
       }
 
       if (!startEquationEvaluation.rightEquationValid) {
         $("#right-equation-input").addClass("is-invalid");
+
+        if (startEquationEvaluation.leftEquationValid) {
+          $("#right-equation-input").focus();
+        }
       } else {
         $("#right-equation-input").removeClass("is-invalid");
       }
