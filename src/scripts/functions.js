@@ -1,9 +1,39 @@
 function simplifyExpression(expression) {
   try {
-    return nerdamer('simplify(' + expression + ')');
+    return math.simplify(expression);
   } catch (e) {
     return expression;
   }
+}
+
+function getEquationResult(leftEquationPart, rightEquationPart, variable) {
+  return nerdamer.solveEquations(
+    leftEquationPart + "=" + rightEquationPart,
+    variable
+  );
+}
+
+function isFinalEquation(leftEquationPart, rightEquationPart, variable) {
+  try {
+    equationResult = getEquationResult(
+      leftEquationPart,
+      rightEquationPart,
+      variable
+    );
+
+    if (
+      leftEquationPart == variable
+      && parseFloat(rightEquationPart) == parseFloat(equationResult.toString())
+      || rightEquationPart == variable
+      && parseFloat(leftEquationPart) == parseFloat(equationResult.toString())
+    ) {
+      return true;
+    }
+  } catch (e) {
+    return false;
+  }
+
+  return false;
 }
 
 function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
@@ -41,17 +71,13 @@ function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
         throw new Error("Die Gleichung ist nicht umformbar");
       }
 
-      equationResult = nerdamer.solveEquations(
-        leftEquationPart + "=" + rightEquationPart,
+      equationResult = getEquationResult(
+        leftEquationPart,
+        rightEquationPart,
         variable
       );
 
-      if (
-        leftEquationPart == variable
-        && rightEquationPart == equationResult.toString()
-        || rightEquationPart == variable
-        && leftEquationPart == equationResult.toString()
-      ) {
+      if (isFinalEquation(leftEquationPart, rightEquationPart, variable)) {
         throw new Error("Die Gleichung ist bereits gelöst");
       }
 
@@ -85,19 +111,38 @@ function evaluateRearrangementStep(
   }
 
   try {
-    simplifyExpression(
-      leftEquationPart + arithmeticOperation + rearrangementStep
-    );
+    leftRearrangementStep = "(" + leftEquationPart + ")"
+      + arithmeticOperation
+      + rearrangementStep;
 
-    simplifyExpression(
-      rightEquationPart + arithmeticOperation + rearrangementStep
-    );
+    simplifiedLeftEquationPart = simplifyExpression(leftRearrangementStep);
 
-    //TODO: anderweitig auswerten, um z.B. Sonderzeichen nicht zuzulassen
-    //TODO: alerts löschen, wenn alles valide ist
+    if (simplifiedLeftEquationPart == leftRearrangementStep) {
+      return "Der Umformungsschritt wird nicht unterstützt";
+    }
+
+    rightRearrangementStep = "(" + rightEquationPart + ")"
+      + arithmeticOperation
+      + rearrangementStep;
+
+    simplifiedRightEquationPart = simplifyExpression(rightRearrangementStep);
+
+    if (simplifiedRightEquationPart == rightRearrangementStep) {
+      return "Der Umformungsschritt wird nicht unterstützt";
+    }
   } catch (e) {
     return "Der Umformungsschritt wird nicht unterstützt";
   }
 
   return "";
+}
+
+function performRearrangementStep(
+  expression,
+  arithmeticOperation,
+  rearrangementStep
+) {
+  return simplifyExpression(
+    "(" + expression + ")" + arithmeticOperation + rearrangementStep
+  );
 }

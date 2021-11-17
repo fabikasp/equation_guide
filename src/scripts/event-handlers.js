@@ -99,6 +99,9 @@ $(document).ready(function () {
       .last()
       .text();
     var rearrangementStep = $(".rearrangement-step-input").last().val();
+    var variable = $("#variable-input").val();
+
+    $("#error-alert-div").empty();
 
     $.getScript("../scripts/functions.js", function() {
       var rearrangementStepEvaluation = evaluateRearrangementStep(
@@ -115,13 +118,33 @@ $(document).ready(function () {
         $(".rearrangement-step-input").last().attr("readonly", true);
         $(".rearrangement-button").last().attr("disabled", true);
 
+        var newLeftEquationPart = performRearrangementStep(
+          leftEquationPart,
+          arithmeticOperation,
+          rearrangementStep
+        );
+
+        var newRightEquationPart = performRearrangementStep(
+          rightEquationPart,
+          arithmeticOperation,
+          rearrangementStep
+        );
+
         $.getScript("../scripts/templates.js", function() {
           $("#equation-rearrangement-div").append(
             RearrangementTemplate({
-              leftEquationPart: leftEquationPart,
-              rightEquationPart: rightEquationPart
+              leftEquationPart: newLeftEquationPart,
+              rightEquationPart: newRightEquationPart
             })
           );
+
+          if (
+            isFinalEquation(newLeftEquationPart, newRightEquationPart, variable)
+          ) {
+            $(".arithmetic-operation-select").last().attr("readonly", true);
+            $(".rearrangement-step-input").last().attr("readonly", true);
+            $(".rearrangement-button").last().attr("disabled", true);
+          }
         });
       } else {
         $(".rearrangement-step-input").last().addClass("is-invalid");
@@ -139,6 +162,8 @@ $(document).ready(function () {
 
   /* restart button functionality */
   $(document).on("click", "#restart-button", function(event) {
+    $("#error-alert-div").empty();
+
     $(".equation-rearrangement-step-div").remove();
     $("#left-equation-input").attr("readonly", false);
     $("#right-equation-input").attr("readonly", false);
