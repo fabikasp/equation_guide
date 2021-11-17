@@ -15,18 +15,10 @@ function getEquationResult(leftEquationPart, rightEquationPart, variable) {
 
 function isFinalEquation(leftEquationPart, rightEquationPart, variable) {
   try {
-    equationResult = getEquationResult(
-      leftEquationPart,
-      rightEquationPart,
-      variable
-    );
+    // TODO: Ergebnis mit dem von Nerdamer vergleichen
+    // Problem: Manchmal formt Nerdamer / math.js das Ergebnis anders um als der Nutzer
 
-    if (
-      leftEquationPart == variable
-      && parseFloat(rightEquationPart) == parseFloat(equationResult.toString())
-      || rightEquationPart == variable
-      && parseFloat(leftEquationPart) == parseFloat(equationResult.toString())
-    ) {
+    if (leftEquationPart == variable || rightEquationPart == variable) {
       return true;
     }
   } catch (e) {

@@ -11,7 +11,7 @@ $(document).ready(function () {
     var rightEquationPart = $("#right-equation-input").val();
     var variable = $("#variable-input").val();
 
-    $("#error-alert-div").empty();
+    $("#alert-div").empty();
 
     $.getScript("../scripts/functions.js", function() {
       leftEquationPart = simplifyExpression(leftEquationPart);
@@ -29,8 +29,8 @@ $(document).ready(function () {
 
         $.getScript("../scripts/templates.js", function() {
           startEquationEvaluation.errorMessages.forEach((errorMessage, i) => {
-            $("#error-alert-div").append(
-              ErrorAlertTemplate({errorText: errorMessage})
+            $("#alert-div").append(
+              AlertTemplate({text: errorMessage, alertType: "danger"})
             );
           });
         });
@@ -71,7 +71,7 @@ $(document).ready(function () {
         && startEquationEvaluation.rightEquationValid
         && startEquationEvaluation.variableValid
       ) {
-        $(".error-alert").remove();
+        $("#alert-div").empty();
 
         $.getScript("../scripts/templates.js", function() {
           $("#equation-rearrangement-div").append(
@@ -101,7 +101,7 @@ $(document).ready(function () {
     var rearrangementStep = $(".rearrangement-step-input").last().val();
     var variable = $("#variable-input").val();
 
-    $("#error-alert-div").empty();
+    $("#alert-div").empty();
 
     $.getScript("../scripts/functions.js", function() {
       var rearrangementStepEvaluation = evaluateRearrangementStep(
@@ -144,14 +144,26 @@ $(document).ready(function () {
             $(".arithmetic-operation-select").last().attr("readonly", true);
             $(".rearrangement-step-input").last().attr("readonly", true);
             $(".rearrangement-button").last().attr("disabled", true);
+
+            $.getScript("../scripts/templates.js", function() {
+              $("#alert-div").append(
+                AlertTemplate({
+                  text: "Die Gleichung wurde erfolgreich umgeformt",
+                  alertType: "success"
+                })
+              );
+            });
           }
         });
       } else {
         $(".rearrangement-step-input").last().addClass("is-invalid");
 
         $.getScript("../scripts/templates.js", function() {
-          $("#error-alert-div").append(
-            ErrorAlertTemplate({errorText: rearrangementStepEvaluation})
+          $("#alert-div").append(
+            AlertTemplate({
+              text: rearrangementStepEvaluation,
+              alertType: "danger"
+            })
           );
         });
       }
@@ -162,7 +174,7 @@ $(document).ready(function () {
 
   /* restart button functionality */
   $(document).on("click", "#restart-button", function(event) {
-    $("#error-alert-div").empty();
+    $("#alert-div").empty();
 
     $(".equation-rearrangement-step-div").remove();
     $("#left-equation-input").attr("readonly", false);
