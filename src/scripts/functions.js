@@ -1,3 +1,11 @@
+function simplifyExpression(expression) {
+  try {
+    return nerdamer('simplify(' + expression + ')');
+  } catch (e) {
+    return expression;
+  }
+}
+
 function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
   let result = {
   	"leftEquationValid": true,
@@ -39,8 +47,10 @@ function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
       );
 
       if (
-        leftEquationPart == variable && rightEquationPart == equationResult
-        || rightEquationPart == variable && leftEquationPart == equationResult
+        leftEquationPart == variable
+        && rightEquationPart == equationResult.toString()
+        || rightEquationPart == variable
+        && leftEquationPart == equationResult.toString()
       ) {
         throw new Error("Die Gleichung ist bereits gelöst");
       }
@@ -64,20 +74,27 @@ function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
   return result;
 }
 
-function simplifyExpression(expression) {
-  try {
-    return nerdamer('simplify(' + expression + ')');
-  } catch (e) {
-    return expression;
+function evaluateRearrangementStep(
+  leftEquationPart,
+  rightEquationPart,
+  arithmeticOperation
+  rearrangementStep
+) {
+  if (rearrangementStep == "") {
+    return "Der Umformungsschritt darf nicht leer sein";
   }
-}
 
-function rearrangementIsValid() {
-  // Validierung
+  try {
+    simplifyExpression(
+      leftEquationPart + arithmeticOperation + rearrangementStep
+    );
 
-  return true;
-}
+    simplifyExpression(
+      rightEquationPart + arithmeticOperation + rearrangementStep
+    );
+  } catch (e) {
+    return "Der Umformungsschritt wird nicht unterstützt";
+  }
 
-function performRearrangement() {
-  // Umformung
+  return "";
 }

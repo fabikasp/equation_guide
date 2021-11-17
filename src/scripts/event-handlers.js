@@ -14,6 +14,9 @@ $(document).ready(function () {
     $("#error-alert-div").empty();
 
     $.getScript("../scripts/functions.js", function() {
+      leftEquationPart = simplifyExpression(leftEquationPart);
+      rightEquationPart = simplifyExpression(rightEquationPart);
+
       var startEquationEvaluation = evaluateStartEquations(
         leftEquationPart,
         rightEquationPart,
@@ -22,6 +25,9 @@ $(document).ready(function () {
 
       if (startEquationEvaluation.errorMessages.length > 0) {
         const enumerationSymbol = "►";
+
+        $("#left-equation-input").val(leftEquationPart);
+        $("#right-equation-input").val(rightEquationPart);
 
         $.getScript("../scripts/templates.js", function() {
           startEquationEvaluation.errorMessages.forEach((errorMessage, i) => {
@@ -74,8 +80,8 @@ $(document).ready(function () {
         $.getScript("../scripts/templates.js", function() {
           $("#equation-rearrangement-div").append(
             RearrangementTemplate({
-              leftEquationPart: simplifyExpression(leftEquationPart),
-              rightEquationPart: simplifyExpression(rightEquationPart)
+              leftEquationPart: leftEquationPart,
+              rightEquationPart: rightEquationPart
             })
           );
 
@@ -98,23 +104,38 @@ $(document).ready(function () {
       .text();
     var rearrangementStep = $(".rearrangement-step-input").last().val();
 
-    $(".arithmetic-operation-select").last().attr("readonly", true);
-    $(".rearrangement-step-input").last().attr("readonly", true);
-    $(".rearrangement-button").last().attr("disabled", true);
-
     $.getScript("../scripts/functions.js", function() {
-      var rearrangementValid = rearrangementIsValid();
-
-      performRearrangement();
-    });
-
-    $.getScript("../scripts/templates.js", function() {
-      $("#equation-rearrangement-div").append(
-        RearrangementTemplate({
-          leftEquationPart: leftEquationPart,
-          rightEquationPart: rightEquationPart
-        })
+      var rearrangementStepEvaluation = evaluateRearrangementStep(
+        leftEquationPart,
+        rightEquationPart,
+        arithmeticOperation,
+        rearrangementStep
       );
+
+      if (rearrangementStepEvaluation == "") {
+        $("#left-equation-input").removeClass("is-invalid");
+
+        $(".arithmetic-operation-select").last().attr("readonly", true);
+        $(".rearrangement-step-input").last().attr("readonly", true);
+        $(".rearrangement-button").last().attr("disabled", true);
+
+        $.getScript("../scripts/templates.js", function() {
+          $("#equation-rearrangement-div").append(
+            RearrangementTemplate({
+              leftEquationPart: leftEquationPart,
+              rightEquationPart: rightEquationPart
+            })
+          );
+        });
+      } else {
+        $("#left-equation-input").addClass("is-invalid");
+
+        $("#error-alert-div").append(
+          ErrorAlertTemplate({
+            errorText: enumerationSymbol + " " + rearrangementStepEvaluation
+          })
+        );
+      }
     });
 
     event.preventDefault();
