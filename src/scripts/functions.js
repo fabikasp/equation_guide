@@ -38,6 +38,13 @@ function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
         variable
       );
 
+      if (
+        leftEquationPart == variable && rightEquationPart == equationResult
+        || rightEquationPart == variable && leftEquationPart == equationResult
+      ) {
+        throw new Error("Die Gleichung ist bereits gelöst");
+      }
+
       if (equationResult == "") {
         throw new Error("Die Gleichung wird nicht unterstützt");
       }
