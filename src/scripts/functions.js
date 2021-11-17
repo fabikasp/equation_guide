@@ -57,6 +57,14 @@ function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
   return result;
 }
 
+function simplifyExpression(expression) {
+  try {
+    return nerdamer('simplify(' + expression + ')');
+  } catch (e) {
+    return expression;
+  }
+}
+
 function rearrangementIsValid() {
   // Validierung
 

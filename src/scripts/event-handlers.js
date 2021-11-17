@@ -74,8 +74,8 @@ $(document).ready(function () {
         $.getScript("../scripts/templates.js", function() {
           $("#equation-rearrangement-div").append(
             RearrangementTemplate({
-              leftEquationPart: leftEquationPart,
-              rightEquationPart: rightEquationPart
+              leftEquationPart: simplifyExpression(leftEquationPart),
+              rightEquationPart: simplifyExpression(rightEquationPart)
             })
           );
 
