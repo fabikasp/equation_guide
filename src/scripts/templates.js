@@ -103,6 +103,6 @@ RestartButtonTemplate = `
 
 ErrorAlertTemplate = ({ errorText }) => `
   <div class="alert alert-danger w-50 mx-auto">
-    ${errorText}
+    ► ${errorText}
   </div>
 `;

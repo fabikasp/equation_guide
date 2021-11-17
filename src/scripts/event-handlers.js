@@ -24,17 +24,13 @@ $(document).ready(function () {
       );
 
       if (startEquationEvaluation.errorMessages.length > 0) {
-        const enumerationSymbol = "►";
-
         $("#left-equation-input").val(leftEquationPart);
         $("#right-equation-input").val(rightEquationPart);
 
         $.getScript("../scripts/templates.js", function() {
           startEquationEvaluation.errorMessages.forEach((errorMessage, i) => {
             $("#error-alert-div").append(
-              ErrorAlertTemplate({
-                errorText: enumerationSymbol + " " + errorMessage
-              })
+              ErrorAlertTemplate({errorText: errorMessage})
             );
           });
         });
@@ -113,7 +109,7 @@ $(document).ready(function () {
       );
 
       if (rearrangementStepEvaluation == "") {
-        $("#left-equation-input").removeClass("is-invalid");
+        $(".rearrangement-step-input").last().removeClass("is-invalid");
 
         $(".arithmetic-operation-select").last().attr("readonly", true);
         $(".rearrangement-step-input").last().attr("readonly", true);
@@ -128,13 +124,13 @@ $(document).ready(function () {
           );
         });
       } else {
-        $("#left-equation-input").addClass("is-invalid");
+        $(".rearrangement-step-input").last().addClass("is-invalid");
 
-        $("#error-alert-div").append(
-          ErrorAlertTemplate({
-            errorText: enumerationSymbol + " " + rearrangementStepEvaluation
-          })
-        );
+        $.getScript("../scripts/templates.js", function() {
+          $("#error-alert-div").append(
+            ErrorAlertTemplate({errorText: rearrangementStepEvaluation})
+          );
+        });
       }
     });
 

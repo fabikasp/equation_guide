@@ -77,7 +77,7 @@ function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
 function evaluateRearrangementStep(
   leftEquationPart,
   rightEquationPart,
-  arithmeticOperation
+  arithmeticOperation,
   rearrangementStep
 ) {
   if (rearrangementStep == "") {
@@ -92,6 +92,9 @@ function evaluateRearrangementStep(
     simplifyExpression(
       rightEquationPart + arithmeticOperation + rearrangementStep
     );
+
+    //TODO: anderweitig auswerten, um z.B. Sonderzeichen nicht zuzulassen
+    //TODO: alerts löschen, wenn alles valide ist
   } catch (e) {
     return "Der Umformungsschritt wird nicht unterstützt";
   }
