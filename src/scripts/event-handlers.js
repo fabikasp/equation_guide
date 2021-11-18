@@ -145,6 +145,13 @@ $(document).ready(function () {
             $(".rearrangement-step-input").last().attr("readonly", true);
             $(".rearrangement-button").last().attr("disabled", true);
 
+            $(".left-rearrangement-input").last().addClass("bg-success");
+            $(".right-rearrangement-input").last().addClass("bg-success");
+            $(".equals-sign-input").last().addClass("bg-success");
+            $(".left-rearrangement-input").last().addClass("text-white");
+            $(".right-rearrangement-input").last().addClass("text-white");
+            $(".equals-sign-input").last().addClass("text-white");
+
             $.getScript("../scripts/templates.js", function() {
               $("#alert-div").append(
                 AlertTemplate({
