@@ -53,11 +53,33 @@ function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
   if (variable == "") {
     result.variableValid = false;
     result.errorMessages.push(
-      "Die Variable, nach der umgeformt werden soll, darf nicht leer sein"
+      "Die Zielvariable darf nicht leer sein"
+    );
+  } else if (variable.length != 1) {
+    result.variableValid = false;
+    result.errorMessages.push(
+      "Die Zielvariable darf nur ein Zeichen enthalten"
+    );
+  } else if (!variable.match("[a-zA-Z]")) {
+    result.variableValid = false;
+    result.errorMessages.push(
+      "Die Zielvariable muss ein Klein- oder Großbuchstabe sein"
+    );
+  } else if (!(
+    leftEquationPart.contains(variable)
+    || rightEquationPart.contains(variable)
+  )) {
+    result.variableValid = false;
+    result.errorMessages.push(
+      "Die Zielvariable muss in der Gleichung vorkommen"
     );
   }
 
-  if (leftEquationPart != "" && rightEquationPart != "" && variable != "") {
+  if (
+    result.leftEquationValid
+    && result.rightEquationPart
+    && result.variableValid
+  ) {
     try {
       if (leftEquationPart == rightEquationPart) {
         throw new Error("Die Gleichung ist nicht umformbar");
