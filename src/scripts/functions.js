@@ -1,6 +1,6 @@
 function simplifyExpression(expression) {
   try {
-    return math.simplify(expression);
+    return nerdamer("simplify(" + expression + ")");
   } catch (e) {
     return expression;
   }
