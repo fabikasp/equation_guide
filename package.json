@@ -2,6 +2,7 @@
   "dependencies": {
     "browserify": "^17.0.0",
     "concurrently": "^6.4.0",
+    "http-server": "^14.0.0",
     "mathjs": "^10.0.0",
     "mathsteps": "^0.2.0",
     "watchify": "^4.0.0"
@@ -9,10 +10,11 @@
   "name": "equationguide",
   "description": "EquationGuide is a web application for supporting pupils solving equations.",
   "version": "1.0.0",
-  "main": "index.js",
-  "devDependencies": {},
+  "main": "src/scripts/functions.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "browserify src/scripts/event-handlers.js src/scripts/functions.js > src/dist/bundle.js",
+    "watch": "watchify src/scripts/event-handlers.js src/scripts/functions.js > src/dist/bundle.js -d",
+    "start": "concurrently \"npm run watch\" \"http-server\""
   },
   "repository": {
     "type": "git",

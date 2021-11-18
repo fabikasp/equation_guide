@@ -73,4 +73,9 @@ $(document).ready(function () {
 
     event.preventDefault();
   });
+
+  $(document).on("click", "#help-button", function(event) {
+    window.mathstepsTestFunction();
+    event.preventDefault();
+  });
 });
