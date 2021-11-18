@@ -138,9 +138,9 @@ $(document).ready(function () {
           if (
             isFinalEquation(newLeftEquationPart, newRightEquationPart, variable)
           ) {
-            $(".arithmetic-operation-select").last().attr("readonly", true);
-            $(".rearrangement-step-input").last().attr("readonly", true);
-            $(".rearrangement-button").last().attr("disabled", true);
+            $(".arithmetic-operation-select").last().remove();
+            $(".rearrangement-step-input").last().remove();
+            $(".rearrangement-button").last().remove();
 
             $(".left-rearrangement-input").last().addClass("bg-success");
             $(".right-rearrangement-input").last().addClass("bg-success");
