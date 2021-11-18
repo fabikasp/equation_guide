@@ -12,8 +12,9 @@
   "version": "1.0.0",
   "main": "src/scripts/functions.js",
   "scripts": {
+    "buildSingle": "browserify src/scripts/functions.js > src/dist/bundle.js",
     "build": "browserify src/scripts/event-handlers.js src/scripts/functions.js > src/dist/bundle.js",
-    "watch": "watchify src/scripts/event-handlers.js src/scripts/functions.js > src/dist/bundle.js -d",
+    "watch": "watchify src/scripts/functions.js -o src/dist/bundle.js -v -d",
     "start": "concurrently \"npm run watch\" \"http-server\""
   },
   "repository": {

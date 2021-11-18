@@ -1,7 +1,7 @@
 const mathsteps = require('mathsteps');
 
 function mathstepsTestFunction() {
-  const steps = mathsteps.solveEquation('3*x+6=4'); //x^2+4x+6=0
+  const steps = mathsteps.solveEquation('3*x+14=4'); //x^2+4x+6=0
 
   steps.forEach(step => {
     console.log("before change: " + step.oldEquation.ascii());  // e.g. before change: 2x + 3x = 35
