@@ -3,27 +3,88 @@ $(document).ready(function () {
     $(StartButtonTemplate).insertAfter($("#back-button"));
   });
 
+  $("#left-equation-input").focus();
+
   /* start button functionality */
   $(document).on("click", "#start-button", function(event) {
     var leftEquationPart = $("#left-equation-input").val();
     var rightEquationPart = $("#right-equation-input").val();
+    var variable = $("#variable-input").val();
+
+    $("#error-alert-div").empty();
 
     $.getScript("../scripts/functions.js", function() {
-      var equationValid = startEquationIsValid();
-    });
-
-    $.getScript("../scripts/templates.js", function() {
-      $("#equation-rearrangement-div").append(
-        RearrangementTemplate({
-          leftEquationPart: leftEquationPart,
-          rightEquationPart: rightEquationPart
-        })
+      var startEquationEvaluation = evaluateStartEquations(
+        leftEquationPart,
+        rightEquationPart,
+        variable
       );
 
-      $("#start-button").replaceWith(RestartButtonTemplate);
-    });
+      if (startEquationEvaluation.errorMessages.length > 0) {
+        const enumerationSymbol = "►";
 
-    $(".equation-input").attr("readonly", true);
+        $.getScript("../scripts/templates.js", function() {
+          startEquationEvaluation.errorMessages.forEach((errorMessage, i) => {
+            $("#error-alert-div").append(
+              ErrorAlertTemplate({
+                errorText: enumerationSymbol + " " + errorMessage
+              })
+            );
+          });
+        });
+      }
+
+      if (!startEquationEvaluation.leftEquationValid) {
+        $("#left-equation-input").addClass("is-invalid");
+        $("#left-equation-input").focus();
+      } else {
+        $("#left-equation-input").removeClass("is-invalid");
+      }
+
+      if (!startEquationEvaluation.rightEquationValid) {
+        $("#right-equation-input").addClass("is-invalid");
+
+        if (startEquationEvaluation.leftEquationValid) {
+          $("#right-equation-input").focus();
+        }
+      } else {
+        $("#right-equation-input").removeClass("is-invalid");
+      }
+
+      if (!startEquationEvaluation.variableValid) {
+        $("#variable-input").addClass("is-invalid");
+
+        if (
+          startEquationEvaluation.leftEquationValid
+          && startEquationEvaluation.rightEquationValid
+        ) {
+          $("#variable-input").focus();
+        }
+      } else {
+        $("#variable-input").removeClass("is-invalid");
+      }
+
+      if (
+        startEquationEvaluation.leftEquationValid
+        && startEquationEvaluation.rightEquationValid
+        && startEquationEvaluation.variableValid
+      ) {
+        $(".error-alert").remove();
+
+        $.getScript("../scripts/templates.js", function() {
+          $("#equation-rearrangement-div").append(
+            RearrangementTemplate({
+              leftEquationPart: simplifyExpression(leftEquationPart),
+              rightEquationPart: simplifyExpression(rightEquationPart)
+            })
+          );
+
+          $("#start-button").replaceWith(RestartButtonTemplate);
+        });
+
+        $(".equation-input").attr("readonly", true);
+      }
+    });
 
     event.preventDefault();
   });
@@ -63,9 +124,12 @@ $(document).ready(function () {
   $(document).on("click", "#restart-button", function(event) {
     $(".equation-rearrangement-step-div").remove();
     $("#left-equation-input").attr("readonly", false);
-    $("#left-equation-input").val("");
     $("#right-equation-input").attr("readonly", false);
+    $("#variable-input").attr("readonly", false);
+    $("#left-equation-input").val("");
     $("#right-equation-input").val("");
+    $("#variable-input").val("");
+    $("#left-equation-input").focus();
 
     $.getScript("../scripts/templates.js", function() {
       $("#restart-button").replaceWith(StartButtonTemplate);
