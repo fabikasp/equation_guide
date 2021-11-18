@@ -29,85 +29,85 @@ function isFinalEquation(leftEquationPart, rightEquationPart, variable) {
 }
 
 function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
-  let result = {
+  var result = {
   	"leftEquationValid": true,
   	"rightEquationValid": true,
     "variableValid": true,
   	"errorMessages": []
   }
 
-  if (leftEquationPart == "") {
+  try {
+    if (leftEquationPart == "") {
+      result.leftEquationValid = false;
+      result.errorMessages.push(
+        "Der linke Teil der Gleichung darf nicht leer sein"
+      );
+    }
+
+    if (rightEquationPart == "") {
+      result.rightEquationValid = false;
+      result.errorMessages.push(
+        "Der rechte Teil der Gleichung darf nicht leer sein"
+      );
+    }
+
+    if (variable == "") {
+      result.variableValid = false;
+      result.errorMessages.push(
+        "Die Zielvariable darf nicht leer sein"
+      );
+    } else if (variable.length != 1) {
+      result.variableValid = false;
+      result.errorMessages.push(
+        "Die Zielvariable darf nur ein Zeichen enthalten"
+      );
+    } else if (!variable.match("[a-zA-Z]")) {
+      result.variableValid = false;
+      result.errorMessages.push(
+        "Die Zielvariable muss ein Klein- oder Großbuchstabe sein"
+      );
+    } else if (!(
+      leftEquationPart.contains(variable)
+      || rightEquationPart.contains(variable)
+    )) {
+      result.variableValid = false;
+      result.errorMessages.push(
+        "Die Zielvariable muss in der Gleichung vorkommen"
+      );
+    }
+  } catch (e) {
     result.leftEquationValid = false;
-    result.errorMessages.push(
-      "Der linke Teil der Gleichung darf nicht leer sein"
-    );
-  }
-
-  if (rightEquationPart == "") {
     result.rightEquationValid = false;
-    result.errorMessages.push(
-      "Der rechte Teil der Gleichung darf nicht leer sein"
-    );
+    result.variableValid = false;
+    result.errorMessages.push("Die Gleichung wird nicht unterstützt");
   }
 
-  if (variable == "") {
-    result.variableValid = false;
-    result.errorMessages.push(
-      "Die Zielvariable darf nicht leer sein"
-    );
-  } else if (variable.length != 1) {
-    result.variableValid = false;
-    result.errorMessages.push(
-      "Die Zielvariable darf nur ein Zeichen enthalten"
-    );
-  } else if (!variable.match("[a-zA-Z]")) {
-    result.variableValid = false;
-    result.errorMessages.push(
-      "Die Zielvariable muss ein Klein- oder Großbuchstabe sein"
-    );
-  } else if (!(
-    leftEquationPart.contains(variable)
-    || rightEquationPart.contains(variable)
-  )) {
-    result.variableValid = false;
-    result.errorMessages.push(
-      "Die Zielvariable muss in der Gleichung vorkommen"
-    );
-  }
-
-  if (
-    result.leftEquationValid
-    && result.rightEquationPart
-    && result.variableValid
-  ) {
+  if (result.errorMessages.length == 0) {
     try {
-      if (leftEquationPart == rightEquationPart) {
-        throw new Error("Die Gleichung ist nicht umformbar");
-      }
-
       equationResult = getEquationResult(
         leftEquationPart,
         rightEquationPart,
         variable
       );
 
-      if (isFinalEquation(leftEquationPart, rightEquationPart, variable)) {
-        throw new Error("Die Gleichung ist bereits gelöst");
-      }
-
       if (equationResult == "") {
-        throw new Error("Die Gleichung wird nicht unterstützt");
+        throw new Error();
       }
     } catch (e) {
-      if (e.name == "NerdamerValueError") {
-        result.errorMessages.push("Die Gleichung wird nicht unterstützt");
-      } else {
-        result.errorMessages.push(e.message);
-      }
-
       result.leftEquationValid = false;
       result.rightEquationValid = false;
       result.variableValid = false;
+      result.errorMessages.push("Die Gleichung wird nicht unterstützt");
+    }
+
+    if (
+      isFinalEquation(leftEquationPart, rightEquationPart, variable)
+      || leftEquationPart.toString() == rightEquationPart.toString()
+    ) {
+      result.leftEquationValid = false;
+      result.rightEquationValid = false;
+      result.variableValid = false;
+      result.errorMessages.push("Die Gleichung ist bereits gelöst");
     }
   }
 
