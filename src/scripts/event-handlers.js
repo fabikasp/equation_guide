@@ -24,9 +24,6 @@ $(document).ready(function () {
       );
 
       if (startEquationEvaluation.errorMessages.length > 0) {
-        $("#left-equation-input").val(leftEquationPart);
-        $("#right-equation-input").val(rightEquationPart);
-
         $.getScript("../scripts/templates.js", function() {
           startEquationEvaluation.errorMessages.forEach((errorMessage, i) => {
             $("#alert-div").append(
