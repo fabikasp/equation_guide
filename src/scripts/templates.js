@@ -100,3 +100,7 @@ RestartButtonTemplate = `
     Neustart
   </button>
 `;
+
+AlertTemplate = ({ text, alertType }) => `
+  <div class="alert alert-${alertType} w-50 mx-auto">${text}</div>
+`;

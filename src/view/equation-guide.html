@@ -6,11 +6,12 @@
 
 		<link rel="icon" type="image/png" href="../img/favicon.png"/>
 
-		<link href="../stylesheets/bootstrap.min.css" rel="stylesheet">
+		<link href="../stylesheets/lib/bootstrap.min.css" rel="stylesheet">
 		<link href="../stylesheets/equation-guide-styles.css" rel="stylesheet">
-		<script src="../scripts/jquery.min.js"></script>
-  	<script src="../scripts/bootstrap.min.js"></script>
-		<script src="../scripts/popper.min.js"></script>
+		<script src="../scripts/lib/jquery.min.js"></script>
+  	<script src="../scripts/lib/bootstrap.min.js"></script>
+		<script src="../scripts/lib/popper.min.js"></script>
+		<script src="../scripts/lib/nerdamer.js"></script>
 		<script src="../scripts/event-handlers.js"></script>
 		<script src="../dist/bundle.js"></script>
 
@@ -61,10 +62,26 @@
 						placeholder="Rechte Seite der Gleichung"
 						required
 					/>
+
+					<input
+						id="variable-input"
+						class="
+							form-control
+							equation-input
+							ml-2
+							text-center
+						"
+						type="text"
+						placeholder="Zielvariable"
+						required
+					/>
 				</div>
 
 				<!-- section for rearranging the equation -->
 				<div id="equation-rearrangement-div" class="mt-4"></div>
+
+				<!-- error alert section -->
+				<div id="alert-div" class="col"></div>
 
 				<!-- button section -->
 				<div class="row justify-content-center">
