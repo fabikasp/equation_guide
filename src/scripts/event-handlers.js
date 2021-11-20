@@ -65,6 +65,7 @@ $(document).ready(function () {
         && startEquationEvaluation.variableValid
       ) {
         $("#alert-div").empty();
+        $(".equation-input").attr("readonly", true);
 
         $("#equation-rearrangement-div").append(
           RearrangementTemplate({
@@ -74,8 +75,6 @@ $(document).ready(function () {
         );
 
         $("#start-button").replaceWith(RestartButtonTemplate);
-
-        $(".equation-input").attr("readonly", true);
       }
     });
 
