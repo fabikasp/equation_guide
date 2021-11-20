@@ -11,10 +11,8 @@ function mathstepsTestFunction() {
   });
 }
 
-window.mathstepsTestFunction = mathstepsTestFunction
+window.mathstepsTestFunction = mathstepsTestFunction;
 
-function startEquationIsValid() {
-  // Validierung
 function simplifyExpression(expression) {
   try {
     return nerdamer("simplify(" + expression + ")");
