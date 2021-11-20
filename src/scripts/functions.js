@@ -27,8 +27,6 @@ function getEquationResult(leftEquationPart, rightEquationPart, variable) {
 }
 
 function isFinalEquation(leftEquationPart, rightEquationPart, variable) {
-  //nerdamer equals verwenden, um Ergebnisse zu vergleichen
-
   try {
     if (
       leftEquationPart == variable && !rightEquationPart.contains(variable)
