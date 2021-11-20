@@ -1,7 +1,5 @@
 $(document).ready(function () {
-  $.getScript("../scripts/templates.js", function() {
-    $(StartButtonTemplate).insertAfter($("#back-button"));
-  });
+  $(StartButtonTemplate).insertAfter($("#back-button"));
 
   $("#left-equation-input").focus();
 
@@ -24,12 +22,10 @@ $(document).ready(function () {
       );
 
       if (startEquationEvaluation.errorMessages.length > 0) {
-        $.getScript("../scripts/templates.js", function() {
-          startEquationEvaluation.errorMessages.forEach((errorMessage, i) => {
-            $("#alert-div").append(
-              AlertTemplate({text: errorMessage, alertType: "danger"})
-            );
-          });
+        startEquationEvaluation.errorMessages.forEach((errorMessage, i) => {
+          $("#alert-div").append(
+            AlertTemplate({text: errorMessage, alertType: "danger"})
+          );
         });
       }
 
@@ -70,16 +66,14 @@ $(document).ready(function () {
       ) {
         $("#alert-div").empty();
 
-        $.getScript("../scripts/templates.js", function() {
-          $("#equation-rearrangement-div").append(
-            RearrangementTemplate({
-              leftEquationPart: leftEquationPart,
-              rightEquationPart: rightEquationPart
-            })
-          );
+        $("#equation-rearrangement-div").append(
+          RearrangementTemplate({
+            leftEquationPart: leftEquationPart,
+            rightEquationPart: rightEquationPart
+          })
+        );
 
-          $("#start-button").replaceWith(RestartButtonTemplate);
-        });
+        $("#start-button").replaceWith(RestartButtonTemplate);
 
         $(".equation-input").attr("readonly", true);
       }
@@ -127,49 +121,43 @@ $(document).ready(function () {
           rearrangementStep
         );
 
-        $.getScript("../scripts/templates.js", function() {
-          $("#equation-rearrangement-div").append(
-            RearrangementTemplate({
-              leftEquationPart: newLeftEquationPart,
-              rightEquationPart: newRightEquationPart
+        $("#equation-rearrangement-div").append(
+          RearrangementTemplate({
+            leftEquationPart: newLeftEquationPart,
+            rightEquationPart: newRightEquationPart
+          })
+        );
+
+        if (
+          isFinalEquation(newLeftEquationPart, newRightEquationPart, variable)
+        ) {
+          $(".arithmetic-operation-select").last().remove();
+          $(".rearrangement-step-input").last().remove();
+          $(".rearrangement-button").last().remove();
+
+          $(".left-rearrangement-input").last().addClass("bg-success");
+          $(".right-rearrangement-input").last().addClass("bg-success");
+          $(".equals-sign-input").last().addClass("bg-success");
+          $(".left-rearrangement-input").last().addClass("text-white");
+          $(".right-rearrangement-input").last().addClass("text-white");
+          $(".equals-sign-input").last().addClass("text-white");
+
+          $("#alert-div").append(
+            AlertTemplate({
+              text: "Die Gleichung wurde erfolgreich umgeformt",
+              alertType: "success"
             })
           );
-
-          if (
-            isFinalEquation(newLeftEquationPart, newRightEquationPart, variable)
-          ) {
-            $(".arithmetic-operation-select").last().remove();
-            $(".rearrangement-step-input").last().remove();
-            $(".rearrangement-button").last().remove();
-
-            $(".left-rearrangement-input").last().addClass("bg-success");
-            $(".right-rearrangement-input").last().addClass("bg-success");
-            $(".equals-sign-input").last().addClass("bg-success");
-            $(".left-rearrangement-input").last().addClass("text-white");
-            $(".right-rearrangement-input").last().addClass("text-white");
-            $(".equals-sign-input").last().addClass("text-white");
-
-            $.getScript("../scripts/templates.js", function() {
-              $("#alert-div").append(
-                AlertTemplate({
-                  text: "Die Gleichung wurde erfolgreich umgeformt",
-                  alertType: "success"
-                })
-              );
-            });
-          }
-        });
+        }
       } else {
         $(".rearrangement-step-input").last().addClass("is-invalid");
 
-        $.getScript("../scripts/templates.js", function() {
-          $("#alert-div").append(
-            AlertTemplate({
-              text: rearrangementStepEvaluation,
-              alertType: "danger"
-            })
-          );
-        });
+        $("#alert-div").append(
+          AlertTemplate({
+            text: rearrangementStepEvaluation,
+            alertType: "danger"
+          })
+        );
       }
     });
 
@@ -189,9 +177,7 @@ $(document).ready(function () {
     $("#variable-input").val("");
     $("#left-equation-input").focus();
 
-    $.getScript("../scripts/templates.js", function() {
-      $("#restart-button").replaceWith(StartButtonTemplate);
-    });
+    $("#restart-button").replaceWith(StartButtonTemplate);
 
     event.preventDefault();
   });

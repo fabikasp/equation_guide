@@ -11,8 +11,6 @@ function mathstepsTestFunction() {
   });
 }
 
-window.mathstepsTestFunction = mathstepsTestFunction;
-
 function simplifyExpression(expression) {
   try {
     return nerdamer("simplify(" + expression + ")");
@@ -177,3 +175,10 @@ function performRearrangementStep(
     "(" + expression + ")" + arithmeticOperation + rearrangementStep
   );
 }
+
+window.mathstepsTestFunction = mathstepsTestFunction;
+window.simplifyExpression = simplifyExpression;
+window.isFinalEquation = isFinalEquation;
+window.evaluateStartEquations = evaluateStartEquations;
+window.evaluateRearrangementStep = evaluateRearrangementStep;
+window.performRearrangementStep = performRearrangementStep;
