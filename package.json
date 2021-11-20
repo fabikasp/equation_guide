@@ -1,6 +1,26 @@
 {
   "dependencies": {
+    "browserify": "^17.0.0",
+    "concurrently": "^6.4.0",
+    "http-server": "^14.0.0",
     "mathjs": "^10.0.0",
-    "mathsteps": "^0.2.0"
-  }
+    "mathsteps": "^0.2.0",
+    "watchify": "^4.0.0"
+  },
+  "name": "equationguide",
+  "description": "EquationGuide is a web application for supporting pupils solving equations.",
+  "version": "1.0.0",
+  "main": "src/scripts/functions.js",
+  "scripts": {
+    "buildSingle": "browserify src/scripts/functions.js > src/dist/bundle.js",
+    "build": "browserify src/scripts/event-handlers.js src/scripts/functions.js > src/dist/bundle.js",
+    "watch": "watchify src/scripts/functions.js -o src/dist/bundle.js -v -d",
+    "start": "concurrently \"npm run watch\" \"http-server\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@gitlab.imn.htwk-leipzig.de:2244/fkaspare/equationguide.git"
+  },
+  "author": "",
+  "license": "ISC"
 }
