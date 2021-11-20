@@ -1,4 +1,4 @@
-const mathsteps = require('mathsteps');
+const mathsteps = require("mathsteps");
 
 function mathstepsTestFunction() {
   const steps = mathsteps.solveEquation('3*x+14=4'); //x^2+4x+6=0

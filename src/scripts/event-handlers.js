@@ -11,72 +11,70 @@ $(document).ready(function () {
 
     $("#alert-div").empty();
 
-    $.getScript("../scripts/functions.js", function() {
-      leftEquationPart = simplifyExpression(leftEquationPart);
-      rightEquationPart = simplifyExpression(rightEquationPart);
+    leftEquationPart = window.simplifyExpression(leftEquationPart);
+    rightEquationPart = window.simplifyExpression(rightEquationPart);
 
-      var startEquationEvaluation = evaluateStartEquations(
-        leftEquationPart,
-        rightEquationPart,
-        variable
-      );
+    var startEquationEvaluation = window.evaluateStartEquations(
+      leftEquationPart,
+      rightEquationPart,
+      variable
+    );
 
-      if (startEquationEvaluation.errorMessages.length > 0) {
-        startEquationEvaluation.errorMessages.forEach((errorMessage, i) => {
-          $("#alert-div").append(
-            AlertTemplate({text: errorMessage, alertType: "danger"})
-          );
-        });
+    if (startEquationEvaluation.errorMessages.length > 0) {
+      startEquationEvaluation.errorMessages.forEach((errorMessage, i) => {
+        $("#alert-div").append(
+          AlertTemplate({text: errorMessage, alertType: "danger"})
+        );
+      });
+    }
+
+    if (!startEquationEvaluation.leftEquationValid) {
+      $("#left-equation-input").addClass("is-invalid");
+      $("#left-equation-input").focus();
+    } else {
+      $("#left-equation-input").removeClass("is-invalid");
+    }
+
+    if (!startEquationEvaluation.rightEquationValid) {
+      $("#right-equation-input").addClass("is-invalid");
+
+      if (startEquationEvaluation.leftEquationValid) {
+        $("#right-equation-input").focus();
       }
+    } else {
+      $("#right-equation-input").removeClass("is-invalid");
+    }
 
-      if (!startEquationEvaluation.leftEquationValid) {
-        $("#left-equation-input").addClass("is-invalid");
-        $("#left-equation-input").focus();
-      } else {
-        $("#left-equation-input").removeClass("is-invalid");
-      }
-
-      if (!startEquationEvaluation.rightEquationValid) {
-        $("#right-equation-input").addClass("is-invalid");
-
-        if (startEquationEvaluation.leftEquationValid) {
-          $("#right-equation-input").focus();
-        }
-      } else {
-        $("#right-equation-input").removeClass("is-invalid");
-      }
-
-      if (!startEquationEvaluation.variableValid) {
-        $("#variable-input").addClass("is-invalid");
-
-        if (
-          startEquationEvaluation.leftEquationValid
-          && startEquationEvaluation.rightEquationValid
-        ) {
-          $("#variable-input").focus();
-        }
-      } else {
-        $("#variable-input").removeClass("is-invalid");
-      }
+    if (!startEquationEvaluation.variableValid) {
+      $("#variable-input").addClass("is-invalid");
 
       if (
         startEquationEvaluation.leftEquationValid
         && startEquationEvaluation.rightEquationValid
-        && startEquationEvaluation.variableValid
       ) {
-        $("#alert-div").empty();
-        $(".equation-input").attr("readonly", true);
-
-        $("#equation-rearrangement-div").append(
-          RearrangementTemplate({
-            leftEquationPart: leftEquationPart,
-            rightEquationPart: rightEquationPart
-          })
-        );
-
-        $("#start-button").replaceWith(RestartButtonTemplate);
+        $("#variable-input").focus();
       }
-    });
+    } else {
+      $("#variable-input").removeClass("is-invalid");
+    }
+
+    if (
+      startEquationEvaluation.leftEquationValid
+      && startEquationEvaluation.rightEquationValid
+      && startEquationEvaluation.variableValid
+    ) {
+      $("#alert-div").empty();
+      $(".equation-input").attr("readonly", true);
+
+      $("#equation-rearrangement-div").append(
+        RearrangementTemplate({
+          leftEquationPart: leftEquationPart,
+          rightEquationPart: rightEquationPart
+        })
+      );
+
+      $("#start-button").replaceWith(RestartButtonTemplate);
+    }
 
     event.preventDefault();
   });
@@ -93,72 +91,74 @@ $(document).ready(function () {
 
     $("#alert-div").empty();
 
-    $.getScript("../scripts/functions.js", function() {
-      var rearrangementStepEvaluation = evaluateRearrangementStep(
+    var rearrangementStepEvaluation = window.evaluateRearrangementStep(
+      leftEquationPart,
+      rightEquationPart,
+      arithmeticOperation,
+      rearrangementStep
+    );
+
+    if (rearrangementStepEvaluation == "") {
+      $(".rearrangement-step-input").last().removeClass("is-invalid");
+
+      $(".arithmetic-operation-select").last().attr("readonly", true);
+      $(".rearrangement-step-input").last().attr("readonly", true);
+      $(".rearrangement-button").last().attr("disabled", true);
+
+      var newLeftEquationPart = window.performRearrangementStep(
         leftEquationPart,
+        arithmeticOperation,
+        rearrangementStep
+      );
+
+      var newRightEquationPart = window.performRearrangementStep(
         rightEquationPart,
         arithmeticOperation,
         rearrangementStep
       );
 
-      if (rearrangementStepEvaluation == "") {
-        $(".rearrangement-step-input").last().removeClass("is-invalid");
+      $("#equation-rearrangement-div").append(
+        RearrangementTemplate({
+          leftEquationPart: newLeftEquationPart,
+          rightEquationPart: newRightEquationPart
+        })
+      );
 
-        $(".arithmetic-operation-select").last().attr("readonly", true);
-        $(".rearrangement-step-input").last().attr("readonly", true);
-        $(".rearrangement-button").last().attr("disabled", true);
+      if (
+        window.isFinalEquation(
+          newLeftEquationPart,
+          newRightEquationPart,
+          variable
+        )
+      ) {
+        $(".arithmetic-operation-select").last().remove();
+        $(".rearrangement-step-input").last().remove();
+        $(".rearrangement-button").last().remove();
 
-        var newLeftEquationPart = performRearrangementStep(
-          leftEquationPart,
-          arithmeticOperation,
-          rearrangementStep
-        );
-
-        var newRightEquationPart = performRearrangementStep(
-          rightEquationPart,
-          arithmeticOperation,
-          rearrangementStep
-        );
-
-        $("#equation-rearrangement-div").append(
-          RearrangementTemplate({
-            leftEquationPart: newLeftEquationPart,
-            rightEquationPart: newRightEquationPart
-          })
-        );
-
-        if (
-          isFinalEquation(newLeftEquationPart, newRightEquationPart, variable)
-        ) {
-          $(".arithmetic-operation-select").last().remove();
-          $(".rearrangement-step-input").last().remove();
-          $(".rearrangement-button").last().remove();
-
-          $(".left-rearrangement-input").last().addClass("bg-success");
-          $(".right-rearrangement-input").last().addClass("bg-success");
-          $(".equals-sign-input").last().addClass("bg-success");
-          $(".left-rearrangement-input").last().addClass("text-white");
-          $(".right-rearrangement-input").last().addClass("text-white");
-          $(".equals-sign-input").last().addClass("text-white");
-
-          $("#alert-div").append(
-            AlertTemplate({
-              text: "Die Gleichung wurde erfolgreich umgeformt",
-              alertType: "success"
-            })
-          );
-        }
-      } else {
-        $(".rearrangement-step-input").last().addClass("is-invalid");
+        $(".left-rearrangement-input").last().addClass("bg-success");
+        $(".right-rearrangement-input").last().addClass("bg-success");
+        $(".equals-sign-input").last().addClass("bg-success");
+        $(".left-rearrangement-input").last().addClass("text-white");
+        $(".right-rearrangement-input").last().addClass("text-white");
+        $(".equals-sign-input").last().addClass("text-white");
 
         $("#alert-div").append(
           AlertTemplate({
-            text: rearrangementStepEvaluation,
-            alertType: "danger"
+            text: "Die Gleichung wurde erfolgreich umgeformt",
+            alertType: "success"
           })
         );
       }
-    });
+    } else {
+      $(".rearrangement-step-input").last().addClass("is-invalid");
+
+      $("#alert-div").append(
+        AlertTemplate({
+          text: rearrangementStepEvaluation,
+          alertType: "danger"
+        })
+      );
+    }
 
     event.preventDefault();
   });
