@@ -13,7 +13,7 @@ function mathstepsTestFunction() {
 
 function simplifyExpression(expression) {
   try {
-    return nerdamer("simplify(" + expression + ")");
+    return nerdamer("simplify(" + expression + ")").toString();
   } catch (e) {
     return expression;
   }
@@ -23,14 +23,14 @@ function getEquationResult(leftEquationPart, rightEquationPart, variable) {
   return nerdamer.solveEquations(
     leftEquationPart + "=" + rightEquationPart,
     variable
-  );
+  ).toString();
 }
 
 function isFinalEquation(leftEquationPart, rightEquationPart, variable) {
   try {
     if (
-      leftEquationPart == variable && !rightEquationPart.contains(variable)
-      || rightEquationPart == variable && !leftEquationPart.contains(variable)
+      leftEquationPart == variable && !rightEquationPart.includes(variable)
+      || rightEquationPart == variable && !leftEquationPart.includes(variable)
     ) {
       return true;
     }
@@ -64,6 +64,22 @@ function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
       );
     }
 
+    if (
+      leftEquationPart.includes("^")
+      || leftEquationPart.includes("√")
+      || leftEquationPart.includes("sqrt")
+      || rightEquationPart.includes("^")
+      || rightEquationPart.includes("√")
+      || rightEquationPart.includes("sqrt")
+    ) {
+      result.leftEquationValid = false;
+      result.rightEquationValid = false;
+      result.variableValid = false;
+      result.errorMessages.push(
+        "Die Gleichung darf keine Potenzen oder Wurzeln enthalten"
+      );
+    }
+
     if (variable == "") {
       result.variableValid = false;
       result.errorMessages.push(
@@ -79,10 +95,10 @@ function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
       result.errorMessages.push(
         "Die Zielvariable muss ein Klein- oder Großbuchstabe sein"
       );
-    } else if (!(
-      leftEquationPart.contains(variable)
-      || rightEquationPart.contains(variable)
-    )) {
+    } else if (
+      !leftEquationPart.includes(variable)
+      && !rightEquationPart.includes(variable)
+    ) {
       result.variableValid = false;
       result.errorMessages.push(
         "Die Zielvariable muss in der Gleichung vorkommen"
