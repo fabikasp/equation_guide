@@ -64,22 +64,6 @@ function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
       );
     }
 
-    if (
-      leftEquationPart.includes("^")
-      || leftEquationPart.includes("√")
-      || leftEquationPart.includes("sqrt")
-      || rightEquationPart.includes("^")
-      || rightEquationPart.includes("√")
-      || rightEquationPart.includes("sqrt")
-    ) {
-      result.leftEquationValid = false;
-      result.rightEquationValid = false;
-      result.variableValid = false;
-      result.errorMessages.push(
-        "Die Gleichung darf keine Potenzen oder Wurzeln enthalten"
-      );
-    }
-
     if (variable == "") {
       result.variableValid = false;
       result.errorMessages.push(
