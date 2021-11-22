@@ -1,4 +1,4 @@
-const mathsteps = require('mathsteps');
+const mathsteps = require("mathsteps");
 
 function mathstepsTestFunction() {
   const steps = mathsteps.solveEquation('3*x+14=4'); //x^2+4x+6=0
@@ -11,13 +11,9 @@ function mathstepsTestFunction() {
   });
 }
 
-window.mathstepsTestFunction = mathstepsTestFunction
-
-function startEquationIsValid() {
-  // Validierung
 function simplifyExpression(expression) {
   try {
-    return nerdamer("simplify(" + expression + ")");
+    return nerdamer("simplify(" + expression + ")").toString();
   } catch (e) {
     return expression;
   }
@@ -27,15 +23,15 @@ function getEquationResult(leftEquationPart, rightEquationPart, variable) {
   return nerdamer.solveEquations(
     leftEquationPart + "=" + rightEquationPart,
     variable
-  );
+  ).toString();
 }
 
 function isFinalEquation(leftEquationPart, rightEquationPart, variable) {
   try {
-    // TODO: Ergebnis mit dem von Nerdamer vergleichen
-    // Problem: Manchmal formt Nerdamer / math.js das Ergebnis anders um als der Nutzer
-
-    if (leftEquationPart == variable || rightEquationPart == variable) {
+    if (
+      leftEquationPart == variable && !rightEquationPart.includes(variable)
+      || rightEquationPart == variable && !leftEquationPart.includes(variable)
+    ) {
       return true;
     }
   } catch (e) {
@@ -46,63 +42,85 @@ function isFinalEquation(leftEquationPart, rightEquationPart, variable) {
 }
 
 function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
-  let result = {
+  var result = {
   	"leftEquationValid": true,
   	"rightEquationValid": true,
     "variableValid": true,
   	"errorMessages": []
   }
 
-  if (leftEquationPart == "") {
+  try {
+    if (leftEquationPart == "") {
+      result.leftEquationValid = false;
+      result.errorMessages.push(
+        "Der linke Teil der Gleichung darf nicht leer sein"
+      );
+    }
+
+    if (rightEquationPart == "") {
+      result.rightEquationValid = false;
+      result.errorMessages.push(
+        "Der rechte Teil der Gleichung darf nicht leer sein"
+      );
+    }
+
+    if (variable == "") {
+      result.variableValid = false;
+      result.errorMessages.push(
+        "Die Zielvariable darf nicht leer sein"
+      );
+    } else if (variable.length != 1) {
+      result.variableValid = false;
+      result.errorMessages.push(
+        "Die Zielvariable darf nur ein Zeichen enthalten"
+      );
+    } else if (!variable.match("[a-zA-Z]")) {
+      result.variableValid = false;
+      result.errorMessages.push(
+        "Die Zielvariable muss ein Klein- oder Großbuchstabe sein"
+      );
+    } else if (
+      !leftEquationPart.includes(variable)
+      && !rightEquationPart.includes(variable)
+    ) {
+      result.variableValid = false;
+      result.errorMessages.push(
+        "Die Zielvariable muss in der Gleichung vorkommen"
+      );
+    }
+  } catch (e) {
     result.leftEquationValid = false;
-    result.errorMessages.push(
-      "Der linke Teil der Gleichung darf nicht leer sein"
-    );
-  }
-
-  if (rightEquationPart == "") {
     result.rightEquationValid = false;
-    result.errorMessages.push(
-      "Der rechte Teil der Gleichung darf nicht leer sein"
-    );
-  }
-
-  if (variable == "") {
     result.variableValid = false;
-    result.errorMessages.push(
-      "Die Variable, nach der umgeformt werden soll, darf nicht leer sein"
-    );
+    result.errorMessages.push("Die Gleichung wird nicht unterstützt");
   }
 
-  if (leftEquationPart != "" && rightEquationPart != "" && variable != "") {
+  if (result.errorMessages.length == 0) {
     try {
-      if (leftEquationPart == rightEquationPart) {
-        throw new Error("Die Gleichung ist nicht umformbar");
-      }
-
       equationResult = getEquationResult(
         leftEquationPart,
         rightEquationPart,
         variable
       );
 
-      if (isFinalEquation(leftEquationPart, rightEquationPart, variable)) {
-        throw new Error("Die Gleichung ist bereits gelöst");
-      }
-
       if (equationResult == "") {
-        throw new Error("Die Gleichung wird nicht unterstützt");
+        throw new Error();
       }
     } catch (e) {
-      if (e.name == "NerdamerValueError") {
-        result.errorMessages.push("Die Gleichung wird nicht unterstützt");
-      } else {
-        result.errorMessages.push(e.message);
-      }
-
       result.leftEquationValid = false;
       result.rightEquationValid = false;
       result.variableValid = false;
+      result.errorMessages.push("Die Gleichung wird nicht unterstützt");
+    }
+
+    if (
+      isFinalEquation(leftEquationPart, rightEquationPart, variable)
+      || leftEquationPart.toString() == rightEquationPart.toString()
+    ) {
+      result.leftEquationValid = false;
+      result.rightEquationValid = false;
+      result.variableValid = false;
+      result.errorMessages.push("Die Gleichung ist bereits gelöst");
     }
   }
 
@@ -155,3 +173,10 @@ function performRearrangementStep(
     "(" + expression + ")" + arithmeticOperation + rearrangementStep
   );
 }
+
+window.mathstepsTestFunction = mathstepsTestFunction;
+window.simplifyExpression = simplifyExpression;
+window.isFinalEquation = isFinalEquation;
+window.evaluateStartEquations = evaluateStartEquations;
+window.evaluateRearrangementStep = evaluateRearrangementStep;
+window.performRearrangementStep = performRearrangementStep;
