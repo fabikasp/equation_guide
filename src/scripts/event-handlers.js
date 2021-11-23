@@ -75,7 +75,13 @@ $(document).ready(function () {
         })
       );
 
+      $('[data-toggle="tooltip"]').tooltip("hide");
+
       $("#start-button").replaceWith(RestartButtonTemplate);
+
+      if ($("#help-button").text().trim() == "Hilfe ausschalten") {
+        $('[data-toggle="tooltip"]').tooltip("enable");
+      }
     }
 
     event.preventDefault();
@@ -120,12 +126,18 @@ $(document).ready(function () {
         rearrangementStep
       );
 
+      $('[data-toggle="tooltip"]').tooltip("hide");
+
       $("#equation-rearrangement-div").append(
         RearrangementTemplate({
           leftEquationPart: newLeftEquationPart,
           rightEquationPart: newRightEquationPart
         })
       );
+
+      if ($("#help-button").text().trim() == "Hilfe ausschalten") {
+        $('[data-toggle="tooltip"]').tooltip("enable");
+      }
 
       if (
         window.isFinalEquation(
@@ -179,7 +191,13 @@ $(document).ready(function () {
     $("#variable-input").val("");
     $("#left-equation-input").focus();
 
+    $('[data-toggle="tooltip"]').tooltip("hide");
+
     $("#restart-button").replaceWith(StartButtonTemplate);
+
+    if ($("#help-button").text().trim() == "Hilfe ausschalten") {
+      $('[data-toggle="tooltip"]').tooltip("enable");
+    }
 
     event.preventDefault();
   });
@@ -187,6 +205,7 @@ $(document).ready(function () {
   $(document).on("click", "#help-button", function(event) {
     if ($("#help-button").text().trim() == "Hilfe ausschalten") {
       $("#help-button").text("Hilfe einschalten");
+      $('[data-toggle="tooltip"]').tooltip("hide");
       $('[data-toggle="tooltip"]').tooltip("disable");
     } else {
       $("#help-button").text("Hilfe ausschalten");

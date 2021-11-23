@@ -52,6 +52,12 @@ RearrangementTemplate = ({ leftEquationPart, rightEquationPart }) => `
           ml-2
           arithmetic-operation-select
         "
+        data-toggle="tooltip"
+        data-placement="top"
+        title="
+          Legt die Rechenoperation fest, die auf
+          die Gleichung angewendet werden soll.
+        "
       >
         <option value="add" selected="selected">+</option>
         <option value="sub">-</option>
@@ -70,12 +76,21 @@ RearrangementTemplate = ({ leftEquationPart, rightEquationPart }) => `
         "
         type="text"
         placeholder="Umformungsschritt"
+        data-toggle="tooltip"
+        data-placement="top"
+        title="
+          Legt fest, mit welchem Term die angegebene Gleichung
+          umgeformt werden soll.
+        "
         required
       />
 
       <!-- rearrangement button -->
       <button
         class="btn btn-success equation-guide-button rearrangement-button ml-2"
+        data-toggle="tooltip"
+        data-placement="top"
+        title="Wendet den angegebenen Umformungsschritt auf die Gleichung an."
       >
         Umformen
       </button>
@@ -89,10 +104,7 @@ StartButtonTemplate = `
     class="btn btn-primary equation-guide-button"
     data-toggle="tooltip"
     data-placement="bottom"
-    title="
-      Nach erfolgreicher Überprüfung der eingegebenen
-      Gleichung wird der Lösungsprozess gestartet
-    "
+    title="Prüft die eingegebene Gleichung und startet den Lösungsprozess."
   >
     Start
   </button>
@@ -106,7 +118,7 @@ RestartButtonTemplate = `
     data-placement="bottom"
     title="
       Bricht den aktuellen Lösungsprozess ab und
-      stellt den Ausgangszustand wiederher
+      stellt den Ausgangszustand wiederher.
     "
   >
     Neustart

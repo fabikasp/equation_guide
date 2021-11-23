@@ -9,8 +9,10 @@
 		<link href="./src/stylesheets/lib/bootstrap.min.css" rel="stylesheet">
 		<link href="./src/stylesheets/index-styles.css" rel="stylesheet">
 		<script src="./src/scripts/lib/jquery.min.js"></script>
-  	<script src="./src/scripts/lib/bootstrap.min.js"></script>
 		<script src="./src/scripts/lib/popper.min.js"></script>
+  	<script src="./src/scripts/lib/bootstrap.min.js"></script>
+		<script src="./src/scripts/templates.js"></script>
+		<script src="./src/scripts/event-handlers.js"></script>
 
 		<title>EquationGuide</title>
 	</head>
@@ -24,12 +26,24 @@
 						<a
 							class="btn btn-primary btn-lg feature-button mb-2"
 							href="./src/view/equation-guide.html"
+							data-toggle="tooltip"
+							data-placement="top"
+							title="
+								Nach der Eingabe einer Gleichung wird diese selbstständig
+								Schritt für Schritt nach einer Zielvariable umgeformt.
+								Pro Umformungsschritt wird Feedback zurückgegeben.
+							"
 						>
 							<span class="button-span">Gleichung lösen</span>
 						</a>
 						<a
 							class="btn btn-primary btn-lg feature-button mt-2"
 							href="#"
+							data-toggle="tooltip"
+							data-placement="bottom"
+							title="
+								Ausstehend
+							"
 						>
 							<span class="button-span">Gleichungssystem lösen</span>
 						</a>
