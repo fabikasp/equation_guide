@@ -87,6 +87,12 @@ StartButtonTemplate = `
   <button
     id="start-button"
     class="btn btn-primary equation-guide-button"
+    data-toggle="tooltip"
+    data-placement="bottom"
+    title="
+      Nach erfolgreicher Überprüfung der eingegebenen
+      Gleichung wird der Lösungsprozess gestartet
+    "
   >
     Start
   </button>
@@ -96,6 +102,12 @@ RestartButtonTemplate = `
   <button
     id="restart-button"
     class="btn btn-primary equation-guide-button"
+    data-toggle="tooltip"
+    data-placement="bottom"
+    title="
+      Bricht den aktuellen Lösungsprozess ab und
+      stellt den Ausgangszustand wiederher
+    "
   >
     Neustart
   </button>

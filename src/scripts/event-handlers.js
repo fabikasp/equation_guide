@@ -3,6 +3,8 @@ $(document).ready(function () {
     $(StartButtonTemplate).insertAfter($("#back-button"));
   });
 
+  $('[data-toggle="tooltip"]').tooltip("enable");
+
   $("#left-equation-input").focus();
 
   /* start button functionality */
@@ -79,6 +81,10 @@ $(document).ready(function () {
           );
 
           $("#start-button").replaceWith(RestartButtonTemplate);
+
+          if ($("#help-button").text().trim() == "Hilfe ausschalten") {
+            $('[data-toggle="tooltip"]').tooltip("enable");
+          }
         });
 
         $(".equation-input").attr("readonly", true);
@@ -197,7 +203,14 @@ $(document).ready(function () {
   });
 
   $(document).on("click", "#help-button", function(event) {
-    window.mathstepsTestFunction();
+    if ($("#help-button").text().trim() == "Hilfe ausschalten") {
+      $("#help-button").text("Hilfe einschalten");
+      $('[data-toggle="tooltip"]').tooltip("disable");
+    } else {
+      $("#help-button").text("Hilfe ausschalten");
+      $('[data-toggle="tooltip"]').tooltip("enable");
+    }
+
     event.preventDefault();
   });
 });
