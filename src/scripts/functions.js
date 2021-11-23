@@ -12,6 +12,8 @@ function mathstepsTestFunction() {
 }
 
 function simplifyExpression(expression) {
+  expression = expression.replace(",", ".");
+
   try {
     return nerdamer("simplify(" + expression + ")").toString();
   } catch (e) {
@@ -20,6 +22,9 @@ function simplifyExpression(expression) {
 }
 
 function getEquationResult(leftEquationPart, rightEquationPart, variable) {
+  leftEquationPart = leftEquationPart.replace(",", ".");
+  rightEquationPart = rightEquationPart.replace(",", ".");
+
   return nerdamer.solveEquations(
     leftEquationPart + "=" + rightEquationPart,
     variable
@@ -125,7 +130,7 @@ function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
 
     if (
       isFinalEquation(leftEquationPart, rightEquationPart, variable)
-      || leftEquationPart.toString() == rightEquationPart.toString()
+      || leftEquationPart == rightEquationPart
     ) {
       result.leftEquationValid = false;
       result.rightEquationValid = false;
