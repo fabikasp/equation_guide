@@ -152,6 +152,10 @@ function evaluateRearrangementStep(
     return "Der Umformungsschritt darf nicht leer sein";
   } else if (rearrangementStep.includes("=")) {
     return "Der Umformungsschritt darf kein Gleichheitszeichen enthalten";
+  } else if (rearrangementStep == "0" && arithmeticOperation == "*") {
+    return "Die Multiplikation mit 0 wird nicht unterstützt";
+  } else if (rearrangementStep == "0" && arithmeticOperation == "/") {
+    return "Die Division durch 0 wird nicht unterstützt";
   }
 
   try {
