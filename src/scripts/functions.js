@@ -208,29 +208,34 @@ function generateRearrangementStepsArray(leftEquationPart, rightEquationPart, va
 
 function generateFeedbackMessage(arithmeticOperation, rearrangementStep) {
   let feedbackMessage = "";
+  let arrayElement;
+
   switch (arithmeticOperation) {
     case "+":
-      if (rearrangementSteps.filter(e => e.type === 'add').length > 0) {
-        feedbackMessage = "good step (+)";
-      }
+      arrayElement = rearrangementSteps.find(e => e.type === 'add');
       break;
     case "-":
-      if (rearrangementSteps.filter(e => e.type === 'subtract').length > 0) {
-        feedbackMessage = "good step (-)";
-      }
+      arrayElement = rearrangementSteps.find(e => e.type === 'subtract');
       break;
     case "*":
-      if (rearrangementSteps.filter(e => e.type === 'multiply').length > 0) {
-        feedbackMessage = "good step (+*)";
-      }
+      arrayElement = rearrangementSteps.find(e => e.type === 'multiply');
       break;
     case "/":
-      if (rearrangementSteps.filter(e => e.type === 'divide').length > 0) {
-        feedbackMessage = "good step (/)";
-      }
+      arrayElement = rearrangementSteps.find(e => e.type === 'divide');
       break;
   }
 
+  if (arrayElement === undefined) {
+    feedbackMessage = "wrong step";
+  } else {
+    if (rearrangementStep === arrayElement.value) {
+      feedbackMessage = "perfect step";
+    } else {
+      feedbackMessage = "good step";
+    }
+  }
+
+  console.log(arrayElement);
   console.log(feedbackMessage);
 }
 
