@@ -209,34 +209,21 @@ function generateRearrangementStepsArray(leftEquationPart, rightEquationPart, va
 function generateFeedbackMessage(arithmeticOperation, rearrangementStep) {
   let feedbackMessage = "";
   let arrayElement;
+  const arithmeticOperatorToString = new Map([['+', 'add'], ['-', 'subtract'], ['*', 'multiply'], ['/', 'divide']]);
 
-  switch (arithmeticOperation) {
-    case "+":
-      arrayElement = rearrangementSteps.find(e => e.type === 'add');
-      break;
-    case "-":
-      arrayElement = rearrangementSteps.find(e => e.type === 'subtract');
-      break;
-    case "*":
-      arrayElement = rearrangementSteps.find(e => e.type === 'multiply');
-      break;
-    case "/":
-      arrayElement = rearrangementSteps.find(e => e.type === 'divide');
-      break;
-  }
+  arrayElement = rearrangementSteps.find(e => e.type === arithmeticOperatorToString.get(arithmeticOperation));
 
   if (arrayElement === undefined) {
-    feedbackMessage = "wrong step";
+    feedbackMessage = {message: "Das war leider nicht der richtige Umformungsschritt. Du kannst es nochmal versuchen oder einfach weitermachen!", type: "danger"}
   } else {
     if (rearrangementStep === arrayElement.value) {
-      feedbackMessage = "perfect step";
+      feedbackMessage = {message: "Perfect! Du hast einen der perfekten Umformungsschritte gefunden.", type: "success"}
     } else {
-      feedbackMessage = "good step";
+      feedbackMessage = {message: "Gut! Das war der richtige Weg, aber vielleicht versuch es mit einem anderen Wert.", type: "warning"}
     }
   }
 
-  console.log(arrayElement);
-  console.log(feedbackMessage);
+  return feedbackMessage;
 }
 
 window.generateFeedbackMessage = generateFeedbackMessage;
