@@ -200,4 +200,24 @@ $(document).ready(function () {
     window.mathstepsTestFunction();
     event.preventDefault();
   });
+
+  $(document).on("click", "#reset-button", function (event) {
+    if (window.getLastOperationsLength() === 0) {
+      $("#alert-div").empty();
+      $("#alert-div").append(
+        AlertTemplate({
+          text: "Es kann noch nichts rückgängig gemacht werden.",
+          alertType: "danger"
+        })
+      );
+    } else {
+      let parentElement = $("#equation-rearrangement-div")[0];
+      parentElement.lastElementChild.remove();
+      $(".arithmetic-operation-select").last().attr("readonly", false);
+      $(".rearrangement-step-input").last().attr("readonly", false);
+      $(".rearrangement-button").last().attr("disabled", false);
+      //window.resetLastOperation();
+    }
+    event.preventDefault();
+  });
 });

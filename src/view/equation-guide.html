@@ -1,109 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<link rel="icon" type="image/png" href="../img/favicon.png"/>
+    <link rel="icon" type="image/png" href="../img/favicon.png"/>
 
-		<link href="../stylesheets/lib/bootstrap.min.css" rel="stylesheet">
-		<link href="../stylesheets/equation-guide-styles.css" rel="stylesheet">
+    <link href="../stylesheets/lib/bootstrap.min.css" rel="stylesheet">
+    <link href="../stylesheets/equation-guide-styles.css" rel="stylesheet">
 
-		<script src="../scripts/lib/jquery.min.js"></script>
-  	<script src="../scripts/lib/bootstrap.min.js"></script>
-		<script src="../scripts/lib/popper.min.js"></script>
-		<script src="../scripts/lib/nerdamer.js"></script>
-		<script src="../scripts/templates.js"></script>
-		<script src="../scripts/event-handlers.js"></script>
-		<script src="../dist/bundle.js"></script>
+    <script src="../scripts/lib/jquery.min.js"></script>
+    <script src="../scripts/lib/bootstrap.min.js"></script>
+    <script src="../scripts/lib/popper.min.js"></script>
+    <script src="../scripts/lib/nerdamer.js"></script>
+    <script src="../scripts/templates.js"></script>
+    <script src="../scripts/event-handlers.js"></script>
+    <script src="../dist/bundle.js"></script>
 
-		<title>EquationGuide</title>
-	</head>
-	<body>
-		<div class="d-flex align-items-center min-vh-100">
-  		<div class="container text-center min-vw-100">
-    		<div class="row form-group justify-content-center">
-					<!-- inputs for defining the equation -->
-					<input
-						id="left-equation-input"
-						class="
+    <title>EquationGuide</title>
+</head>
+<body>
+<div class="d-flex align-items-center min-vh-100">
+    <div class="container text-center min-vw-100">
+        <div class="row form-group justify-content-center">
+            <!-- inputs for defining the equation -->
+            <input
+                    id="left-equation-input"
+                    class="
 							form-control
 							equation-input
 							w-25
 							mr-2
 							text-center
 						"
-						type="text"
-						placeholder="Linke Seite der Gleichung"
-						required
-					/>
+                    type="text"
+                    placeholder="Linke Seite der Gleichung"
+                    required
+            />
 
-					<input
-						class="
+            <input
+                    class="
 							form-control
 							equation-input
 							text-center
 							font-weight-bold
 							equals-sign-input
 						"
-						type="text"
-						value="="
-						readonly
-					/>
+                    type="text"
+                    value="="
+                    readonly
+            />
 
-					<input
-						id="right-equation-input"
-						class="
+            <input
+                    id="right-equation-input"
+                    class="
 							form-control
 							equation-input
 							w-25
 							ml-2
 							text-center
 						"
-						type="text"
-						placeholder="Rechte Seite der Gleichung"
-						required
-					/>
+                    type="text"
+                    placeholder="Rechte Seite der Gleichung"
+                    required
+            />
 
-					<input
-						id="variable-input"
-						class="
+            <input
+                    id="variable-input"
+                    class="
 							form-control
 							equation-input
 							ml-2
 							text-center
 						"
-						type="text"
-						placeholder="Zielvariable"
-						required
-					/>
-				</div>
+                    type="text"
+                    placeholder="Zielvariable"
+                    required
+            />
+        </div>
 
-				<!-- section for rearranging the equation -->
-				<div id="equation-rearrangement-div" class="mt-4"></div>
+        <!-- section for rearranging the equation -->
+        <div id="equation-rearrangement-div" class="mt-4"></div>
 
-				<!-- error alert section -->
-				<div id="alert-div" class="col"></div>
+        <!-- error alert section -->
+        <div id="alert-div" class="col"></div>
 
-				<!-- button section -->
-				<div class="row justify-content-center">
-					<a
-						id="back-button"
-						class="btn btn-secondary equation-guide-button mr-4"
-						href="../../index.html"
-					>
-						Zurück
-					</a>
+        <!-- button section -->
+        <div class="row justify-content-center">
+            <a
+                    id="back-button"
+                    class="btn btn-secondary equation-guide-button mr-4"
+                    href="../../index.html"
+            >
+                Zurück
+            </a>
 
-					<a
-						id="help-button"
-						class="btn btn-warning equation-guide-button ml-4"
-						href="#"
-					>
-						Hilfe
-					</a>
-				</div>
-  		</div>
-		</div>
-	</body>
+			<a
+					id="reset-button"
+					class="btn btn-dark equation-guide-button ml-4"
+					href="#"
+			>
+				Zurücksetzen
+			</a>
+
+            <a
+                    id="help-button"
+                    class="btn btn-warning equation-guide-button ml-4"
+                    href="#"
+            >
+                Hilfe
+            </a>
+        </div>
+    </div>
+</div>
+</body>
 </html>

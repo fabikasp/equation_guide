@@ -1,5 +1,6 @@
 const mathsteps = require("mathsteps");
-let rearrangementSteps = []
+let rearrangementSteps = [];
+let lastOperations = [];
 
 function mathstepsTestFunction() {
   console.log(rearrangementSteps);
@@ -164,6 +165,7 @@ function evaluateRearrangementStep(
     return "Der Umformungsschritt wird nicht unterstützt";
   }
 
+  lastOperations.push({type: arithmeticOperation, value: rearrangementStep});
   return "";
 }
 
@@ -240,7 +242,7 @@ function generateFeedbackMessage(arithmeticOperation, rearrangementStep) {
 }
 
 function editRearrangementStepsArray(arithmeticOperator, rearrangementStep) {
-  console.log(rearrangementSteps);
+  //console.log(rearrangementSteps);
   rearrangementSteps = rearrangementSteps.filter(e => {
     if (e.type !== arithmeticOperator || e.value - rearrangementStep !== 0) {
       return e;
@@ -289,9 +291,19 @@ function editRearrangementStepsArray(arithmeticOperator, rearrangementStep) {
       });
       break;
   }
-  console.log(rearrangementSteps);
+  //console.log(rearrangementSteps);
 }
 
+function resetLastOperation() {
+  console.log(lastOperations);
+}
+
+function getLastOperationsLength() {
+  return lastOperations.length;
+}
+
+window.getLastOperationsLength = getLastOperationsLength;
+window.resetLastOperation = resetLastOperation;
 window.generateFeedbackMessage = generateFeedbackMessage;
 window.generateRearrangementStepsArray = generateRearrangementStepsArray;
 window.mathstepsTestFunction = mathstepsTestFunction;
