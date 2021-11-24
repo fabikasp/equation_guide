@@ -2,14 +2,16 @@ const mathsteps = require("mathsteps");
 let rearrangementSteps = []
 
 function mathstepsTestFunction() {
-  const steps = mathsteps.solveEquation('3*x+14=4'); //x^2+4x+6=0
+  console.log(rearrangementSteps);
+
+  /*const steps = mathsteps.solveEquation('3*x+14=4'); //x^2+4x+6=0
 
   steps.forEach(step => {
     console.log("before change: " + step.oldEquation.ascii());  // e.g. before change: 2x + 3x = 35
     console.log("change: " + step.changeType);                  // e.g. change: SIMPLIFY_LEFT_SIDE
     console.log("after change: " + step.newEquation.ascii());   // e.g. after change: 5x = 35
     console.log("# of substeps: " + step.substeps.length);      // e.g. # of substeps: 2
-  });
+  });*/
 }
 
 function simplifyExpression(expression) {
@@ -202,8 +204,6 @@ function generateRearrangementStepsArray(leftEquationPart, rightEquationPart, va
         break;
     }
   });
-
-  console.log(rearrangementSteps);
 }
 
 function generateFeedbackMessage(arithmeticOperation, rearrangementStep) {
@@ -214,16 +214,82 @@ function generateFeedbackMessage(arithmeticOperation, rearrangementStep) {
   arrayElement = rearrangementSteps.find(e => e.type === arithmeticOperatorToString.get(arithmeticOperation));
 
   if (arrayElement === undefined) {
-    feedbackMessage = {message: "Das war leider nicht der richtige Umformungsschritt. Du kannst es nochmal versuchen oder einfach weitermachen!", type: "danger"}
+    feedbackMessage = {
+      message: "Das war leider nicht der richtige Umformungsschritt. Du kannst es nochmal versuchen oder einfach weitermachen!",
+      type: "danger"
+    }
   } else {
-    if (rearrangementStep === arrayElement.value) {
-      feedbackMessage = {message: "Perfect! Du hast einen der perfekten Umformungsschritte gefunden.", type: "success"}
+    if (Number(rearrangementStep) === Number(arrayElement.value)) {
+      if (rearrangementSteps.length === 1) {
+        feedbackMessage = {message: "Gleichung gelößt.", type: "done"}
+      } else {
+        feedbackMessage = {
+          message: "Perfect! Du hast einen der perfekten Umformungsschritte gefunden.",
+          type: "success"
+        }
+      }
     } else {
-      feedbackMessage = {message: "Gut! Das war der richtige Weg, aber vielleicht versuch es mit einem anderen Wert.", type: "warning"}
+      feedbackMessage = {
+        message: "Gut! Das war der richtige Weg, aber vielleicht versuch es mit einem anderen Wert.",
+        type: "warning"
+      }
     }
   }
-
+  editRearrangementStepsArray(arithmeticOperatorToString.get(arithmeticOperation), rearrangementStep);
   return feedbackMessage;
+}
+
+function editRearrangementStepsArray(arithmeticOperator, rearrangementStep) {
+  console.log(rearrangementSteps);
+  rearrangementSteps = rearrangementSteps.filter(e => {
+    if (e.type !== arithmeticOperator || e.value - rearrangementStep !== 0) {
+      return e;
+    }
+  });
+
+  switch (arithmeticOperator) {
+    case "add":
+      rearrangementSteps.map(e => {
+        if (e.type === "add") {
+          e.value = Number(e.value) - Number(rearrangementStep);
+        }
+        if (e.type === "subtract") {
+          e.value = Number(e.value) + Number(rearrangementStep);
+        }
+      });
+      break;
+    case "subtract":
+      rearrangementSteps.map(e => {
+        if (e.type === "subtract") {
+          e.value = Number(e.value) - Number(rearrangementStep);
+        }
+        if (e.type === "add") {
+          e.value = Number(e.value) + Number(rearrangementStep);
+        }
+      });
+      break;
+    case "multiply":
+      rearrangementSteps.map(e => {
+        if (e.type === "multiply") {
+          e.value = Number(e.value) - Number(rearrangementStep);
+        }
+        if (e.type === "divide") {
+          e.value = Number(e.value) + Number(rearrangementStep);
+        }
+      });
+      break;
+    case "divide":
+      rearrangementSteps.map(e => {
+        if (e.type === "divide") {
+          e.value = Number(e.value) - Number(rearrangementStep);
+        }
+        if (e.type === "multiply") {
+          e.value = Number(e.value) + Number(rearrangementStep);
+        }
+      });
+      break;
+  }
+  console.log(rearrangementSteps);
 }
 
 window.generateFeedbackMessage = generateFeedbackMessage;

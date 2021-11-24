@@ -103,14 +103,16 @@ $(document).ready(function () {
     );
 
     if (rearrangementStepEvaluation === "") {
-      // Rearrangement step was evaluated successfully | generating feedback TODO: feedback for rearrangement step
+      // Rearrangement step was evaluated successfully | generating feedback
       const feedbackMessage = window.generateFeedbackMessage(arithmeticOperation, rearrangementStep);
-      $("#alert-div").append(
-        AlertTemplate({
-          text: feedbackMessage.message,
-          alertType: feedbackMessage.type
-        })
-      );
+      if (feedbackMessage.type !== 'done') {
+        $("#alert-div").append(
+          AlertTemplate({
+            text: feedbackMessage.message,
+            alertType: feedbackMessage.type
+          })
+        );
+      }
 
       $(".rearrangement-step-input").last().removeClass("is-invalid");
 
