@@ -79,8 +79,9 @@ RearrangementTemplate = ({ leftEquationPart, rightEquationPart }) => `
         data-toggle="tooltip"
         data-placement="top"
         title="
-          Legt fest, mit welchem Term die angegebene Gleichung
-          umgeformt werden soll.
+          Legt den mathematischen Ausdruck fest, der auf beiden Seiten
+          der Gleichung addiert, subtrahiert, multipliziert oder
+          dividiert wird.
         "
         required
       />
@@ -90,7 +91,10 @@ RearrangementTemplate = ({ leftEquationPart, rightEquationPart }) => `
         class="btn btn-success equation-guide-button rearrangement-button ml-2"
         data-toggle="tooltip"
         data-placement="top"
-        title="Wendet den angegebenen Umformungsschritt auf die Gleichung an."
+        title="
+          Wendet den angegebenen Umformungsschritt mit der entsprechenden
+          Rechenoperation auf die Gleichung an.
+        "
       >
         Umformen
       </button>
@@ -118,7 +122,7 @@ RestartButtonTemplate = `
     data-placement="bottom"
     title="
       Bricht den aktuellen Lösungsprozess ab und
-      stellt den Ausgangszustand wiederher.
+      stellt den Ausgangszustand wieder her.
     "
   >
     Neustart
