@@ -4,7 +4,7 @@ $(document).ready(function () {
   $("#left-equation-input").focus();
 
   /* start button functionality */
-  $(document).on("click", "#start-button", function(event) {
+  $(document).on("click", "#start-button", function (event) {
     var leftEquationPart = $("#left-equation-input").val().toString();
     var rightEquationPart = $("#right-equation-input").val().toString();
     var variable = $("#variable-input").val().toString();
@@ -63,6 +63,9 @@ $(document).ready(function () {
       && startEquationEvaluation.rightEquationValid
       && startEquationEvaluation.variableValid
     ) {
+      // Start equation was evaluated successfully | generate feedback array with mathsteps
+      window.generateRearrangementStepsArray(leftEquationPart, rightEquationPart, variable);
+
       $("#alert-div").empty();
       $(".equation-input").attr("readonly", true);
 
@@ -80,7 +83,7 @@ $(document).ready(function () {
   });
 
   /* rearrangement button functionality */
-  $(document).on("click", ".rearrangement-button", function(event) {
+  $(document).on("click", ".rearrangement-button", function (event) {
     var leftEquationPart = $(".left-rearrangement-input").last().val().toString();
     var rightEquationPart = $(".right-rearrangement-input").last().val().toString();
     var arithmeticOperation = $(".arithmetic-operation-select option:selected")
@@ -99,7 +102,10 @@ $(document).ready(function () {
       rearrangementStep
     );
 
-    if (rearrangementStepEvaluation == "") {
+    if (rearrangementStepEvaluation === "") {
+      // Rearrangement step was evaluated successfully | generating feedback TODO: feedback for rearrangement step
+      window.generateFeedbackMessage(arithmeticOperation, rearrangementStep);
+
       $(".rearrangement-step-input").last().removeClass("is-invalid");
 
       $(".arithmetic-operation-select").last().attr("readonly", true);
@@ -165,7 +171,7 @@ $(document).ready(function () {
   });
 
   /* restart button functionality */
-  $(document).on("click", "#restart-button", function(event) {
+  $(document).on("click", "#restart-button", function (event) {
     $("#alert-div").empty();
 
     $(".equation-rearrangement-step-div").remove();
@@ -182,7 +188,7 @@ $(document).ready(function () {
     event.preventDefault();
   });
 
-  $(document).on("click", "#help-button", function(event) {
+  $(document).on("click", "#help-button", function (event) {
     window.mathstepsTestFunction();
     event.preventDefault();
   });

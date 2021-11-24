@@ -1,4 +1,5 @@
 const mathsteps = require("mathsteps");
+let rearrangementSteps = []
 
 function mathstepsTestFunction() {
   const steps = mathsteps.solveEquation('3*x+14=4'); //x^2+4x+6=0
@@ -43,10 +44,10 @@ function isFinalEquation(leftEquationPart, rightEquationPart, variable) {
 
 function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
   var result = {
-  	"leftEquationValid": true,
-  	"rightEquationValid": true,
+    "leftEquationValid": true,
+    "rightEquationValid": true,
     "variableValid": true,
-  	"errorMessages": []
+    "errorMessages": []
   }
 
   try {
@@ -174,6 +175,67 @@ function performRearrangementStep(
   );
 }
 
+function generateRearrangementStepsArray(leftEquationPart, rightEquationPart, variable) {
+  rearrangementSteps = []
+  const equation = leftEquationPart + '=' + rightEquationPart;
+
+  const steps = mathsteps.solveEquation(equation);
+
+  steps.forEach(step => {
+    //console.log(step.changeType);
+
+    switch (step.changeType) {
+      case "ADD_TO_BOTH_SIDES":
+        rearrangementSteps.push({type: "add", value: step.newEquation.leftNode.args[1].value});
+        break;
+      case "SUBTRACT_FROM_BOTH_SIDES":
+        rearrangementSteps.push({type: "subtract", value: step.newEquation.leftNode.args[1].value});
+        break;
+      case "MULTIPLY_BOTH_SIDES_BY_INVERSE_FRACTION":
+        rearrangementSteps.push({type: "multiply", value: step.newEquation.leftNode.args[1].value});
+        break;
+      case "MULTIPLY_TO_BOTH_SIDES":
+        rearrangementSteps.push({type: "multiply", value: step.newEquation.leftNode.args[1].value});
+        break;
+      case "DIVIDE_FROM_BOTH_SIDES":
+        rearrangementSteps.push({type: "divide", value: step.newEquation.leftNode.args[1].value});
+        break;
+    }
+  });
+
+  console.log(rearrangementSteps);
+}
+
+function generateFeedbackMessage(arithmeticOperation, rearrangementStep) {
+  let feedbackMessage = "";
+  switch (arithmeticOperation) {
+    case "+":
+      if (rearrangementSteps.filter(e => e.type === 'add').length > 0) {
+        feedbackMessage = "good step (+)";
+      }
+      break;
+    case "-":
+      if (rearrangementSteps.filter(e => e.type === 'subtract').length > 0) {
+        feedbackMessage = "good step (-)";
+      }
+      break;
+    case "*":
+      if (rearrangementSteps.filter(e => e.type === 'multiply').length > 0) {
+        feedbackMessage = "good step (+*)";
+      }
+      break;
+    case "/":
+      if (rearrangementSteps.filter(e => e.type === 'divide').length > 0) {
+        feedbackMessage = "good step (/)";
+      }
+      break;
+  }
+
+  console.log(feedbackMessage);
+}
+
+window.generateFeedbackMessage = generateFeedbackMessage;
+window.generateRearrangementStepsArray = generateRearrangementStepsArray;
 window.mathstepsTestFunction = mathstepsTestFunction;
 window.simplifyExpression = simplifyExpression;
 window.isFinalEquation = isFinalEquation;
