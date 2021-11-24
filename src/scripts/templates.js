@@ -81,7 +81,8 @@ RearrangementTemplate = ({ leftEquationPart, rightEquationPart }) => `
         title="
           Legt den mathematischen Ausdruck fest, der auf beiden Seiten
           der Gleichung addiert, subtrahiert, multipliziert oder
-          dividiert wird.
+          dividiert wird. Negative Werte müssen in Klammern geschrieben
+          werden.
         "
         required
       />
