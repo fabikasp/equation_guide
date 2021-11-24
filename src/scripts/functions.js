@@ -4,6 +4,7 @@ let lastOperations = [];
 
 function mathstepsTestFunction() {
   console.log(rearrangementSteps);
+  console.log(lastOperations);
 
   /*const steps = mathsteps.solveEquation('3*x+14=4'); //x^2+4x+6=0
 
@@ -295,7 +296,9 @@ function editRearrangementStepsArray(arithmeticOperator, rearrangementStep) {
 }
 
 function resetLastOperation() {
-  console.log(lastOperations);
+  const invertedOperators = new Map([['+', 'subtract'], ['-', 'add'], ['*', 'divide'], ['/', 'multiply']]);
+  editRearrangementStepsArray(invertedOperators.get(lastOperations[lastOperations.length - 1].type), lastOperations[lastOperations.length - 1].value);
+  lastOperations.pop();
 }
 
 function getLastOperationsLength() {

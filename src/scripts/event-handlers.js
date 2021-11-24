@@ -202,6 +202,7 @@ $(document).ready(function () {
   });
 
   $(document).on("click", "#reset-button", function (event) {
+    $("#alert-div").empty();
     if (window.getLastOperationsLength() === 0) {
       $("#alert-div").empty();
       $("#alert-div").append(
@@ -216,7 +217,7 @@ $(document).ready(function () {
       $(".arithmetic-operation-select").last().attr("readonly", false);
       $(".rearrangement-step-input").last().attr("readonly", false);
       $(".rearrangement-button").last().attr("disabled", false);
-      //window.resetLastOperation();
+      window.resetLastOperation();
     }
     event.preventDefault();
   });
