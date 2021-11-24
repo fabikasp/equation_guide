@@ -4,7 +4,7 @@ let lastOperations = [];
 
 function mathstepsTestFunction() {
   console.log(rearrangementSteps);
-  console.log(lastOperations);
+  //console.log(lastOperations);
 
   /*const steps = mathsteps.solveEquation('3*x+14=4'); //x^2+4x+6=0
 
@@ -180,7 +180,8 @@ function performRearrangementStep(
   );
 }
 
-function generateRearrangementStepsArray(leftEquationPart, rightEquationPart, variable) {
+function generateRearrangementStepsArray(leftEquationPart, rightEquationPart) {
+  console.log("inpuz");
   rearrangementSteps = []
   const equation = leftEquationPart + '=' + rightEquationPart;
 
@@ -238,72 +239,10 @@ function generateFeedbackMessage(arithmeticOperation, rearrangementStep) {
       }
     }
   }
-  editRearrangementStepsArray(arithmeticOperatorToString.get(arithmeticOperation), rearrangementStep);
   return feedbackMessage;
 }
 
-function editRearrangementStepsArray(arithmeticOperator, rearrangementStep) {
-  //console.log(rearrangementSteps);
-  rearrangementSteps = rearrangementSteps.filter(e => {
-    if (e.type !== arithmeticOperator || e.value - rearrangementStep !== 0) {
-      return e;
-    }
-  });
-
-  switch (arithmeticOperator) {
-    case "add":
-      rearrangementSteps.map(e => {
-        if (e.type === "add") {
-          e.value = Number(e.value) - Number(rearrangementStep);
-        }
-        if (e.type === "subtract") {
-          e.value = Number(e.value) + Number(rearrangementStep);
-        }
-      });
-      break;
-    case "subtract":
-      rearrangementSteps.map(e => {
-        if (e.type === "subtract") {
-          e.value = Number(e.value) - Number(rearrangementStep);
-        }
-        if (e.type === "add") {
-          e.value = Number(e.value) + Number(rearrangementStep);
-        }
-      });
-      break;
-    case "multiply":
-      rearrangementSteps.map(e => {
-        if (e.type === "multiply") {
-          e.value = Number(e.value) - Number(rearrangementStep);
-        }
-        if (e.type === "divide") {
-          e.value = Number(e.value) + Number(rearrangementStep);
-        }
-      });
-      break;
-    case "divide":
-      rearrangementSteps.map(e => {
-        if (e.type === "divide") {
-          e.value = Number(e.value) - Number(rearrangementStep);
-        }
-        if (e.type === "multiply") {
-          e.value = Number(e.value) + Number(rearrangementStep);
-        }
-      });
-      break;
-  }
-  //console.log(rearrangementSteps);
-}
-
 function resetLastOperation() {
-  const invertedOperators = new Map([['+', 'subtract'], ['-', 'add'], ['*', 'divide'], ['/', 'multiply']]);
-  const arithmeticOperatorToString = new Map([['+', 'add'], ['-', 'subtract'], ['*', 'multiply'], ['/', 'divide']]);
-
-  if (rearrangementSteps.find(e => e.type === arithmeticOperatorToString.get(lastOperations[lastOperations.length - 1].type)) > 0) {
-    editRearrangementStepsArray(invertedOperators.get(lastOperations[lastOperations.length - 1].type), lastOperations[lastOperations.length - 1].value);
-  } else {
-    rearrangementSteps.push({type: arithmeticOperatorToString.get(lastOperations[lastOperations.length - 1].type), value: lastOperations[lastOperations.length - 1].value});
-  }
   lastOperations.pop();
 }
 

@@ -139,6 +139,9 @@ $(document).ready(function () {
         })
       );
 
+      // Generate new rearrangementSteps array
+      window.generateRearrangementStepsArray(newLeftEquationPart, newRightEquationPart);
+
       if (
         window.isFinalEquation(
           newLeftEquationPart,
@@ -217,6 +220,10 @@ $(document).ready(function () {
       $(".arithmetic-operation-select").last().attr("readonly", false);
       $(".rearrangement-step-input").last().attr("readonly", false);
       $(".rearrangement-button").last().attr("disabled", false);
+
+      let leftSide = parentElement.lastElementChild.children[0].children[0].value;
+      let rightSide = parentElement.lastElementChild.children[0].children[2].value;
+      window.generateRearrangementStepsArray(leftSide, rightSide);
       window.resetLastOperation();
     }
     event.preventDefault();
