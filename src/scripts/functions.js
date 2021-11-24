@@ -297,7 +297,13 @@ function editRearrangementStepsArray(arithmeticOperator, rearrangementStep) {
 
 function resetLastOperation() {
   const invertedOperators = new Map([['+', 'subtract'], ['-', 'add'], ['*', 'divide'], ['/', 'multiply']]);
-  editRearrangementStepsArray(invertedOperators.get(lastOperations[lastOperations.length - 1].type), lastOperations[lastOperations.length - 1].value);
+  const arithmeticOperatorToString = new Map([['+', 'add'], ['-', 'subtract'], ['*', 'multiply'], ['/', 'divide']]);
+
+  if (rearrangementSteps.find(e => e.type === arithmeticOperatorToString.get(lastOperations[lastOperations.length - 1].type)) > 0) {
+    editRearrangementStepsArray(invertedOperators.get(lastOperations[lastOperations.length - 1].type), lastOperations[lastOperations.length - 1].value);
+  } else {
+    rearrangementSteps.push({type: arithmeticOperatorToString.get(lastOperations[lastOperations.length - 1].type), value: lastOperations[lastOperations.length - 1].value});
+  }
   lastOperations.pop();
 }
 
