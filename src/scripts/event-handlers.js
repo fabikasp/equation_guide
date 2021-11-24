@@ -87,6 +87,17 @@ $(document).ready(function () {
     event.preventDefault();
   });
 
+  $(document).on("input", ".rearrangement-step-input", function(event) {
+    var rearrangementStep = $(".rearrangement-step-input").last().val().toString().trim();
+
+    if (rearrangementStep != "" && ["+", "-", "*", "/"].includes(rearrangementStep[0])) {
+      $(".arithmetic-operation-select").last().val(rearrangementStep[0]);
+      $(".rearrangement-step-input").last().val(rearrangementStep.substring(1));
+    }
+
+    event.preventDefault();
+  });
+
   /* rearrangement button functionality */
   $(document).on("click", ".rearrangement-button", function(event) {
     var leftEquationPart = $(".left-rearrangement-input").last().val().toString();

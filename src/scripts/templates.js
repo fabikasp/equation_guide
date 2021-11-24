@@ -59,10 +59,10 @@ RearrangementTemplate = ({ leftEquationPart, rightEquationPart }) => `
           die Gleichung angewendet werden soll.
         "
       >
-        <option value="add" selected="selected">+</option>
-        <option value="sub">-</option>
-        <option value="mul">*</option>
-        <option value="div">/</option>
+        <option value="+" selected="selected">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
       </select>
 
       <!-- rearrangement step -->
