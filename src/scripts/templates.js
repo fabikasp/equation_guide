@@ -109,7 +109,10 @@ StartButtonTemplate = `
     class="btn btn-primary equation-guide-button"
     data-toggle="tooltip"
     data-placement="bottom"
-    title="Prüft die eingegebene Gleichung und startet den Lösungsprozess."
+    title="
+      Prüft und vereinfacht die eingegebene Gleichung
+      und startet den Lösungsprozess.
+    "
   >
     Start
   </button>
