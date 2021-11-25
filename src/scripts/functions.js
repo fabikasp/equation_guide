@@ -12,6 +12,8 @@ function mathstepsTestFunction() {
 }
 
 function simplifyExpression(expression) {
+  expression = expression.replace(",", ".");
+
   try {
     return nerdamer("simplify(" + expression + ")").toString();
   } catch (e) {
@@ -20,6 +22,9 @@ function simplifyExpression(expression) {
 }
 
 function getEquationResult(leftEquationPart, rightEquationPart, variable) {
+  leftEquationPart = leftEquationPart.replace(",", ".");
+  rightEquationPart = rightEquationPart.replace(",", ".");
+
   return nerdamer.solveEquations(
     leftEquationPart + "=" + rightEquationPart,
     variable
@@ -55,12 +60,22 @@ function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
       result.errorMessages.push(
         "Der linke Teil der Gleichung darf nicht leer sein"
       );
+    } else if (leftEquationPart.includes("=")) {
+      result.leftEquationValid = false;
+      result.errorMessages.push(
+        "Der linke Teil der Gleichung darf kein Gleichheitszeichen enthalten"
+      );
     }
 
     if (rightEquationPart == "") {
       result.rightEquationValid = false;
       result.errorMessages.push(
         "Der rechte Teil der Gleichung darf nicht leer sein"
+      );
+    } else if (rightEquationPart.includes("=")) {
+      result.rightEquationValid = false;
+      result.errorMessages.push(
+        "Der rechte Teil der Gleichung darf kein Gleichheitszeichen enthalten"
       );
     }
 
@@ -77,7 +92,7 @@ function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
     } else if (!variable.match("[a-zA-Z]")) {
       result.variableValid = false;
       result.errorMessages.push(
-        "Die Zielvariable muss ein Klein- oder Großbuchstabe sein"
+        "Die Zielvariable muss ein Klein- oder Großbuchstabe (a-z, A-Z) sein"
       );
     } else if (
       !leftEquationPart.includes(variable)
@@ -115,7 +130,7 @@ function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
 
     if (
       isFinalEquation(leftEquationPart, rightEquationPart, variable)
-      || leftEquationPart.toString() == rightEquationPart.toString()
+      || leftEquationPart == rightEquationPart
     ) {
       result.leftEquationValid = false;
       result.rightEquationValid = false;
@@ -135,6 +150,12 @@ function evaluateRearrangementStep(
 ) {
   if (rearrangementStep == "") {
     return "Der Umformungsschritt darf nicht leer sein";
+  } else if (rearrangementStep.includes("=")) {
+    return "Der Umformungsschritt darf kein Gleichheitszeichen enthalten";
+  } else if (rearrangementStep == "0" && arithmeticOperation == "*") {
+    return "Die Multiplikation mit 0 wird nicht unterstützt";
+  } else if (rearrangementStep == "0" && arithmeticOperation == "/") {
+    return "Die Division durch 0 wird nicht unterstützt";
   }
 
   try {
