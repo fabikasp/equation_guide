@@ -5,9 +5,9 @@ $(document).ready(function () {
 
   /* start button functionality */
   $(document).on("click", "#start-button", function(event) {
-    var leftEquationPart = $("#left-equation-input").val().toString();
-    var rightEquationPart = $("#right-equation-input").val().toString();
-    var variable = $("#variable-input").val().toString();
+    var leftEquationPart = $("#left-equation-input").val().toString().trim();
+    var rightEquationPart = $("#right-equation-input").val().toString().trim();
+    var variable = $("#variable-input").val().toString().trim();
 
     $("#alert-div").empty();
 
@@ -81,14 +81,11 @@ $(document).ready(function () {
 
   /* rearrangement button functionality */
   $(document).on("click", ".rearrangement-button", function(event) {
-    var leftEquationPart = $(".left-rearrangement-input").last().val().toString();
-    var rightEquationPart = $(".right-rearrangement-input").last().val().toString();
-    var arithmeticOperation = $(".arithmetic-operation-select option:selected")
-      .last()
-      .text()
-      .toString();
-    var rearrangementStep = $(".rearrangement-step-input").last().val().toString();
-    var variable = $("#variable-input").val().toString();
+    var leftEquationPart = $(".left-rearrangement-input").last().val().toString().trim();
+    var rightEquationPart = $(".right-rearrangement-input").last().val().toString().trim();
+    var arithmeticOperation = $(".arithmetic-operation-select option:selected").last().text().toString();
+    var rearrangementStep = $(".rearrangement-step-input").last().val().toString().trim();
+    var variable = $("#variable-input").val().toString().trim();
 
     $("#alert-div").empty();
 
