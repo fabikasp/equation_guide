@@ -90,6 +90,16 @@ $(document).ready(function () {
     event.preventDefault();
   });
 
+  $(document).on("input", ".arithmetic-operation-select", function(event) {
+    var arithmeticOperation = $(".arithmetic-operation-select option:selected").last().val().toString();
+
+    if (["^2", "sqrt"].includes(arithmeticOperation)) {
+      $(".rearrangement-step-input").last().attr("readonly", true);
+    }
+
+    event.preventDefault();
+  });
+
   $(document).on("input", ".rearrangement-step-input", function(event) {
     var rearrangementStep = $(".rearrangement-step-input").last().val().toString().trim();
 
@@ -105,7 +115,7 @@ $(document).ready(function () {
   $(document).on("click", ".rearrangement-button", function(event) {
     var leftEquationPart = $(".left-rearrangement-input").last().val().toString().trim();
     var rightEquationPart = $(".right-rearrangement-input").last().val().toString().trim();
-    var arithmeticOperation = $(".arithmetic-operation-select option:selected").last().text().toString();
+    var arithmeticOperation = $(".arithmetic-operation-select option:selected").last().val().toString();
     var rearrangementStep = $(".rearrangement-step-input").last().val().toString().trim();
     var variable = $("#variable-input").val().toString().trim();
 

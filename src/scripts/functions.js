@@ -162,7 +162,9 @@ function evaluateRearrangementStep(
   rearrangementStep
 ) {
   if (rearrangementStep == "") {
-    return "Der Umformungsschritt darf nicht leer sein";
+    if (!["^2", "sqrt"].includes(arithmeticOperation)) {
+      return "Der Umformungsschritt darf nicht leer sein";
+    }
   } else if (rearrangementStep.includes("=")) {
     return "Der Umformungsschritt darf kein Gleichheitszeichen enthalten";
   } else if (rearrangementStep == "0" && arithmeticOperation == "*") {
@@ -172,23 +174,33 @@ function evaluateRearrangementStep(
   }
 
   try {
-    leftRearrangementStep = "(" + leftEquationPart + ")"
-      + arithmeticOperation
-      + rearrangementStep;
+    if (arithmeticOperation == "sqrt") {
+      leftRearrangementStep = "sqrt(" + leftEquationPart + ")";
+      rightRearrangementStep = "sqrt(" + rightEquationPart + ")";
+    } else {
+      leftRearrangementStep = "(" + leftEquationPart + ")"
+        + arithmeticOperation
+        + rearrangementStep;
+      rightRearrangementStep = "(" + rightEquationPart + ")"
+        + arithmeticOperation
+        + rearrangementStep;
+    }
 
     simplifiedLeftEquationPart = simplifyExpression(leftRearrangementStep);
 
-    if (simplifiedLeftEquationPart == leftRearrangementStep) {
+    if (
+      arithmeticOperation != "sqrt"
+      && simplifiedLeftEquationPart == leftRearrangementStep
+    ) {
       return "Der Umformungsschritt wird nicht unterstützt";
     }
 
-    rightRearrangementStep = "(" + rightEquationPart + ")"
-      + arithmeticOperation
-      + rearrangementStep;
-
     simplifiedRightEquationPart = simplifyExpression(rightRearrangementStep);
 
-    if (simplifiedRightEquationPart == rightRearrangementStep) {
+    if (
+      arithmeticOperation != "sqrt"
+      && simplifiedRightEquationPart == rightRearrangementStep
+    ) {
       return "Der Umformungsschritt wird nicht unterstützt";
     }
   } catch (e) {
@@ -196,6 +208,7 @@ function evaluateRearrangementStep(
   }
 
   lastOperations.push({type: arithmeticOperation, value: rearrangementStep});
+
   return "";
 }
 
@@ -204,6 +217,10 @@ function performRearrangementStep(
   arithmeticOperation,
   rearrangementStep
 ) {
+  if (arithmeticOperation == "sqrt") {
+    return simplifyExpression("sqrt(" + expression + ")");
+  }
+
   return simplifyExpression(
     "(" + expression + ")" + arithmeticOperation + rearrangementStep
   );
