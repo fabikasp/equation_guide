@@ -3,7 +3,7 @@ let rearrangementSteps = [];
 let lastOperations = [];
 
 function mathstepsTestFunction() {
-  console.log(rearrangementSteps);
+  //console.log(rearrangementSteps);
   //console.log(lastOperations);
 
   /*const steps = mathsteps.solveEquation('3*x+14=4'); //x^2+4x+6=0
@@ -208,8 +208,6 @@ function generateRearrangementStepsArray(leftEquationPart, rightEquationPart) {
   const steps = mathsteps.solveEquation(equation);
 
   steps.forEach(step => {
-    //console.log(step.changeType);
-
     switch (step.changeType) {
       case "ADD_TO_BOTH_SIDES":
         rearrangementSteps.push({type: "add", value: step.newEquation.leftNode.args[1].value});
