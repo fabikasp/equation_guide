@@ -10,8 +10,8 @@
     <link href="../stylesheets/equation-guide-styles.css" rel="stylesheet">
 
     <script src="../scripts/lib/jquery.min.js"></script>
-    <script src="../scripts/lib/bootstrap.min.js"></script>
     <script src="../scripts/lib/popper.min.js"></script>
+    <script src="../scripts/lib/bootstrap.min.js"></script>
     <script src="../scripts/lib/nerdamer.js"></script>
     <script src="../scripts/templates.js"></script>
     <script src="../scripts/event-handlers.js"></script>
@@ -33,16 +33,16 @@
 							mr-2
 							text-center
 						"
-						type="text"
-						placeholder="Linke Seite der Gleichung"
-						data-toggle="tooltip"
-						data-placement="top"
-						title="
+                    type="text"
+                    placeholder="Linke Seite der Gleichung"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="
 							Legt den Teil der Gleichung fest, der sich links
 							neben dem Gleichheitszeichen befindet.
 						"
-						required
-					/>
+                    required
+            />
 
             <input
                     class="
@@ -66,16 +66,16 @@
 							ml-2
 							text-center
 						"
-						type="text"
-						placeholder="Rechte Seite der Gleichung"
-						data-toggle="tooltip"
-						data-placement="top"
-						title="
+                    type="text"
+                    placeholder="Rechte Seite der Gleichung"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="
 							Legt den Teil der Gleichung fest, der sich rechts
 							neben dem Gleichheitszeichen befindet.
 						"
-						required
-					/>
+                    required
+            />
 
             <input
                     id="variable-input"
@@ -85,17 +85,17 @@
 							ml-2
 							text-center
 						"
-						type="text"
-						placeholder="Zielvariable"
-						data-toggle="tooltip"
-						data-placement="top"
-						title="
+                    type="text"
+                    placeholder="Zielvariable"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="
 							Legt fest, nach welcher Variable die angegebene
 							Gleichung umgeformt werden soll.
 						"
-						required
-					/>
-				</div>
+                    required
+            />
+        </div>
 
         <!-- section for rearranging the equation -->
         <div id="equation-rearrangement-div" class="mt-4"></div>
@@ -103,52 +103,42 @@
         <!-- error alert section -->
         <div id="alert-div" class="col"></div>
 
-				<!-- button section -->
-				<div class="row justify-content-center">
-					<a
-						id="back-button"
-						class="btn btn-secondary equation-guide-button mr-4"
-						href="../../index.html"
-						data-toggle="tooltip"
-						data-placement="bottom"
-						title="
+        <!-- button section -->
+        <div class="row justify-content-center">
+            <a
+                    id="back-button"
+                    class="btn btn-secondary equation-guide-button mr-4"
+                    href="../../index.html"
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    title="
 							Stellt den Ausgangszustand wieder her und
 							leitet zum Hauptmenü weiter.
 						"
-					>
-						Zurück
-					</a>
+            >
+                Zurück
+            </a>
 
-					<a
-							id="help-button"
-							class="btn btn-warning equation-guide-button ml-4"
-							href="#"
-							data-toggle="tooltip"
-							data-placement="bottom"
-							title="
-								Erklärungen werden ein- bzw. ausgeblendet.
-							"
-					>
-						Hilfe ausschalten
-					</a>
-				</div>
-  		</div>
-		</div>
-	</body>
-			<a
-					id="reset-button"
-					class="btn btn-dark equation-guide-button ml-4"
-					href="#"
-			>
-				Zurücksetzen
-			</a>
+            <a
+                    id="reset-button"
+                    class="btn btn-dark equation-guide-button ml-4"
+                    href="#"
+            >
+                Zurücksetzen
+            </a>
+
 
             <a
                     id="help-button"
                     class="btn btn-warning equation-guide-button ml-4"
                     href="#"
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    title="
+								Erklärungen werden ein- bzw. ausgeblendet.
+							"
             >
-                Hilfe
+                Hilfe ausschalten
             </a>
         </div>
     </div>

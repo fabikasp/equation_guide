@@ -202,7 +202,6 @@ function performRearrangementStep(
 }
 
 function generateRearrangementStepsArray(leftEquationPart, rightEquationPart) {
-  console.log("inpuz");
   rearrangementSteps = []
   const equation = leftEquationPart + '=' + rightEquationPart;
 
