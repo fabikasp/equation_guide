@@ -2,20 +2,6 @@ const mathsteps = require("mathsteps");
 let rearrangementSteps = [];
 let lastOperations = [];
 
-function mathstepsTestFunction() {
-  //console.log(rearrangementSteps);
-  //console.log(lastOperations);
-
-  /*const steps = mathsteps.solveEquation('3*x+14=4'); //x^2+4x+6=0
-
-  steps.forEach(step => {
-    console.log("before change: " + step.oldEquation.ascii());  // e.g. before change: 2x + 3x = 35
-    console.log("change: " + step.changeType);                  // e.g. change: SIMPLIFY_LEFT_SIDE
-    console.log("after change: " + step.newEquation.ascii());   // e.g. after change: 5x = 35
-    console.log("# of substeps: " + step.substeps.length);      // e.g. # of substeps: 2
-  });*/
-}
-
 function simplifyExpression(expression) {
   expression = expression.replace(",", ".");
 
@@ -39,8 +25,10 @@ function getEquationResult(leftEquationPart, rightEquationPart, variable) {
 function isFinalEquation(leftEquationPart, rightEquationPart, variable) {
   try {
     if (
-      leftEquationPart == variable && !rightEquationPart.includes(variable)
-      || rightEquationPart == variable && !leftEquationPart.includes(variable)
+      (leftEquationPart == variable || leftEquationPart == "abs(" + variable + ")")
+      && !rightEquationPart.includes(variable)
+      || (rightEquationPart == variable || rightEquationPart == "abs(" + variable + ")")
+      && !leftEquationPart.includes(variable)
     ) {
       return true;
     }
@@ -51,7 +39,7 @@ function isFinalEquation(leftEquationPart, rightEquationPart, variable) {
   return false;
 }
 
-function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
+function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
   var result = {
     "leftEquationValid": true,
     "rightEquationValid": true,
@@ -70,6 +58,16 @@ function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
       result.errorMessages.push(
         "Der linke Teil der Gleichung darf kein Gleichheitszeichen enthalten"
       );
+    } else if (leftEquationPart.includes("^")) {
+      countPowerSymbols = leftEquationPart.split("^").length - 1;
+      countSquarePowers = leftEquationPart.split("^2").length - 1;
+
+      if (countPowerSymbols != countSquarePowers) {
+        result.leftEquationValid = false;
+        result.errorMessages.push(
+          "Der linke Teil der Gleichung darf keine Exponenten ungleich 2 enthalten"
+        );
+      }
     }
 
     if (rightEquationPart == "") {
@@ -82,6 +80,16 @@ function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
       result.errorMessages.push(
         "Der rechte Teil der Gleichung darf kein Gleichheitszeichen enthalten"
       );
+    } else if (rightEquationPart.includes("^")) {
+      countPowerSymbols = rightEquationPart.split("^").length - 1;
+      countSquarePowers = rightEquationPart.split("^2").length - 1;
+
+      if (countPowerSymbols != countSquarePowers) {
+        result.rightEquationValid = false;
+        result.errorMessages.push(
+          "Der rechte Teil der Gleichung darf keine Exponenten ungleich 2 enthalten"
+        );
+      }
     }
 
     if (variable == "") {
@@ -126,21 +134,21 @@ function evaluateStartEquations(leftEquationPart, rightEquationPart, variable) {
       if (equationResult == "") {
         throw new Error();
       }
+
+      if (
+        isFinalEquation(leftEquationPart, rightEquationPart, variable)
+        || leftEquationPart == rightEquationPart
+      ) {
+        result.leftEquationValid = false;
+        result.rightEquationValid = false;
+        result.variableValid = false;
+        result.errorMessages.push("Die Gleichung ist bereits gelöst");
+      }
     } catch (e) {
       result.leftEquationValid = false;
       result.rightEquationValid = false;
       result.variableValid = false;
       result.errorMessages.push("Die Gleichung wird nicht unterstützt");
-    }
-
-    if (
-      isFinalEquation(leftEquationPart, rightEquationPart, variable)
-      || leftEquationPart == rightEquationPart
-    ) {
-      result.leftEquationValid = false;
-      result.rightEquationValid = false;
-      result.variableValid = false;
-      result.errorMessages.push("Die Gleichung ist bereits gelöst");
     }
   }
 
@@ -272,9 +280,8 @@ window.getLastOperationsLength = getLastOperationsLength;
 window.resetLastOperation = resetLastOperation;
 window.generateFeedbackMessage = generateFeedbackMessage;
 window.generateRearrangementStepsArray = generateRearrangementStepsArray;
-window.mathstepsTestFunction = mathstepsTestFunction;
 window.simplifyExpression = simplifyExpression;
 window.isFinalEquation = isFinalEquation;
-window.evaluateStartEquations = evaluateStartEquations;
+window.evaluateStartEquation = evaluateStartEquation;
 window.evaluateRearrangementStep = evaluateRearrangementStep;
 window.performRearrangementStep = performRearrangementStep;

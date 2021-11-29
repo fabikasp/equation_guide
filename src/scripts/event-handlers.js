@@ -16,7 +16,7 @@ $(document).ready(function () {
     leftEquationPart = window.simplifyExpression(leftEquationPart);
     rightEquationPart = window.simplifyExpression(rightEquationPart);
 
-    var startEquationEvaluation = window.evaluateStartEquations(
+    var startEquationEvaluation = window.evaluateStartEquation(
       leftEquationPart,
       rightEquationPart,
       variable

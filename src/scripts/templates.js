@@ -63,6 +63,8 @@ RearrangementTemplate = ({ leftEquationPart, rightEquationPart }) => `
         <option value="-">-</option>
         <option value="*">*</option>
         <option value="/">/</option>
+        <option value="^2">^2</option>
+        <option value="sqrt">sqrt</option>
       </select>
 
       <!-- rearrangement step -->
