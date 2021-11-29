@@ -52,11 +52,17 @@ RearrangementTemplate = ({ leftEquationPart, rightEquationPart }) => `
           ml-2
           arithmetic-operation-select
         "
+        data-toggle="tooltip"
+        data-placement="top"
+        title="
+          Legt die Rechenoperation fest, die auf
+          die Gleichung angewendet werden soll.
+        "
       >
-        <option value="add" selected="selected">+</option>
-        <option value="sub">-</option>
-        <option value="mul">*</option>
-        <option value="div">/</option>
+        <option value="+" selected="selected">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
       </select>
 
       <!-- rearrangement step -->
@@ -70,12 +76,26 @@ RearrangementTemplate = ({ leftEquationPart, rightEquationPart }) => `
         "
         type="text"
         placeholder="Umformungsschritt"
+        data-toggle="tooltip"
+        data-placement="top"
+        title="
+          Legt den mathematischen Ausdruck fest, der auf beiden Seiten
+          der Gleichung addiert, subtrahiert, multipliziert oder
+          dividiert wird. Negative Werte müssen in Klammern geschrieben
+          werden.
+        "
         required
       />
 
       <!-- rearrangement button -->
       <button
         class="btn btn-success equation-guide-button rearrangement-button ml-2"
+        data-toggle="tooltip"
+        data-placement="top"
+        title="
+          Wendet den angegebenen Umformungsschritt mit der entsprechenden
+          Rechenoperation auf die Gleichung an.
+        "
       >
         Umformen
       </button>
@@ -87,6 +107,12 @@ StartButtonTemplate = `
   <button
     id="start-button"
     class="btn btn-primary equation-guide-button"
+    data-toggle="tooltip"
+    data-placement="bottom"
+    title="
+      Prüft und vereinfacht die eingegebene Gleichung
+      und startet den Lösungsprozess.
+    "
   >
     Start
   </button>
@@ -96,6 +122,12 @@ RestartButtonTemplate = `
   <button
     id="restart-button"
     class="btn btn-primary equation-guide-button"
+    data-toggle="tooltip"
+    data-placement="bottom"
+    title="
+      Bricht den aktuellen Lösungsprozess ab und
+      stellt den Ausgangszustand wieder her.
+    "
   >
     Neustart
   </button>

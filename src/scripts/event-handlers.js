@@ -1,13 +1,15 @@
 $(document).ready(function () {
   $(StartButtonTemplate).insertAfter($("#back-button"));
 
+  $('[data-toggle="tooltip"]').tooltip("enable");
+
   $("#left-equation-input").focus();
 
   /* start button functionality */
-  $(document).on("click", "#start-button", function (event) {
-    var leftEquationPart = $("#left-equation-input").val().toString();
-    var rightEquationPart = $("#right-equation-input").val().toString();
-    var variable = $("#variable-input").val().toString();
+  $(document).on("click", "#start-button", function(event) {
+    var leftEquationPart = $("#left-equation-input").val().toString().trim();
+    var rightEquationPart = $("#right-equation-input").val().toString().trim();
+    var variable = $("#variable-input").val().toString().trim();
 
     $("#alert-div").empty();
 
@@ -76,22 +78,36 @@ $(document).ready(function () {
         })
       );
 
+      $('[data-toggle="tooltip"]').tooltip("hide");
+
       $("#start-button").replaceWith(RestartButtonTemplate);
+
+      if ($("#help-button").text().trim() == "Hilfe ausschalten") {
+        $('[data-toggle="tooltip"]').tooltip("enable");
+      }
+    }
+
+    event.preventDefault();
+  });
+
+  $(document).on("input", ".rearrangement-step-input", function(event) {
+    var rearrangementStep = $(".rearrangement-step-input").last().val().toString().trim();
+
+    if (rearrangementStep != "" && ["+", "-", "*", "/"].includes(rearrangementStep[0])) {
+      $(".arithmetic-operation-select").last().val(rearrangementStep[0]);
+      $(".rearrangement-step-input").last().val(rearrangementStep.substring(1));
     }
 
     event.preventDefault();
   });
 
   /* rearrangement button functionality */
-  $(document).on("click", ".rearrangement-button", function (event) {
-    var leftEquationPart = $(".left-rearrangement-input").last().val().toString();
-    var rightEquationPart = $(".right-rearrangement-input").last().val().toString();
-    var arithmeticOperation = $(".arithmetic-operation-select option:selected")
-      .last()
-      .text()
-      .toString();
-    var rearrangementStep = $(".rearrangement-step-input").last().val().toString();
-    var variable = $("#variable-input").val().toString();
+  $(document).on("click", ".rearrangement-button", function(event) {
+    var leftEquationPart = $(".left-rearrangement-input").last().val().toString().trim();
+    var rightEquationPart = $(".right-rearrangement-input").last().val().toString().trim();
+    var arithmeticOperation = $(".arithmetic-operation-select option:selected").last().text().toString();
+    var rearrangementStep = $(".rearrangement-step-input").last().val().toString().trim();
+    var variable = $("#variable-input").val().toString().trim();
 
     $("#alert-div").empty();
 
@@ -132,6 +148,8 @@ $(document).ready(function () {
         rearrangementStep
       );
 
+      $('[data-toggle="tooltip"]').tooltip("hide");
+
       $("#equation-rearrangement-div").append(
         RearrangementTemplate({
           leftEquationPart: newLeftEquationPart,
@@ -141,6 +159,10 @@ $(document).ready(function () {
 
       // Generate new rearrangementSteps array
       window.generateRearrangementStepsArray(newLeftEquationPart, newRightEquationPart);
+
+      if ($("#help-button").text().trim() == "Hilfe ausschalten") {
+        $('[data-toggle="tooltip"]').tooltip("enable");
+      }
 
       if (
         window.isFinalEquation(
@@ -194,13 +216,27 @@ $(document).ready(function () {
     $("#variable-input").val("");
     $("#left-equation-input").focus();
 
+    $('[data-toggle="tooltip"]').tooltip("hide");
+
     $("#restart-button").replaceWith(StartButtonTemplate);
+
+    if ($("#help-button").text().trim() == "Hilfe ausschalten") {
+      $('[data-toggle="tooltip"]').tooltip("enable");
+    }
 
     event.preventDefault();
   });
 
-  $(document).on("click", "#help-button", function (event) {
-    window.mathstepsTestFunction();
+  $(document).on("click", "#help-button", function(event) {
+    if ($("#help-button").text().trim() == "Hilfe ausschalten") {
+      $("#help-button").text("Hilfe einschalten");
+      $('[data-toggle="tooltip"]').tooltip("hide");
+      $('[data-toggle="tooltip"]').tooltip("disable");
+    } else {
+      $("#help-button").text("Hilfe ausschalten");
+      $('[data-toggle="tooltip"]').tooltip("enable");
+    }
+
     event.preventDefault();
   });
 
