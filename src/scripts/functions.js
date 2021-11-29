@@ -219,7 +219,7 @@ function generateFeedbackMessage(arithmeticOperation, rearrangementStep) {
 
   if (arrayElement === undefined) {
     feedbackMessage = {
-      message: "Das war leider nicht der richtige Umformungsschritt. Du kannst es nochmal versuchen oder einfach weitermachen!",
+      message: "Das war leider nicht der perfekte Umformungsschritt. Du kannst es nochmal versuchen oder einfach weitermachen!",
       type: "danger"
     }
   } else {
