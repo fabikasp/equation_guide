@@ -51,12 +51,12 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
     if (leftEquationPart == "") {
       result.leftEquationValid = false;
       result.errorMessages.push(
-        "Der linke Teil der Gleichung darf nicht leer sein"
+        "Der linke Teil der Gleichung darf nicht leer sein."
       );
     } else if (leftEquationPart.includes("=")) {
       result.leftEquationValid = false;
       result.errorMessages.push(
-        "Der linke Teil der Gleichung darf kein Gleichheitszeichen enthalten"
+        "Der linke Teil der Gleichung darf kein Gleichheitszeichen enthalten."
       );
     } else if (leftEquationPart.includes("^")) {
       countPowerSymbols = leftEquationPart.split("^").length - 1;
@@ -65,7 +65,7 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
       if (countPowerSymbols != countSquarePowers) {
         result.leftEquationValid = false;
         result.errorMessages.push(
-          "Der linke Teil der Gleichung darf keine Exponenten ungleich 2 enthalten"
+          "Der linke Teil der Gleichung darf keine Exponenten ungleich 2 enthalten."
         );
       }
     }
@@ -73,12 +73,12 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
     if (rightEquationPart == "") {
       result.rightEquationValid = false;
       result.errorMessages.push(
-        "Der rechte Teil der Gleichung darf nicht leer sein"
+        "Der rechte Teil der Gleichung darf nicht leer sein."
       );
     } else if (rightEquationPart.includes("=")) {
       result.rightEquationValid = false;
       result.errorMessages.push(
-        "Der rechte Teil der Gleichung darf kein Gleichheitszeichen enthalten"
+        "Der rechte Teil der Gleichung darf kein Gleichheitszeichen enthalten."
       );
     } else if (rightEquationPart.includes("^")) {
       countPowerSymbols = rightEquationPart.split("^").length - 1;
@@ -87,7 +87,7 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
       if (countPowerSymbols != countSquarePowers) {
         result.rightEquationValid = false;
         result.errorMessages.push(
-          "Der rechte Teil der Gleichung darf keine Exponenten ungleich 2 enthalten"
+          "Der rechte Teil der Gleichung darf keine Exponenten ungleich 2 enthalten."
         );
       }
     }
@@ -95,17 +95,17 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
     if (variable == "") {
       result.variableValid = false;
       result.errorMessages.push(
-        "Die Zielvariable darf nicht leer sein"
+        "Die Zielvariable darf nicht leer sein."
       );
     } else if (variable.length != 1) {
       result.variableValid = false;
       result.errorMessages.push(
-        "Die Zielvariable darf nur ein Zeichen enthalten"
+        "Die Zielvariable darf nur ein Zeichen enthalten."
       );
     } else if (!variable.match("[a-zA-Z]")) {
       result.variableValid = false;
       result.errorMessages.push(
-        "Die Zielvariable muss ein Klein- oder Großbuchstabe (a-z, A-Z) sein"
+        "Die Zielvariable muss ein Klein- oder Großbuchstabe (a-z, A-Z) sein."
       );
     } else if (
       !leftEquationPart.includes(variable)
@@ -113,14 +113,14 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
     ) {
       result.variableValid = false;
       result.errorMessages.push(
-        "Die Zielvariable muss in der Gleichung vorkommen"
+        "Die Zielvariable muss in der Gleichung vorkommen."
       );
     }
   } catch (e) {
     result.leftEquationValid = false;
     result.rightEquationValid = false;
     result.variableValid = false;
-    result.errorMessages.push("Die Gleichung wird nicht unterstützt");
+    result.errorMessages.push("Die Gleichung wird nicht unterstützt.");
   }
 
   if (result.errorMessages.length == 0) {
@@ -142,13 +142,13 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
         result.leftEquationValid = false;
         result.rightEquationValid = false;
         result.variableValid = false;
-        result.errorMessages.push("Die Gleichung ist bereits gelöst");
+        result.errorMessages.push("Die Gleichung ist bereits gelöst.");
       }
     } catch (e) {
       result.leftEquationValid = false;
       result.rightEquationValid = false;
       result.variableValid = false;
-      result.errorMessages.push("Die Gleichung wird nicht unterstützt");
+      result.errorMessages.push("Die Gleichung wird nicht unterstützt.");
     }
   }
 
@@ -163,14 +163,14 @@ function evaluateRearrangementStep(
 ) {
   if (rearrangementStep == "") {
     if (!["^2", "sqrt"].includes(arithmeticOperation)) {
-      return "Der Umformungsschritt darf nicht leer sein";
+      return "Der Umformungsschritt darf nicht leer sein.";
     }
   } else if (rearrangementStep.includes("=")) {
-    return "Der Umformungsschritt darf kein Gleichheitszeichen enthalten";
+    return "Der Umformungsschritt darf kein Gleichheitszeichen enthalten.";
   } else if (rearrangementStep == "0" && arithmeticOperation == "*") {
-    return "Die Multiplikation mit 0 wird nicht unterstützt";
+    return "Die Multiplikation mit 0 wird nicht unterstützt.";
   } else if (rearrangementStep == "0" && arithmeticOperation == "/") {
-    return "Die Division durch 0 wird nicht unterstützt";
+    return "Die Division durch 0 wird nicht unterstützt.";
   }
 
   try {
@@ -192,7 +192,7 @@ function evaluateRearrangementStep(
       arithmeticOperation != "sqrt"
       && simplifiedLeftEquationPart == leftRearrangementStep
     ) {
-      return "Der Umformungsschritt wird nicht unterstützt";
+      return "Der Umformungsschritt wird nicht unterstützt.";
     }
 
     simplifiedRightEquationPart = simplifyExpression(rightRearrangementStep);
@@ -201,10 +201,10 @@ function evaluateRearrangementStep(
       arithmeticOperation != "sqrt"
       && simplifiedRightEquationPart == rightRearrangementStep
     ) {
-      return "Der Umformungsschritt wird nicht unterstützt";
+      return "Der Umformungsschritt wird nicht unterstützt.";
     }
   } catch (e) {
-    return "Der Umformungsschritt wird nicht unterstützt";
+    return "Der Umformungsschritt wird nicht unterstützt.";
   }
 
   lastOperations.push({type: arithmeticOperation, value: rearrangementStep});
@@ -268,7 +268,7 @@ function generateFeedbackMessage(arithmeticOperation, rearrangementStep) {
   } else {
     if (Number(rearrangementStep) === Number(arrayElement.value)) {
       if (rearrangementSteps.length === 1) {
-        feedbackMessage = {message: "Gleichung gelößt.", type: "done"}
+        feedbackMessage = {message: "Die Gleichung wurde erfolgreich umgeformt.", type: "done"}
       } else {
         feedbackMessage = {
           message: "Sehr gut! Du hast einen der optimalen Umformungsschritte gefunden.",

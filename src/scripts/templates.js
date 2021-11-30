@@ -143,7 +143,7 @@ ResetButtonTemplate = `
     data-toggle="tooltip"
     data-placement="bottom"
     title="
-      Die Gleichung kann um einen Umformungsschritt zurückgesetzt werden.
+      Setzt die Gleichung um einen Umformungsschritt zurück.
     "
   >
     Zurücksetzen

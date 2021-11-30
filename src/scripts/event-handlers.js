@@ -202,7 +202,7 @@ $(document).ready(function () {
 
         $("#alert-div").append(
           AlertTemplate({
-            text: "Die Gleichung wurde erfolgreich umgeformt",
+            text: "Die Gleichung wurde erfolgreich umgeformt.",
             alertType: "success"
           })
         );
