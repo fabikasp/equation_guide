@@ -228,7 +228,7 @@ function performRearrangementStep(
 
 function generateRearrangementStepsArray(leftEquationPart, rightEquationPart) {
   rearrangementSteps = []
-  const equation = leftEquationPart + '=' + rightEquationPart;
+  const equation = leftEquationPart + "=" + rightEquationPart;
 
   const steps = mathsteps.solveEquation(equation);
 
@@ -256,7 +256,7 @@ function generateRearrangementStepsArray(leftEquationPart, rightEquationPart) {
 function generateFeedbackMessage(arithmeticOperation, rearrangementStep) {
   let feedbackMessage = "";
   let arrayElement;
-  const arithmeticOperatorToString = new Map([['+', 'add'], ['-', 'subtract'], ['*', 'multiply'], ['/', 'divide']]);
+  const arithmeticOperatorToString = new Map([["+", "add"], ["-", "subtract"], ["*", "multiply"], ["/", "divide"]]);
 
   arrayElement = rearrangementSteps.find(e => e.type === arithmeticOperatorToString.get(arithmeticOperation));
 
