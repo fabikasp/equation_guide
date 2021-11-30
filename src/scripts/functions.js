@@ -253,8 +253,29 @@ function generateRearrangementStepsArray(leftEquationPart, rightEquationPart) {
   });
 }
 
-function generateFeedbackMessage(arithmeticOperation, rearrangementStep) {
-  let feedbackMessage = "";
+function generateFeedbackMessage(
+  leftEquationPart,
+  rightEquationPart,
+  arithmeticOperation,
+  rearrangementStep
+) {
+  if (
+    leftEquationPart.includes("sqrt") || leftEquationPart.includes("^2")
+    || rightEquationPart.includes("sqrt") || rightEquationPart.includes("^2")
+  ) {
+    return generateNerdamerFeedbackMessage(
+      leftEquationPart,
+      rightEquationPart,
+      arithmeticOperation,
+      rearrangementStep
+    );
+  }
+
+  return generateMathstepsFeedbackMessage(arithmeticOperation, rearrangementStep);
+}
+
+function generateMathstepsFeedbackMessage(arithmeticOperation, rearrangementStep) {
+  let feedbackMessage = {};
   let arrayElement;
   const arithmeticOperatorToString = new Map([["+", "add"], ["-", "subtract"], ["*", "multiply"], ["/", "divide"]]);
 
@@ -267,9 +288,7 @@ function generateFeedbackMessage(arithmeticOperation, rearrangementStep) {
     }
   } else {
     if (Number(rearrangementStep) === Number(arrayElement.value)) {
-      if (rearrangementSteps.length === 1) {
-        feedbackMessage = {message: "Die Gleichung wurde erfolgreich umgeformt.", type: "done"}
-      } else {
+      if (rearrangementSteps.length > 1) {
         feedbackMessage = {
           message: "Sehr gut! Du hast einen der optimalen Umformungsschritte gefunden.",
           type: "info"
@@ -282,6 +301,20 @@ function generateFeedbackMessage(arithmeticOperation, rearrangementStep) {
       }
     }
   }
+
+  return feedbackMessage;
+}
+
+function generateNerdamerFeedbackMessage(
+  leftEquationPart,
+  rightEquationPart,
+  arithmeticOperation,
+  rearrangementStep
+) {
+  let feedbackMessage = {};
+
+  
+
   return feedbackMessage;
 }
 

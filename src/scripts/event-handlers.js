@@ -138,8 +138,14 @@ $(document).ready(function () {
       }
 
       // Rearrangement step was evaluated successfully | generating feedback
-      const feedbackMessage = window.generateFeedbackMessage(arithmeticOperation, rearrangementStep);
-      if (feedbackMessage.type !== 'done') {
+      const feedbackMessage = window.generateFeedbackMessage(
+        leftEquationPart,
+        rightEquationPart,
+        arithmeticOperation,
+        rearrangementStep
+      );
+
+      if (!jQuery.isEmptyObject(feedbackMessage)) {
         $("#alert-div").append(
           AlertTemplate({
             text: feedbackMessage.message,
