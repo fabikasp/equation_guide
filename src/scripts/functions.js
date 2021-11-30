@@ -256,6 +256,7 @@ function generateRearrangementStepsArray(leftEquationPart, rightEquationPart) {
 function generateFeedbackMessage(
   leftEquationPart,
   rightEquationPart,
+  variable,
   arithmeticOperation,
   rearrangementStep
 ) {
@@ -266,6 +267,7 @@ function generateFeedbackMessage(
     return generateNerdamerFeedbackMessage(
       leftEquationPart,
       rightEquationPart,
+      variable,
       arithmeticOperation,
       rearrangementStep
     );
@@ -308,14 +310,91 @@ function generateMathstepsFeedbackMessage(arithmeticOperation, rearrangementStep
 function generateNerdamerFeedbackMessage(
   leftEquationPart,
   rightEquationPart,
+  variable,
   arithmeticOperation,
   rearrangementStep
 ) {
-  let feedbackMessage = {};
+  let optimalRearrangementStep = false;
 
-  
+  if (
+    (leftEquationPart.includes("^2") || rightEquationPart.includes("^2"))
+    && arithmeticOperation == "sqrt"
+  ) {
+    optimalRearrangementStep = true;
+  }
 
-  return feedbackMessage;
+  if (
+    (leftEquationPart.includes("sqrt") || rightEquationPart.includes("sqrt"))
+    && arithmeticOperation == "^2"
+  ) {
+    optimalRearrangementStep = true;
+  }
+
+  if (!optimalRearrangementStep) {
+    countLeftNumbersBeforeRearrangement = leftEquationPart.replace(/[^0-9]/g,"").length;
+    countRightNumbersBeforeRearrangement = rightEquationPart.replace(/[^0-9]/g,"").length;
+
+    rearrangedLeftEquationPart = performRearrangementStep(leftEquationPart, arithmeticOperation, rearrangementStep);
+    rearrangedRightEquationPart = performRearrangementStep(rightEquationPart, arithmeticOperation, rearrangementStep);
+
+    countLeftNumbersAfterRearrangement = rearrangedLeftEquationPart.replace(/[^0-9]/g,"").length;
+    countRightNumbersAfterRearrangement = rearrangedRightEquationPart.replace(/[^0-9]/g,"").length;
+
+    if (
+      leftEquationPart.includes(variable)
+      && !rightEquationPart.includes(variable)
+      && countLeftNumbersAfterRearrangement < countLeftNumbersBeforeRearrangement
+    ) {
+      optimalRearrangementStep = true;
+    }
+
+    if (
+      rightEquationPart.includes(variable)
+      && !leftEquationPart.includes(variable)
+      && countRightNumbersAfterRearrangement < countRightNumbersBeforeRearrangement
+    ) {
+      optimalRearrangementStep = true;
+    }
+
+    if (leftEquationPart.includes(variable) && rightEquationPart.includes(variable)) {
+      if (
+        rearrangedLeftEquationPart.includes(variable)
+        && !rearrangedRightEquationPart.includes(variable)
+      ) {
+        optimalRearrangementStep = true;
+      }
+
+      if (
+        rearrangedLeftEquationPart.includes(variable)
+        && countLeftNumbersAfterRearrangement < countLeftNumbersBeforeRearrangement
+      ) {
+        optimalRearrangementStep = true;
+      }
+
+      if (
+        rearrangedRightEquationPart.includes(variable)
+        && !rearrangedLeftEquationPart.includes(variable)
+      ) {
+        optimalRearrangementStep = true;
+      }
+
+      if (
+        rearrangedRightEquationPart.includes(variable)
+        && countRightNumbersAfterRearrangement < countRightNumbersBeforeRearrangement
+      ) {
+        optimalRearrangementStep = true;
+      }
+    }
+  }
+
+  if (optimalRearrangementStep) {
+    return {
+      message: "Sehr gut! Du hast einen der optimalen Umformungsschritte gefunden.",
+      type: "info"
+    }
+  }
+
+  return {};
 }
 
 function resetLastOperation() {

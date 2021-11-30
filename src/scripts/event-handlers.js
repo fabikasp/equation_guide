@@ -93,10 +93,13 @@ $(document).ready(function () {
   $(document).on("input", ".arithmetic-operation-select", function(event) {
     var arithmeticOperation = $(".arithmetic-operation-select option:selected").last().val().toString();
 
-    $(".rearrangement-step-input").last().attr(
-      "readonly",
-      ["^2", "sqrt"].includes(arithmeticOperation)
-    );
+    disableRearrangementStep = ["^2", "sqrt"].includes(arithmeticOperation);
+
+    $(".rearrangement-step-input").last().attr("readonly", disableRearrangementStep);
+
+    if (disableRearrangementStep) {
+      $(".rearrangement-step-input").last().val("");
+    }
 
     event.preventDefault();
   });
@@ -135,23 +138,6 @@ $(document).ready(function () {
         && $("#reset-button").length == 0
       ) {
         $(ResetButtonTemplate).insertAfter($("#restart-button"));
-      }
-
-      // Rearrangement step was evaluated successfully | generating feedback
-      const feedbackMessage = window.generateFeedbackMessage(
-        leftEquationPart,
-        rightEquationPart,
-        arithmeticOperation,
-        rearrangementStep
-      );
-
-      if (!jQuery.isEmptyObject(feedbackMessage)) {
-        $("#alert-div").append(
-          AlertTemplate({
-            text: feedbackMessage.message,
-            alertType: feedbackMessage.type
-          })
-        );
       }
 
       $(".rearrangement-step-input").last().removeClass("is-invalid");
@@ -212,6 +198,24 @@ $(document).ready(function () {
             alertType: "success"
           })
         );
+      } else {
+        // Rearrangement step was evaluated successfully | generating feedback
+        const feedbackMessage = window.generateFeedbackMessage(
+          leftEquationPart,
+          rightEquationPart,
+          variable,
+          arithmeticOperation,
+          rearrangementStep
+        );
+
+        if (!jQuery.isEmptyObject(feedbackMessage)) {
+          $("#alert-div").append(
+            AlertTemplate({
+              text: feedbackMessage.message,
+              alertType: feedbackMessage.type
+            })
+          );
+        }
       }
     } else {
       $(".rearrangement-step-input").last().addClass("is-invalid");
