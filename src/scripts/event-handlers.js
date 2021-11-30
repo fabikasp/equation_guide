@@ -93,9 +93,10 @@ $(document).ready(function () {
   $(document).on("input", ".arithmetic-operation-select", function(event) {
     var arithmeticOperation = $(".arithmetic-operation-select option:selected").last().val().toString();
 
-    if (["^2", "sqrt"].includes(arithmeticOperation)) {
-      $(".rearrangement-step-input").last().attr("readonly", true);
-    }
+    $(".rearrangement-step-input").last().attr(
+      "readonly",
+      ["^2", "sqrt"].includes(arithmeticOperation)
+    );
 
     event.preventDefault();
   });
@@ -129,6 +130,13 @@ $(document).ready(function () {
     );
 
     if (rearrangementStepEvaluation === "") {
+      if (
+        $(".left-rearrangement-input").length > 0
+        && $("#reset-button").length == 0
+      ) {
+        $(ResetButtonTemplate).insertAfter($("#restart-button"));
+      }
+
       // Rearrangement step was evaluated successfully | generating feedback
       const feedbackMessage = window.generateFeedbackMessage(arithmeticOperation, rearrangementStep);
       if (feedbackMessage.type !== 'done') {
@@ -229,6 +237,7 @@ $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip("hide");
 
     $("#restart-button").replaceWith(StartButtonTemplate);
+    $("#reset-button").remove();
 
     if ($("#help-button").text().trim() == "Hilfe ausschalten") {
       $('[data-toggle="tooltip"]').tooltip("enable");
@@ -256,7 +265,7 @@ $(document).ready(function () {
       $("#alert-div").empty();
       $("#alert-div").append(
         AlertTemplate({
-          text: "Es kann noch nichts rückgängig gemacht werden.",
+          text: "Es kann nichts rückgängig gemacht werden.",
           alertType: "danger"
         })
       );

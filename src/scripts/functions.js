@@ -262,8 +262,8 @@ function generateFeedbackMessage(arithmeticOperation, rearrangementStep) {
 
   if (arrayElement === undefined) {
     feedbackMessage = {
-      message: "Das war leider nicht der perfekte Umformungsschritt. Du kannst es nochmal versuchen oder einfach weitermachen!",
-      type: "danger"
+      message: "Das war leider kein optimaler Umformungsschritt. Du kannst den Schritt rückgängig oder einfach weiter machen.",
+      type: "warning"
     }
   } else {
     if (Number(rearrangementStep) === Number(arrayElement.value)) {
@@ -271,13 +271,13 @@ function generateFeedbackMessage(arithmeticOperation, rearrangementStep) {
         feedbackMessage = {message: "Gleichung gelößt.", type: "done"}
       } else {
         feedbackMessage = {
-          message: "Perfect! Du hast einen der perfekten Umformungsschritte gefunden.",
-          type: "success"
+          message: "Sehr gut! Du hast einen der optimalen Umformungsschritte gefunden.",
+          type: "info"
         }
       }
     } else {
       feedbackMessage = {
-        message: "Gut! Das war der richtige Weg, aber vielleicht versuch es mit einem anderen Wert.",
+        message: "Gut! Das ist der richtige Weg, aber versuch es vielleicht mit einem anderen Wert.",
         type: "warning"
       }
     }

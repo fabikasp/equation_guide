@@ -135,6 +135,21 @@ RestartButtonTemplate = `
   </button>
 `;
 
+ResetButtonTemplate = `
+  <a
+    id="reset-button"
+    class="btn btn-dark equation-guide-button ml-4"
+    href="#"
+    data-toggle="tooltip"
+    data-placement="bottom"
+    title="
+      Die Gleichung kann um einen Umformungsschritt zurückgesetzt werden.
+    "
+  >
+    Zurücksetzen
+  </a>
+`
+
 AlertTemplate = ({ text, alertType }) => `
   <div class="alert alert-${alertType} w-50 mx-auto">${text}</div>
 `;
