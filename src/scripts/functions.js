@@ -1,6 +1,7 @@
 const mathsteps = require("mathsteps");
 let rearrangementSteps = [];
 let lastOperations = [];
+let wrongCounter = 0;
 
 function simplifyExpression(expression) {
   expression = expression.replace(",", ".");
@@ -261,6 +262,7 @@ function generateFeedbackMessage(arithmeticOperation, rearrangementStep) {
   arrayElement = rearrangementSteps.find(e => e.type === arithmeticOperatorToString.get(arithmeticOperation));
 
   if (arrayElement === undefined) {
+    wrongCounter += 1;
     feedbackMessage = {
       message: "Das war leider kein optimaler Umformungsschritt. Du kannst den Schritt rückgängig oder einfach weiter machen.",
       type: "warning"
@@ -268,14 +270,17 @@ function generateFeedbackMessage(arithmeticOperation, rearrangementStep) {
   } else {
     if (Number(rearrangementStep) === Number(arrayElement.value)) {
       if (rearrangementSteps.length === 1) {
+        wrongCounter = 0;
         feedbackMessage = {message: "Die Gleichung wurde erfolgreich umgeformt.", type: "done"}
       } else {
+        wrongCounter = 0;
         feedbackMessage = {
           message: "Sehr gut! Du hast einen der optimalen Umformungsschritte gefunden.",
           type: "info"
         }
       }
     } else {
+      wrongCounter += 1;
       feedbackMessage = {
         message: "Gut! Das ist der richtige Weg, aber versuch es vielleicht mit einem anderen Wert.",
         type: "warning"
@@ -293,6 +298,33 @@ function getLastOperationsLength() {
   return lastOperations.length;
 }
 
+function getWrongCounter() {
+  return wrongCounter;
+}
+
+function getAdvice(type) {
+  if (rearrangementSteps.length === 0) {
+    return "Du hast die Gleichung bereits gelößt."
+  } else {
+    switch (type) {
+      case "weak":
+        console.log(getRandomInt(0, 3));
+        break;
+      case "strong":
+        console.log("strong tipp generate");
+        break;
+    }
+  }
+}
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+window.getAdvice = getAdvice;
+window.getWrongCounter = getWrongCounter;
 window.getLastOperationsLength = getLastOperationsLength;
 window.resetLastOperation = resetLastOperation;
 window.generateFeedbackMessage = generateFeedbackMessage;

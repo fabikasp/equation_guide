@@ -150,6 +150,21 @@ ResetButtonTemplate = `
   </a>
 `
 
+AdviceButtonTemplate = `
+  <a
+    id="advice-button"
+    class="btn btn-success equation-guide-button ml-4"
+    href="#"
+    data-toggle="tooltip"
+    data-placement="bottom"
+    title="
+      Gibt dir einen Tipp, falls du nicht weiter kommst.
+    "
+  >
+    Tipp
+  </a>
+`
+
 AlertTemplate = ({ text, alertType }) => `
   <div class="alert alert-${alertType} w-50 mx-auto">${text}</div>
 `;
