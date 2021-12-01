@@ -287,31 +287,34 @@ $(document).ready(function () {
   });
 
   $(document).on("click", "#advice-button", function (event) {
-    const x = getWrongCounter();
     const alertDiv = $("#alert-div");
+
+    if (alertDiv[0].children.length > 1) {
+      alertDiv[0].lastElementChild.remove();
+    }
+
+    const x = getWrongCounter();
     switch (true) {
       case (x <= 2):
         alertDiv.append(
           AlertTemplate({
-            text: "Probiert doch erstmal ein bisschen.",
+            text: "Probier doch erstmal ein bisschen.",
             alertType: "warning"
           })
         );
         break;
       case (x <= 4):
-        window.getAdvice("weak");
         alertDiv.append(
           AlertTemplate({
-            text: "weak Tipp coming",
+            text: window.getAdvice("weak"),
             alertType: "warning"
           })
         );
         break;
       case (x > 4):
-        window.getAdvice("strong");
         alertDiv.append(
           AlertTemplate({
-            text: "strong Tipp coming",
+            text: window.getAdvice("strong"),
             alertType: "warning"
           })
         );

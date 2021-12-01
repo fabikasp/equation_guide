@@ -308,19 +308,26 @@ function getAdvice(type) {
   } else {
     switch (type) {
       case "weak":
-        console.log(getRandomInt(0, 3));
+        switch (rearrangementSteps[getRandomInt(0, rearrangementSteps.length - 1)].type) {
+          case "add":
+            return "Versuch es doch mal mit addieren."
+          case "subtract":
+            return "Versuch es doch mal mit subtrahieren."
+          case "multiply":
+            return "Versuch es doch mal mit multiplizieren."
+          case "divide":
+            return "Versuch es doch mal mit dividieren."
+        }
         break;
       case "strong":
-        console.log("strong tipp generate");
+        console.log(rearrangementSteps[getRandomInt(0, rearrangementSteps.length - 1)].value);
         break;
     }
   }
 }
 
 function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min;
+  return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
 window.getAdvice = getAdvice;

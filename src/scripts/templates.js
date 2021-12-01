@@ -158,7 +158,7 @@ AdviceButtonTemplate = `
     data-toggle="tooltip"
     data-placement="bottom"
     title="
-      Gibt dir einen Tipp, falls du nicht weiter kommst.
+      Gibt dir einen zufälligen Tipp, falls du nicht weiter kommst.
     "
   >
     Tipp
