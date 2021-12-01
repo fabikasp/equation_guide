@@ -169,9 +169,6 @@ $(document).ready(function () {
         })
       );
 
-      // Generate new rearrangementSteps array
-      window.generateRearrangementStepsArray(newLeftEquationPart, newRightEquationPart);
-
       if ($("#help-button").text().trim() == "Hilfe ausschalten") {
         $('[data-toggle="tooltip"]').tooltip("enable");
       }
@@ -212,6 +209,9 @@ $(document).ready(function () {
           rearrangementStep
         );
 
+        // Generate new rearrangementSteps array
+        window.generateRearrangementStepsArray(newLeftEquationPart, newRightEquationPart);
+
         if (!jQuery.isEmptyObject(feedbackMessage)) {
           $("#alert-div").append(
             AlertTemplate({
@@ -237,6 +237,7 @@ $(document).ready(function () {
 
   /* restart button functionality */
   $(document).on("click", "#restart-button", function (event) {
+    window.resetWrongCounter();
     $("#alert-div").empty();
 
     $(".equation-rearrangement-step-div").remove();
@@ -306,33 +307,13 @@ $(document).ready(function () {
       alertDiv[0].lastElementChild.remove();
     }
 
-    const x = getWrongCounter();
-    switch (true) {
-      case (x < 2):
-        alertDiv.append(
-          AlertTemplate({
-            text: "Probier doch erstmal ein bisschen.",
-            alertType: "warning"
-          })
-        );
-        break;
-      case (x < 4):
-        alertDiv.append(
-          AlertTemplate({
-            text: window.getAdvice("weak"),
-            alertType: "warning"
-          })
-        );
-        break;
-      case (x >= 4):
-        alertDiv.append(
-          AlertTemplate({
-            text: window.getAdvice("strong"),
-            alertType: "warning"
-          })
-        );
-        break;
-    }
+    alertDiv.append(
+      AlertTemplate({
+        text: window.getAdviceMessage(),
+        alertType: "warning"
+      })
+    );
+
     event.preventDefault();
   });
 });

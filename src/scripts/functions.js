@@ -409,8 +409,16 @@ function getLastOperationsLength() {
   return lastOperations.length;
 }
 
-function getWrongCounter() {
-  return wrongCounter;
+function getAdviceMessage() {
+  console.log(rearrangementSteps);
+  switch (true) {
+    case (wrongCounter < 2):
+      return "Probier doch erstmal ein bisschen."
+    case (wrongCounter < 4):
+      return window.getAdvice("weak");
+    case (wrongCounter >= 4):
+      return window.getAdvice("strong");
+  }
 }
 
 function getAdvice(type) {
@@ -457,13 +465,28 @@ function checkIfEquationContainsRootOrPower(leftEquationPart, rightEquationPart)
 }
 
 function testMathStepsSimplify() {
-  const steps = mathsteps.simplifyExpression('(15+2*x)/2');
+  /*const steps = mathsteps.simplifyExpression('(15+2*x)/2');
   console.log(steps[steps.length - 1].newNode.toString());
+
+  const steps = mathsteps.solveEquation('2*(2+x) = 0');
+
+  steps.forEach(step => {
+    console.log("before change: " + step.oldEquation.ascii());  // e.g. before change: 2x + 3x = 35
+    console.log("change: " + step.changeType);                  // e.g. change: SIMPLIFY_LEFT_SIDE
+    console.log("after change: " + step.newEquation.ascii());   // e.g. after change: 5x = 35
+    console.log("# of substeps: " + step.substeps.length);      // e.g. # of substeps: 2
+  });*/
 }
+
+function resetWrongCounter() {
+  wrongCounter = 0;
+}
+
+window.resetWrongCounter = resetWrongCounter;
+window.getAdviceMessage = getAdviceMessage;
 window.checkIfEquationContainsRootOrPower = checkIfEquationContainsRootOrPower;
 window.testMathStepsSimplify = testMathStepsSimplify;
 window.getAdvice = getAdvice;
-window.getWrongCounter = getWrongCounter;
 window.getLastOperationsLength = getLastOperationsLength;
 window.resetLastOperation = resetLastOperation;
 window.generateFeedbackMessage = generateFeedbackMessage;
