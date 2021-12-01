@@ -303,7 +303,6 @@ function getWrongCounter() {
 }
 
 function getAdvice(type) {
-  console.log(rearrangementSteps);
   if (rearrangementSteps.length === 0) {
     return "Du hast die Gleichung bereits gelößt."
   } else {
@@ -340,6 +339,12 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
+function testMathStepsSimplify() {
+  const steps = mathsteps.simplifyExpression('(15+2*x)/2');
+  console.log(steps[steps.length - 1].newNode.toString());
+}
+
+window.testMathStepsSimplify = testMathStepsSimplify;
 window.getAdvice = getAdvice;
 window.getWrongCounter = getWrongCounter;
 window.getLastOperationsLength = getLastOperationsLength;
