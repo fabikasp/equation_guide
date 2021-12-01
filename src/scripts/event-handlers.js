@@ -197,6 +197,8 @@ $(document).ready(function () {
             alertType: "success"
           })
         );
+
+        window.generateRearrangementStepsArray(newLeftEquationPart, newRightEquationPart);
       } else {
         // Rearrangement step was evaluated successfully | generating feedback
         $("#advice-button").last().attr("disabled", window.checkIfEquationContainsRootOrPower(newLeftEquationPart, newRightEquationPart));

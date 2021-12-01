@@ -335,14 +335,14 @@ function generateNerdamerFeedbackMessage(
   }
 
   if (!optimalRearrangementStep) {
-    countLeftNumbersBeforeRearrangement = leftEquationPart.replace(/[^0-9]/g,"").length;
-    countRightNumbersBeforeRearrangement = rightEquationPart.replace(/[^0-9]/g,"").length;
+    countLeftNumbersBeforeRearrangement = leftEquationPart.replace(/[^0-9]/g, "").length;
+    countRightNumbersBeforeRearrangement = rightEquationPart.replace(/[^0-9]/g, "").length;
 
     rearrangedLeftEquationPart = performRearrangementStep(leftEquationPart, arithmeticOperation, rearrangementStep);
     rearrangedRightEquationPart = performRearrangementStep(rightEquationPart, arithmeticOperation, rearrangementStep);
 
-    countLeftNumbersAfterRearrangement = rearrangedLeftEquationPart.replace(/[^0-9]/g,"").length;
-    countRightNumbersAfterRearrangement = rearrangedRightEquationPart.replace(/[^0-9]/g,"").length;
+    countLeftNumbersAfterRearrangement = rearrangedLeftEquationPart.replace(/[^0-9]/g, "").length;
+    countRightNumbersAfterRearrangement = rearrangedRightEquationPart.replace(/[^0-9]/g, "").length;
 
     if (
       leftEquationPart.includes(variable)
@@ -410,47 +410,46 @@ function getLastOperationsLength() {
 }
 
 function getAdviceMessage() {
-  console.log(rearrangementSteps);
-  switch (true) {
-    case (wrongCounter < 2):
-      return "Probier doch erstmal ein bisschen."
-    case (wrongCounter < 4):
-      return window.getAdvice("weak");
-    case (wrongCounter >= 4):
-      return window.getAdvice("strong");
+  if (rearrangementSteps.length === 0) {
+    return "Du hast die Gleichung bereits gelößt."
+  } else {
+    switch (true) {
+      case (wrongCounter < 2):
+        return "Probier doch erstmal ein bisschen."
+      case (wrongCounter < 4):
+        return window.getAdvice("weak");
+      case (wrongCounter >= 4):
+        return window.getAdvice("strong");
+    }
   }
 }
 
 function getAdvice(type) {
-  if (rearrangementSteps.length === 0) {
-    return "Du hast die Gleichung bereits gelößt."
-  } else {
-    switch (type) {
-      case "weak":
-        switch (rearrangementSteps[getRandomInt(0, rearrangementSteps.length - 1)].type) {
-          case "add":
-            return "Versuch es doch mal mit addieren."
-          case "subtract":
-            return "Versuch es doch mal mit subtrahieren."
-          case "multiply":
-            return "Versuch es doch mal mit multiplizieren."
-          case "divide":
-            return "Versuch es doch mal mit dividieren."
-        }
-        break;
-      case "strong":
-        const arrayElement = rearrangementSteps[getRandomInt(0, rearrangementSteps.length - 1)];
-        switch (arrayElement.type) {
-          case "add":
-            return "Mit +" + arrayElement.value + " umzuformen, wird dich bestimmt weiterbringen."
-          case "subtract":
-            return "Mit -" + arrayElement.value + " umzuformen, wird dich bestimmt weiterbringen."
-          case "multiply":
-            return "Mit *" + arrayElement.value + " umzuformen, wird dich bestimmt weiterbringen."
-          case "divide":
-            return "Mit /" + arrayElement.value + " umzuformen, wird dich bestimmt weiterbringen."
-        }
-    }
+  switch (type) {
+    case "weak":
+      switch (rearrangementSteps[getRandomInt(0, rearrangementSteps.length - 1)].type) {
+        case "add":
+          return "Versuch es doch mal mit addieren."
+        case "subtract":
+          return "Versuch es doch mal mit subtrahieren."
+        case "multiply":
+          return "Versuch es doch mal mit multiplizieren."
+        case "divide":
+          return "Versuch es doch mal mit dividieren."
+      }
+      break;
+    case "strong":
+      const arrayElement = rearrangementSteps[getRandomInt(0, rearrangementSteps.length - 1)];
+      switch (arrayElement.type) {
+        case "add":
+          return "Mit +" + arrayElement.value + " umzuformen, wird dich bestimmt weiterbringen."
+        case "subtract":
+          return "Mit -" + arrayElement.value + " umzuformen, wird dich bestimmt weiterbringen."
+        case "multiply":
+          return "Mit *" + arrayElement.value + " umzuformen, wird dich bestimmt weiterbringen."
+        case "divide":
+          return "Mit /" + arrayElement.value + " umzuformen, wird dich bestimmt weiterbringen."
+      }
   }
 }
 
