@@ -303,6 +303,7 @@ function getWrongCounter() {
 }
 
 function getAdvice(type) {
+  console.log(rearrangementSteps);
   if (rearrangementSteps.length === 0) {
     return "Du hast die Gleichung bereits gelößt."
   } else {
@@ -320,8 +321,17 @@ function getAdvice(type) {
         }
         break;
       case "strong":
-        console.log(rearrangementSteps[getRandomInt(0, rearrangementSteps.length - 1)].value);
-        break;
+        const arrayElement = rearrangementSteps[getRandomInt(0, rearrangementSteps.length - 1)];
+        switch (arrayElement.type) {
+          case "add":
+            return "Mit +" + arrayElement.value + " umzuformen, wird dich bestimmt weiterbringen."
+          case "subtract":
+            return "Mit -" + arrayElement.value + " umzuformen, wird dich bestimmt weiterbringen."
+          case "multiply":
+            return "Mit *" + arrayElement.value + " umzuformen, wird dich bestimmt weiterbringen."
+          case "divide":
+            return "Mit /" + arrayElement.value + " umzuformen, wird dich bestimmt weiterbringen."
+        }
     }
   }
 }
