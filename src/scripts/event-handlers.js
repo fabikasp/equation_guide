@@ -6,7 +6,7 @@ $(document).ready(function () {
   $("#left-equation-input").focus();
 
   /* start button functionality */
-  $(document).on("click", "#start-button", function(event) {
+  $(document).on("click", "#start-button", function (event) {
     var leftEquationPart = $("#left-equation-input").val().toString().trim();
     var rightEquationPart = $("#right-equation-input").val().toString().trim();
     var variable = $("#variable-input").val().toString().trim();
@@ -65,7 +65,8 @@ $(document).ready(function () {
       && startEquationEvaluation.rightEquationValid
       && startEquationEvaluation.variableValid
     ) {
-      // Start equation was evaluated successfully | generate feedback array with mathsteps
+      // Start equation was evaluated successfully | generate feedback array with mathsteps | insert advice button
+      $(AdviceButtonTemplate).insertAfter($("#start-button"));
       window.generateRearrangementStepsArray(leftEquationPart, rightEquationPart, variable);
 
       $("#alert-div").empty();
@@ -90,7 +91,7 @@ $(document).ready(function () {
     event.preventDefault();
   });
 
-  $(document).on("input", ".arithmetic-operation-select", function(event) {
+  $(document).on("input", ".arithmetic-operation-select", function (event) {
     var arithmeticOperation = $(".arithmetic-operation-select option:selected").last().val().toString();
 
     disableRearrangementStep = ["^2", "sqrt"].includes(arithmeticOperation);
@@ -104,7 +105,7 @@ $(document).ready(function () {
     event.preventDefault();
   });
 
-  $(document).on("input", ".rearrangement-step-input", function(event) {
+  $(document).on("input", ".rearrangement-step-input", function (event) {
     var rearrangementStep = $(".rearrangement-step-input").last().val().toString().trim();
 
     if (rearrangementStep != "" && ["+", "-", "*", "/"].includes(rearrangementStep[0])) {
@@ -116,7 +117,7 @@ $(document).ready(function () {
   });
 
   /* rearrangement button functionality */
-  $(document).on("click", ".rearrangement-button", function(event) {
+  $(document).on("click", ".rearrangement-button", function (event) {
     var leftEquationPart = $(".left-rearrangement-input").last().val().toString().trim();
     var rightEquationPart = $(".right-rearrangement-input").last().val().toString().trim();
     var arithmeticOperation = $(".arithmetic-operation-select option:selected").last().val().toString();
@@ -137,7 +138,6 @@ $(document).ready(function () {
         $(".left-rearrangement-input").length > 0
         && $("#reset-button").length == 0
       ) {
-        $(ResetButtonTemplate).insertAfter($("#restart-button"));
         $(AdviceButtonTemplate).insertAfter($("#reset-button"));
       }
 
@@ -201,6 +201,11 @@ $(document).ready(function () {
         );
       } else {
         // Rearrangement step was evaluated successfully | generating feedback
+        if (!leftEquationPart.includes("sqrt") && !rightEquationPart.includes("sqrt")
+          && !leftEquationPart.includes("^2") && !rightEquationPart.includes("^2")) {
+          //$(AdviceButtonTemplate).insertAfter($("#start-button"));
+        }
+
         const feedbackMessage = window.generateFeedbackMessage(
           leftEquationPart,
           rightEquationPart,
@@ -258,7 +263,7 @@ $(document).ready(function () {
     event.preventDefault();
   });
 
-  $(document).on("click", "#help-button", function(event) {
+  $(document).on("click", "#help-button", function (event) {
     if ($("#help-button").text().trim() == "Hilfe ausschalten") {
       $("#help-button").text("Hilfe einschalten");
       $('[data-toggle="tooltip"]').tooltip("hide");
@@ -305,7 +310,7 @@ $(document).ready(function () {
 
     const x = getWrongCounter();
     switch (true) {
-      case (x <= 2):
+      case (x < 2):
         alertDiv.append(
           AlertTemplate({
             text: "Probier doch erstmal ein bisschen.",
@@ -313,7 +318,7 @@ $(document).ready(function () {
           })
         );
         break;
-      case (x <= 4):
+      case (x < 4):
         alertDiv.append(
           AlertTemplate({
             text: window.getAdvice("weak"),
@@ -321,7 +326,7 @@ $(document).ready(function () {
           })
         );
         break;
-      case (x > 4):
+      case (x >= 4):
         alertDiv.append(
           AlertTemplate({
             text: window.getAdvice("strong"),
