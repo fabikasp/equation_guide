@@ -254,8 +254,31 @@ function generateRearrangementStepsArray(leftEquationPart, rightEquationPart) {
   });
 }
 
-function generateFeedbackMessage(arithmeticOperation, rearrangementStep) {
-  let feedbackMessage = "";
+function generateFeedbackMessage(
+  leftEquationPart,
+  rightEquationPart,
+  variable,
+  arithmeticOperation,
+  rearrangementStep
+) {
+  if (
+    leftEquationPart.includes("sqrt") || leftEquationPart.includes("^2")
+    || rightEquationPart.includes("sqrt") || rightEquationPart.includes("^2")
+  ) {
+    return generateNerdamerFeedbackMessage(
+      leftEquationPart,
+      rightEquationPart,
+      variable,
+      arithmeticOperation,
+      rearrangementStep
+    );
+  }
+
+  return generateMathstepsFeedbackMessage(arithmeticOperation, rearrangementStep);
+}
+
+function generateMathstepsFeedbackMessage(arithmeticOperation, rearrangementStep) {
+  let feedbackMessage = {};
   let arrayElement;
   const arithmeticOperatorToString = new Map([["+", "add"], ["-", "subtract"], ["*", "multiply"], ["/", "divide"]]);
 
@@ -269,10 +292,7 @@ function generateFeedbackMessage(arithmeticOperation, rearrangementStep) {
     }
   } else {
     if (Number(rearrangementStep) === Number(arrayElement.value)) {
-      if (rearrangementSteps.length === 1) {
-        wrongCounter = 0;
-        feedbackMessage = {message: "Die Gleichung wurde erfolgreich umgeformt.", type: "done"}
-      } else {
+      if (rearrangementSteps.length > 1) {
         wrongCounter = 0;
         feedbackMessage = {
           message: "Sehr gut! Du hast einen der optimalen Umformungsschritte gefunden.",
@@ -287,7 +307,98 @@ function generateFeedbackMessage(arithmeticOperation, rearrangementStep) {
       }
     }
   }
+
   return feedbackMessage;
+}
+
+function generateNerdamerFeedbackMessage(
+  leftEquationPart,
+  rightEquationPart,
+  variable,
+  arithmeticOperation,
+  rearrangementStep
+) {
+  let optimalRearrangementStep = false;
+
+  if (
+    (leftEquationPart.includes("^2") || rightEquationPart.includes("^2"))
+    && arithmeticOperation == "sqrt"
+  ) {
+    optimalRearrangementStep = true;
+  }
+
+  if (
+    (leftEquationPart.includes("sqrt") || rightEquationPart.includes("sqrt"))
+    && arithmeticOperation == "^2"
+  ) {
+    optimalRearrangementStep = true;
+  }
+
+  if (!optimalRearrangementStep) {
+    countLeftNumbersBeforeRearrangement = leftEquationPart.replace(/[^0-9]/g,"").length;
+    countRightNumbersBeforeRearrangement = rightEquationPart.replace(/[^0-9]/g,"").length;
+
+    rearrangedLeftEquationPart = performRearrangementStep(leftEquationPart, arithmeticOperation, rearrangementStep);
+    rearrangedRightEquationPart = performRearrangementStep(rightEquationPart, arithmeticOperation, rearrangementStep);
+
+    countLeftNumbersAfterRearrangement = rearrangedLeftEquationPart.replace(/[^0-9]/g,"").length;
+    countRightNumbersAfterRearrangement = rearrangedRightEquationPart.replace(/[^0-9]/g,"").length;
+
+    if (
+      leftEquationPart.includes(variable)
+      && !rightEquationPart.includes(variable)
+      && countLeftNumbersAfterRearrangement < countLeftNumbersBeforeRearrangement
+    ) {
+      optimalRearrangementStep = true;
+    }
+
+    if (
+      rightEquationPart.includes(variable)
+      && !leftEquationPart.includes(variable)
+      && countRightNumbersAfterRearrangement < countRightNumbersBeforeRearrangement
+    ) {
+      optimalRearrangementStep = true;
+    }
+
+    if (leftEquationPart.includes(variable) && rightEquationPart.includes(variable)) {
+      if (
+        rearrangedLeftEquationPart.includes(variable)
+        && !rearrangedRightEquationPart.includes(variable)
+      ) {
+        optimalRearrangementStep = true;
+      }
+
+      if (
+        rearrangedLeftEquationPart.includes(variable)
+        && countLeftNumbersAfterRearrangement < countLeftNumbersBeforeRearrangement
+      ) {
+        optimalRearrangementStep = true;
+      }
+
+      if (
+        rearrangedRightEquationPart.includes(variable)
+        && !rearrangedLeftEquationPart.includes(variable)
+      ) {
+        optimalRearrangementStep = true;
+      }
+
+      if (
+        rearrangedRightEquationPart.includes(variable)
+        && countRightNumbersAfterRearrangement < countRightNumbersBeforeRearrangement
+      ) {
+        optimalRearrangementStep = true;
+      }
+    }
+  }
+
+  if (optimalRearrangementStep) {
+    return {
+      message: "Sehr gut! Du hast einen der optimalen Umformungsschritte gefunden.",
+      type: "info"
+    }
+  }
+
+  return {};
 }
 
 function resetLastOperation() {
