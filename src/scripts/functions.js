@@ -450,11 +450,17 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
+
+function checkIfEquationContainsRootOrPower(leftEquationPart, rightEquationPart) {
+  return !(!leftEquationPart.includes("sqrt") && !rightEquationPart.includes("sqrt")
+    && !leftEquationPart.includes("^2") && !rightEquationPart.includes("^2"));
+}
+
 function testMathStepsSimplify() {
   const steps = mathsteps.simplifyExpression('(15+2*x)/2');
   console.log(steps[steps.length - 1].newNode.toString());
 }
-
+window.checkIfEquationContainsRootOrPower = checkIfEquationContainsRootOrPower;
 window.testMathStepsSimplify = testMathStepsSimplify;
 window.getAdvice = getAdvice;
 window.getWrongCounter = getWrongCounter;

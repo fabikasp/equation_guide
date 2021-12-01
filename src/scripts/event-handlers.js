@@ -67,6 +67,7 @@ $(document).ready(function () {
     ) {
       // Start equation was evaluated successfully | generate feedback array with mathsteps | insert advice button
       $(AdviceButtonTemplate).insertAfter($("#start-button"));
+      $("#advice-button").last().attr("disabled", window.checkIfEquationContainsRootOrPower(leftEquationPart, rightEquationPart));
       window.generateRearrangementStepsArray(leftEquationPart, rightEquationPart, variable);
 
       $("#alert-div").empty();
@@ -201,10 +202,7 @@ $(document).ready(function () {
         );
       } else {
         // Rearrangement step was evaluated successfully | generating feedback
-        if (!leftEquationPart.includes("sqrt") && !rightEquationPart.includes("sqrt")
-          && !leftEquationPart.includes("^2") && !rightEquationPart.includes("^2")) {
-          //$(AdviceButtonTemplate).insertAfter($("#start-button"));
-        }
+        $("#advice-button").last().attr("disabled", window.checkIfEquationContainsRootOrPower(newLeftEquationPart, newRightEquationPart));
 
         const feedbackMessage = window.generateFeedbackMessage(
           leftEquationPart,

@@ -154,9 +154,9 @@ ResetButtonTemplate = `
 `
 
 AdviceButtonTemplate = `
-  <a
+  <button
     id="advice-button"
-    class="btn btn-success equation-guide-button ml-4"
+    class="btn btn-success equation-guide-button ml-4 advice-button"
                     style="width: 10%"
     href="#"
     data-toggle="tooltip"
@@ -166,7 +166,7 @@ AdviceButtonTemplate = `
     "
   >
     Tipp
-  </a>
+  </button>
 `
 
 AlertTemplate = ({ text, alertType }) => `
