@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  $(StartButtonTemplate).insertAfter($("#back-button"));
+  $(StartButtonTemplate).insertBefore($("#help-button"));
 
   $('[data-toggle="tooltip"]').tooltip("enable");
 
