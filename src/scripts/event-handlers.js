@@ -135,7 +135,6 @@ $(document).ready(function () {
     );
 
     if (rearrangementStepEvaluation === "") {
-      console.log($("#reset-button").length);
       if (
         $(".left-rearrangement-input").length > 0
         && $("#reset-button").length == 0
