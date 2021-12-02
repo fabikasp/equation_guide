@@ -1,6 +1,7 @@
 const mathsteps = require("mathsteps");
 let rearrangementSteps = [];
 let lastOperations = [];
+let wrongCounter = 0;
 
 function simplifyExpression(expression) {
   expression = expression.replace(",", ".");
@@ -284,6 +285,7 @@ function generateMathstepsFeedbackMessage(arithmeticOperation, rearrangementStep
   arrayElement = rearrangementSteps.find(e => e.type === arithmeticOperatorToString.get(arithmeticOperation));
 
   if (arrayElement === undefined) {
+    wrongCounter += 1;
     feedbackMessage = {
       message: "Das war leider kein optimaler Umformungsschritt. Du kannst den Schritt rückgängig oder einfach weiter machen.",
       type: "warning"
@@ -291,12 +293,14 @@ function generateMathstepsFeedbackMessage(arithmeticOperation, rearrangementStep
   } else {
     if (Number(rearrangementStep) === Number(arrayElement.value)) {
       if (rearrangementSteps.length > 1) {
+        wrongCounter = 0;
         feedbackMessage = {
           message: "Sehr gut! Du hast einen der optimalen Umformungsschritte gefunden.",
           type: "info"
         }
       }
     } else {
+      wrongCounter += 1;
       feedbackMessage = {
         message: "Gut! Das ist der richtige Weg, aber versuch es vielleicht mit einem anderen Wert.",
         type: "warning"
@@ -331,14 +335,14 @@ function generateNerdamerFeedbackMessage(
   }
 
   if (!optimalRearrangementStep) {
-    countLeftNumbersBeforeRearrangement = leftEquationPart.replace(/[^0-9]/g,"").length;
-    countRightNumbersBeforeRearrangement = rightEquationPart.replace(/[^0-9]/g,"").length;
+    countLeftNumbersBeforeRearrangement = leftEquationPart.replace(/[^0-9]/g, "").length;
+    countRightNumbersBeforeRearrangement = rightEquationPart.replace(/[^0-9]/g, "").length;
 
     rearrangedLeftEquationPart = performRearrangementStep(leftEquationPart, arithmeticOperation, rearrangementStep);
     rearrangedRightEquationPart = performRearrangementStep(rightEquationPart, arithmeticOperation, rearrangementStep);
 
-    countLeftNumbersAfterRearrangement = rearrangedLeftEquationPart.replace(/[^0-9]/g,"").length;
-    countRightNumbersAfterRearrangement = rearrangedRightEquationPart.replace(/[^0-9]/g,"").length;
+    countLeftNumbersAfterRearrangement = rearrangedLeftEquationPart.replace(/[^0-9]/g, "").length;
+    countRightNumbersAfterRearrangement = rearrangedRightEquationPart.replace(/[^0-9]/g, "").length;
 
     if (
       leftEquationPart.includes(variable)
@@ -405,6 +409,83 @@ function getLastOperationsLength() {
   return lastOperations.length;
 }
 
+function getAdviceMessage() {
+  if (rearrangementSteps.length === 0) {
+    return "Du hast die Gleichung bereits gelößt."
+  } else {
+    switch (true) {
+      case (wrongCounter < 2):
+        return "Probier doch erstmal ein bisschen."
+      case (wrongCounter < 4):
+        return window.getAdvice("weak");
+      case (wrongCounter >= 4):
+        return window.getAdvice("strong");
+    }
+  }
+}
+
+function getAdvice(type) {
+  switch (type) {
+    case "weak":
+      switch (rearrangementSteps[getRandomInt(0, rearrangementSteps.length - 1)].type) {
+        case "add":
+          return "Versuch es doch mal mit addieren."
+        case "subtract":
+          return "Versuch es doch mal mit subtrahieren."
+        case "multiply":
+          return "Versuch es doch mal mit multiplizieren."
+        case "divide":
+          return "Versuch es doch mal mit dividieren."
+      }
+      break;
+    case "strong":
+      const arrayElement = rearrangementSteps[getRandomInt(0, rearrangementSteps.length - 1)];
+      switch (arrayElement.type) {
+        case "add":
+          return "Mit +" + arrayElement.value + " umzuformen, wird dich bestimmt weiterbringen."
+        case "subtract":
+          return "Mit -" + arrayElement.value + " umzuformen, wird dich bestimmt weiterbringen."
+        case "multiply":
+          return "Mit *" + arrayElement.value + " umzuformen, wird dich bestimmt weiterbringen."
+        case "divide":
+          return "Mit /" + arrayElement.value + " umzuformen, wird dich bestimmt weiterbringen."
+      }
+  }
+}
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
+
+function checkIfEquationContainsRootOrPower(leftEquationPart, rightEquationPart) {
+  return !(!leftEquationPart.includes("sqrt") && !rightEquationPart.includes("sqrt")
+    && !leftEquationPart.includes("^2") && !rightEquationPart.includes("^2"));
+}
+
+function testMathStepsSimplify() {
+  /*const steps = mathsteps.simplifyExpression('(15+2*x)/2');
+  console.log(steps[steps.length - 1].newNode.toString());
+
+  const steps = mathsteps.solveEquation('2*(2+x) = 0');
+
+  steps.forEach(step => {
+    console.log("before change: " + step.oldEquation.ascii());  // e.g. before change: 2x + 3x = 35
+    console.log("change: " + step.changeType);                  // e.g. change: SIMPLIFY_LEFT_SIDE
+    console.log("after change: " + step.newEquation.ascii());   // e.g. after change: 5x = 35
+    console.log("# of substeps: " + step.substeps.length);      // e.g. # of substeps: 2
+  });*/
+}
+
+function resetWrongCounter() {
+  wrongCounter = 0;
+}
+
+window.resetWrongCounter = resetWrongCounter;
+window.getAdviceMessage = getAdviceMessage;
+window.checkIfEquationContainsRootOrPower = checkIfEquationContainsRootOrPower;
+window.testMathStepsSimplify = testMathStepsSimplify;
+window.getAdvice = getAdvice;
 window.getLastOperationsLength = getLastOperationsLength;
 window.resetLastOperation = resetLastOperation;
 window.generateFeedbackMessage = generateFeedbackMessage;

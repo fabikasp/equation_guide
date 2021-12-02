@@ -109,6 +109,7 @@ StartButtonTemplate = `
   <button
     id="start-button"
     class="btn btn-primary equation-guide-button"
+                    style="width: 10%"
     data-toggle="tooltip"
     data-placement="bottom"
     title="
@@ -124,6 +125,7 @@ RestartButtonTemplate = `
   <button
     id="restart-button"
     class="btn btn-primary equation-guide-button"
+                    style="width: 10%"
     data-toggle="tooltip"
     data-placement="bottom"
     title="
@@ -139,6 +141,7 @@ ResetButtonTemplate = `
   <a
     id="reset-button"
     class="btn btn-dark equation-guide-button ml-4"
+                    style="width: 10%"
     href="#"
     data-toggle="tooltip"
     data-placement="bottom"
@@ -148,6 +151,22 @@ ResetButtonTemplate = `
   >
     Zurücksetzen
   </a>
+`
+
+AdviceButtonTemplate = `
+  <button
+    id="advice-button"
+    class="btn btn-success equation-guide-button ml-4 advice-button"
+                    style="width: 10%"
+    href="#"
+    data-toggle="tooltip"
+    data-placement="bottom"
+    title="
+      Gibt dir einen zufälligen Tipp, falls du nicht weiter kommst.
+    "
+  >
+    Tipp
+  </button>
 `
 
 AlertTemplate = ({ text, alertType }) => `
