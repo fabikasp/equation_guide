@@ -67,7 +67,7 @@ $(document).ready(function () {
     ) {
       // Start equation was evaluated successfully | generate feedback array with mathsteps | insert advice button
       $(AdviceButtonTemplate).insertAfter($("#start-button"));
-      $("#advice-button").last().attr("disabled", window.checkIfEquationContainsRootOrPower(leftEquationPart, rightEquationPart));
+
       window.generateRearrangementStepsArray(leftEquationPart, rightEquationPart, variable);
 
       $("#alert-div").empty();
@@ -200,9 +200,6 @@ $(document).ready(function () {
 
         window.generateRearrangementStepsArray(newLeftEquationPart, newRightEquationPart);
       } else {
-        // Rearrangement step was evaluated successfully | generating feedback
-        $("#advice-button").last().attr("disabled", window.checkIfEquationContainsRootOrPower(newLeftEquationPart, newRightEquationPart));
-
         const feedbackMessage = window.generateFeedbackMessage(
           leftEquationPart,
           rightEquationPart,
@@ -303,6 +300,9 @@ $(document).ready(function () {
   });
 
   $(document).on("click", "#advice-button", function (event) {
+    let leftEquationPart = $('.left-rearrangement-input').last().val();
+    let rightEquationPart = $('.right-rearrangement-input').last().val();
+
     const alertDiv = $("#alert-div");
 
     if (alertDiv[0].lastElementChild !== null) {
@@ -313,7 +313,7 @@ $(document).ready(function () {
 
     alertDiv.append(
       AlertTemplate({
-        text: window.getAdviceMessage(),
+        text: window.getAdviceMessage(leftEquationPart, rightEquationPart),
         alertType: "warning",
       })
     );
