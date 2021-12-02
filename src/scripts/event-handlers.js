@@ -135,11 +135,12 @@ $(document).ready(function () {
     );
 
     if (rearrangementStepEvaluation === "") {
+      console.log($("#reset-button").length);
       if (
         $(".left-rearrangement-input").length > 0
         && $("#reset-button").length == 0
       ) {
-        $(AdviceButtonTemplate).insertAfter($("#reset-button"));
+        $(ResetButtonTemplate).insertAfter($("#restart-button"));
       }
 
       $(".rearrangement-step-input").last().removeClass("is-invalid");
@@ -305,16 +306,20 @@ $(document).ready(function () {
   $(document).on("click", "#advice-button", function (event) {
     const alertDiv = $("#alert-div");
 
-    if (alertDiv[0].children.length > 1) {
-      alertDiv[0].lastElementChild.remove();
+    if (alertDiv[0].lastElementChild !== null) {
+      if (alertDiv[0].lastElementChild.classList.contains("advice")) {
+        alertDiv[0].lastElementChild.remove();
+      }
     }
 
     alertDiv.append(
       AlertTemplate({
         text: window.getAdviceMessage(),
-        alertType: "warning"
+        alertType: "warning",
       })
     );
+
+    alertDiv[0].lastElementChild.classList.add("advice");
 
     event.preventDefault();
   });
