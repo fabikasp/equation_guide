@@ -2,6 +2,7 @@ const mathsteps = require("mathsteps");
 let rearrangementSteps = [];
 let lastOperations = [];
 let wrongCounter = 0;
+let adviceButtonClickCounter = 0;
 
 function simplifyExpression(expression) {
   expression = expression.replace(",", ".");
@@ -392,6 +393,8 @@ function generateNerdamerFeedbackMessage(
   }
 
   if (optimalRearrangementStep) {
+    adviceButtonClickCounter = 0;
+
     return {
       message: "Sehr gut! Du hast einen der optimalen Umformungsschritte gefunden.",
       type: "info"
@@ -410,9 +413,19 @@ function getLastOperationsLength() {
 }
 
 function getAdviceMessage(leftEquationPart, rightEquationPart) {
+  adviceButtonClickCounter += 1;
+
   if (equationContainsRoot(leftEquationPart, rightEquationPart)) {
+    if (adviceButtonClickCounter < 2) {
+      return "Versuch es erst einmal selbst.";
+    }
+
     return "Versuch es doch mal mit Potenzieren";
   } else if (equationContainsPower(leftEquationPart, rightEquationPart)) {
+    if (adviceButtonClickCounter < 2) {
+      return "Versuch es erst einmal selbst.";
+    }
+
     return "Versuch es doch mal mit Wurzelziehen";
   }
 
@@ -421,7 +434,7 @@ function getAdviceMessage(leftEquationPart, rightEquationPart) {
   } else {
     switch (true) {
       case (wrongCounter < 2):
-        return "Probier doch erstmal ein bisschen.";
+        return "Versuch es erst einmal selbst.";
       case (wrongCounter < 4):
         return getAdvice("weak");
       case (wrongCounter >= 4):
@@ -475,7 +488,12 @@ function resetWrongCounter() {
   wrongCounter = 0;
 }
 
+function resetAdviceButtonClickCounter() {
+  adviceButtonClickCounter = 0;
+}
+
 window.resetWrongCounter = resetWrongCounter;
+window.resetAdviceButtonClickCounter = resetAdviceButtonClickCounter;
 window.getAdviceMessage = getAdviceMessage;
 window.getLastOperationsLength = getLastOperationsLength;
 window.resetLastOperation = resetLastOperation;

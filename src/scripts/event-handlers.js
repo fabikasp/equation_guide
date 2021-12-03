@@ -237,6 +237,8 @@ $(document).ready(function () {
   /* restart button functionality */
   $(document).on("click", "#restart-button", function (event) {
     window.resetWrongCounter();
+    window.resetAdviceButtonClickCounter();
+
     $("#alert-div").empty();
 
     $(".equation-rearrangement-step-div").remove();
@@ -314,7 +316,7 @@ $(document).ready(function () {
     alertDiv.append(
       AlertTemplate({
         text: window.getAdviceMessage(leftEquationPart, rightEquationPart),
-        alertType: "warning",
+        alertType: "primary",
       })
     );
 
