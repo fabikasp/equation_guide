@@ -26,18 +26,13 @@ function testMathStepsSimplify() {
   console.log((/([^0-9+*\/\-x^[sqrt]()])/g).test('sqrt(x)'));
 
 
-
- /* const steps = mathsteps.simplifyExpression('4*(x+20)/4');
-  console.log(steps);
-  console.log(steps[steps.length - 1].newNode.toString());
-  console.log(nerdamer("simplify(" + "((3)/2)" + ")").toString());*/
-
-  /*steps.forEach(step => {
+  const steps = mathsteps.solveEquation('15/2+x=15');
+  steps.forEach(step => {
     console.log("before change: " + step.oldEquation.ascii());  // e.g. before change: 2x + 3x = 35
     console.log("change: " + step.changeType);                  // e.g. change: SIMPLIFY_LEFT_SIDE
     console.log("after change: " + step.newEquation.ascii());   // e.g. after change: 5x = 35
     console.log("# of substeps: " + step.substeps.length);      // e.g. # of substeps: 2
-  });*/
+  });
 }
 
 function getEquationResult(leftEquationPart, rightEquationPart, variable) {
@@ -271,19 +266,39 @@ function generateRearrangementStepsArray(leftEquationPart, rightEquationPart) {
   steps.forEach(step => {
     switch (step.changeType) {
       case "ADD_TO_BOTH_SIDES":
-        rearrangementSteps.push({type: "add", value: step.newEquation.leftNode.args[1].value});
+        if (step.newEquation.leftNode.args[1].value !== undefined) {
+          rearrangementSteps.push({type: "add", value: step.newEquation.leftNode.args[1].value});
+        } else {
+          rearrangementSteps.push({type: "add", value: step.newEquation.leftNode.args[1].args[0] + "/" + step.newEquation.leftNode.args[1].args[1]});
+        }
         break;
       case "SUBTRACT_FROM_BOTH_SIDES":
-        rearrangementSteps.push({type: "subtract", value: step.newEquation.leftNode.args[1].value});
+        if (step.newEquation.leftNode.args[1].value !== undefined) {
+          rearrangementSteps.push({type: "subtract", value: step.newEquation.leftNode.args[1].value});
+        } else {
+          rearrangementSteps.push({type: "subtract", value: step.newEquation.leftNode.args[1].args[0] + "/" + step.newEquation.leftNode.args[1].args[1]});
+        }
         break;
       case "MULTIPLY_BOTH_SIDES_BY_INVERSE_FRACTION":
-        rearrangementSteps.push({type: "multiply", value: step.newEquation.leftNode.args[1].value});
+        if (step.newEquation.leftNode.args[1].value !== undefined) {
+          rearrangementSteps.push({type: "multiply", value: step.newEquation.leftNode.args[1].value});
+        } else {
+          rearrangementSteps.push({type: "multiply", value: step.newEquation.leftNode.args[1].args[0] + "/" + step.newEquation.leftNode.args[1].args[1]});
+        }
         break;
       case "MULTIPLY_TO_BOTH_SIDES":
-        rearrangementSteps.push({type: "multiply", value: step.newEquation.leftNode.args[1].value});
+        if (step.newEquation.leftNode.args[1].value !== undefined) {
+          rearrangementSteps.push({type: "multiply", value: step.newEquation.leftNode.args[1].value});
+        } else {
+          rearrangementSteps.push({type: "multiply", value: step.newEquation.leftNode.args[1].args[0] + "/" + step.newEquation.leftNode.args[1].args[1]});
+        }
         break;
       case "DIVIDE_FROM_BOTH_SIDES":
-        rearrangementSteps.push({type: "divide", value: step.newEquation.leftNode.args[1].value});
+        if (step.newEquation.leftNode.args[1].value !== undefined) {
+          rearrangementSteps.push({type: "divide", value: step.newEquation.leftNode.args[1].value});
+        } else {
+          rearrangementSteps.push({type: "divide", value: step.newEquation.leftNode.args[1].args[0] + "/" + step.newEquation.leftNode.args[1].args[1]});
+        }
         break;
     }
   });
@@ -447,6 +462,7 @@ function getLastOperationsLength() {
 }
 
 function getAdviceMessage(leftEquationPart, rightEquationPart) {
+  console.log(rearrangementSteps);
   adviceButtonClickCounter += 1;
 
   if (equationContainsRoot(leftEquationPart, rightEquationPart)) {
