@@ -1,12 +1,12 @@
 $(document).ready(function () {
-  $(StartButtonTemplate).insertAfter($("#back-button"));
+  $(StartButtonTemplate).insertBefore($("#help-button"));
 
   $('[data-toggle="tooltip"]').tooltip("enable");
 
   $("#left-equation-input").focus();
 
   /* start button functionality */
-  $(document).on("click", "#start-button", function(event) {
+  $(document).on("click", "#start-button", function (event) {
     var leftEquationPart = $("#left-equation-input").val().toString().trim();
     var rightEquationPart = $("#right-equation-input").val().toString().trim();
     var variable = $("#variable-input").val().toString().trim();
@@ -65,7 +65,9 @@ $(document).ready(function () {
       && startEquationEvaluation.rightEquationValid
       && startEquationEvaluation.variableValid
     ) {
-      // Start equation was evaluated successfully | generate feedback array with mathsteps
+      // Start equation was evaluated successfully | generate feedback array with mathsteps | insert advice button
+      $(AdviceButtonTemplate).insertAfter($("#start-button"));
+
       window.generateRearrangementStepsArray(leftEquationPart, rightEquationPart, variable);
 
       $("#alert-div").empty();
@@ -90,7 +92,7 @@ $(document).ready(function () {
     event.preventDefault();
   });
 
-  $(document).on("input", ".arithmetic-operation-select", function(event) {
+  $(document).on("input", ".arithmetic-operation-select", function (event) {
     var arithmeticOperation = $(".arithmetic-operation-select option:selected").last().val().toString();
 
     disableRearrangementStep = ["^2", "sqrt"].includes(arithmeticOperation);
@@ -104,7 +106,7 @@ $(document).ready(function () {
     event.preventDefault();
   });
 
-  $(document).on("input", ".rearrangement-step-input", function(event) {
+  $(document).on("input", ".rearrangement-step-input", function (event) {
     var rearrangementStep = $(".rearrangement-step-input").last().val().toString().trim();
 
     if (rearrangementStep != "" && ["+", "-", "*", "/"].includes(rearrangementStep[0])) {
@@ -116,7 +118,7 @@ $(document).ready(function () {
   });
 
   /* rearrangement button functionality */
-  $(document).on("click", ".rearrangement-button", function(event) {
+  $(document).on("click", ".rearrangement-button", function (event) {
     var leftEquationPart = $(".left-rearrangement-input").last().val().toString().trim();
     var rightEquationPart = $(".right-rearrangement-input").last().val().toString().trim();
     var arithmeticOperation = $(".arithmetic-operation-select option:selected").last().val().toString();
@@ -167,9 +169,6 @@ $(document).ready(function () {
         })
       );
 
-      // Generate new rearrangementSteps array
-      window.generateRearrangementStepsArray(newLeftEquationPart, newRightEquationPart);
-
       if ($("#help-button").text().trim() == "Hilfe ausschalten") {
         $('[data-toggle="tooltip"]').tooltip("enable");
       }
@@ -198,15 +197,19 @@ $(document).ready(function () {
             alertType: "success"
           })
         );
+
+        window.generateRearrangementStepsArray(newLeftEquationPart, newRightEquationPart);
       } else {
-        // Rearrangement step was evaluated successfully | generating feedback
-        const feedbackMessage = window.generateFeedbackMessage(
+       const feedbackMessage = window.generateFeedbackMessage(
           leftEquationPart,
           rightEquationPart,
           variable,
           arithmeticOperation,
           rearrangementStep
         );
+
+        // Generate new rearrangementSteps array
+        window.generateRearrangementStepsArray(newLeftEquationPart, newRightEquationPart);
 
         if (!jQuery.isEmptyObject(feedbackMessage)) {
           $("#alert-div").append(
@@ -233,6 +236,9 @@ $(document).ready(function () {
 
   /* restart button functionality */
   $(document).on("click", "#restart-button", function (event) {
+    window.resetWrongCounter();
+    window.resetAdviceButtonClickCounter();
+
     $("#alert-div").empty();
 
     $(".equation-rearrangement-step-div").remove();
@@ -248,6 +254,7 @@ $(document).ready(function () {
 
     $("#restart-button").replaceWith(StartButtonTemplate);
     $("#reset-button").remove();
+    $("#advice-button").remove();
 
     if ($("#help-button").text().trim() == "Hilfe ausschalten") {
       $('[data-toggle="tooltip"]').tooltip("enable");
@@ -256,7 +263,7 @@ $(document).ready(function () {
     event.preventDefault();
   });
 
-  $(document).on("click", "#help-button", function(event) {
+  $(document).on("click", "#help-button", function (event) {
     window.testMathStepsSimplify();
     if ($("#help-button").text().trim() == "Hilfe ausschalten") {
       $("#help-button").text("Hilfe einschalten");
@@ -292,6 +299,30 @@ $(document).ready(function () {
       window.generateRearrangementStepsArray(leftSide, rightSide);
       window.resetLastOperation();
     }
+    event.preventDefault();
+  });
+
+  $(document).on("click", "#advice-button", function (event) {
+    let leftEquationPart = $('.left-rearrangement-input').last().val();
+    let rightEquationPart = $('.right-rearrangement-input').last().val();
+
+    const alertDiv = $("#alert-div");
+
+    if (alertDiv[0].lastElementChild !== null) {
+      if (alertDiv[0].lastElementChild.classList.contains("advice")) {
+        alertDiv[0].lastElementChild.remove();
+      }
+    }
+
+    alertDiv.append(
+      AlertTemplate({
+        text: window.getAdviceMessage(leftEquationPart, rightEquationPart),
+        alertType: "primary",
+      })
+    );
+
+    alertDiv[0].lastElementChild.classList.add("advice");
+
     event.preventDefault();
   });
 });
