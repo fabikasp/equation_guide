@@ -3,13 +3,39 @@ let rearrangementSteps = [];
 let lastOperations = [];
 
 function simplifyExpression(expression) {
-  expression = expression.replace(",", ".");
-
-  try {
-    return nerdamer("simplify(" + expression + ")").toString();
-  } catch (e) {
-    return expression;
+  if (expression.includes("sqrt")) {
+    try {
+      return nerdamer("simplify(" + expression + ")").toString();
+    } catch (e) {
+      return expression;
+    }
+  } else {
+    const steps = mathsteps.simplifyExpression(expression);
+    if (steps.length === 0) {
+      return expression.replace(/[()]/g, '');
+    } else {
+      return (steps[steps.length - 1].newNode.toString()).replace(/[()]/g, '');
+    }
   }
+}
+
+function testMathStepsSimplify() {
+  console.log((/([^0-9+*\/\-x])/g).test('st2'));
+  console.log((/([^0-9+*\/\-x^[sqrt]()])/g).test('sqrt(x)'));
+
+
+
+ /* const steps = mathsteps.simplifyExpression('4*(x+20)/4');
+  console.log(steps);
+  console.log(steps[steps.length - 1].newNode.toString());
+  console.log(nerdamer("simplify(" + "((3)/2)" + ")").toString());*/
+
+  /*steps.forEach(step => {
+    console.log("before change: " + step.oldEquation.ascii());  // e.g. before change: 2x + 3x = 35
+    console.log("change: " + step.changeType);                  // e.g. change: SIMPLIFY_LEFT_SIDE
+    console.log("after change: " + step.newEquation.ascii());   // e.g. after change: 5x = 35
+    console.log("# of substeps: " + step.substeps.length);      // e.g. # of substeps: 2
+  });*/
 }
 
 function getEquationResult(leftEquationPart, rightEquationPart, variable) {
@@ -161,15 +187,15 @@ function evaluateRearrangementStep(
   arithmeticOperation,
   rearrangementStep
 ) {
-  if (rearrangementStep == "") {
+  if (rearrangementStep === "") {
     if (!["^2", "sqrt"].includes(arithmeticOperation)) {
       return "Der Umformungsschritt darf nicht leer sein.";
     }
   } else if (rearrangementStep.includes("=")) {
     return "Der Umformungsschritt darf kein Gleichheitszeichen enthalten.";
-  } else if (rearrangementStep == "0" && arithmeticOperation == "*") {
+  } else if (rearrangementStep === "0" && arithmeticOperation === "*") {
     return "Die Multiplikation mit 0 wird nicht unterstützt.";
-  } else if (rearrangementStep == "0" && arithmeticOperation == "/") {
+  } else if (rearrangementStep === "0" && arithmeticOperation === "/") {
     return "Die Division durch 0 wird nicht unterstützt.";
   }
 
@@ -188,22 +214,30 @@ function evaluateRearrangementStep(
 
     simplifiedLeftEquationPart = simplifyExpression(leftRearrangementStep);
 
+    if ((/([^0-9+*\/\-x^[sqrt]()])/g).test(leftRearrangementStep) || (/([^0-9+*\/\-x^[sqrt]()])/g).test(rightRearrangementStep)) {
+      return "Der Umformungsschritt wird nicht unterstützt.";
+    }
+
+    /*
     if (
-      arithmeticOperation != "sqrt"
-      && simplifiedLeftEquationPart == leftRearrangementStep
+      arithmeticOperation !== "sqrt"
+      && simplifiedLeftEquationPart === leftRearrangementStep
     ) {
+      console.log("1");
       return "Der Umformungsschritt wird nicht unterstützt.";
     }
 
     simplifiedRightEquationPart = simplifyExpression(rightRearrangementStep);
 
     if (
-      arithmeticOperation != "sqrt"
-      && simplifiedRightEquationPart == rightRearrangementStep
+      arithmeticOperation !== "sqrt"
+      && simplifiedRightEquationPart === rightRearrangementStep
     ) {
+      console.log("2");
       return "Der Umformungsschritt wird nicht unterstützt.";
-    }
+    }*/
   } catch (e) {
+    console.log("3");
     return "Der Umformungsschritt wird nicht unterstützt.";
   }
 
@@ -217,7 +251,7 @@ function performRearrangementStep(
   arithmeticOperation,
   rearrangementStep
 ) {
-  if (arithmeticOperation == "sqrt") {
+  if (arithmeticOperation === "sqrt") {
     return simplifyExpression("sqrt(" + expression + ")");
   }
 
@@ -331,14 +365,14 @@ function generateNerdamerFeedbackMessage(
   }
 
   if (!optimalRearrangementStep) {
-    countLeftNumbersBeforeRearrangement = leftEquationPart.replace(/[^0-9]/g,"").length;
-    countRightNumbersBeforeRearrangement = rightEquationPart.replace(/[^0-9]/g,"").length;
+    countLeftNumbersBeforeRearrangement = leftEquationPart.replace(/[^0-9]/g, "").length;
+    countRightNumbersBeforeRearrangement = rightEquationPart.replace(/[^0-9]/g, "").length;
 
     rearrangedLeftEquationPart = performRearrangementStep(leftEquationPart, arithmeticOperation, rearrangementStep);
     rearrangedRightEquationPart = performRearrangementStep(rightEquationPart, arithmeticOperation, rearrangementStep);
 
-    countLeftNumbersAfterRearrangement = rearrangedLeftEquationPart.replace(/[^0-9]/g,"").length;
-    countRightNumbersAfterRearrangement = rearrangedRightEquationPart.replace(/[^0-9]/g,"").length;
+    countLeftNumbersAfterRearrangement = rearrangedLeftEquationPart.replace(/[^0-9]/g, "").length;
+    countRightNumbersAfterRearrangement = rearrangedRightEquationPart.replace(/[^0-9]/g, "").length;
 
     if (
       leftEquationPart.includes(variable)
@@ -405,6 +439,7 @@ function getLastOperationsLength() {
   return lastOperations.length;
 }
 
+window.testMathStepsSimplify = testMathStepsSimplify;
 window.getLastOperationsLength = getLastOperationsLength;
 window.resetLastOperation = resetLastOperation;
 window.generateFeedbackMessage = generateFeedbackMessage;
