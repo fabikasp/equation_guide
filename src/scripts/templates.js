@@ -91,7 +91,7 @@ RearrangementTemplate = ({ leftEquationPart, rightEquationPart }) => `
 
       <!-- rearrangement button -->
       <button
-        class="btn btn-success equation-guide-button rearrangement-button ml-2"
+        class="btn btn-success rearrangement-button ml-2"
         data-toggle="tooltip"
         data-placement="top"
         title="
@@ -109,7 +109,6 @@ StartButtonTemplate = `
   <button
     id="start-button"
     class="btn btn-primary equation-guide-button"
-                    style="width: 10%"
     data-toggle="tooltip"
     data-placement="bottom"
     title="
@@ -125,7 +124,6 @@ RestartButtonTemplate = `
   <button
     id="restart-button"
     class="btn btn-primary equation-guide-button"
-                    style="width: 10%"
     data-toggle="tooltip"
     data-placement="bottom"
     title="
@@ -141,7 +139,6 @@ ResetButtonTemplate = `
   <a
     id="reset-button"
     class="btn btn-dark equation-guide-button ml-4"
-                    style="width: 10%"
     href="#"
     data-toggle="tooltip"
     data-placement="bottom"
@@ -157,7 +154,6 @@ AdviceButtonTemplate = `
   <button
     id="advice-button"
     class="btn btn-success equation-guide-button ml-4 advice-button"
-                    style="width: 10%"
     href="#"
     data-toggle="tooltip"
     data-placement="bottom"

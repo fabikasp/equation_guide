@@ -2,6 +2,7 @@ const mathsteps = require("mathsteps");
 let rearrangementSteps = [];
 let lastOperations = [];
 let wrongCounter = 0;
+let adviceButtonClickCounter = 0;
 
 function simplifyExpression(expression) {
   expression = expression.replace(",", ".");
@@ -262,8 +263,8 @@ function generateFeedbackMessage(
   rearrangementStep
 ) {
   if (
-    leftEquationPart.includes("sqrt") || leftEquationPart.includes("^2")
-    || rightEquationPart.includes("sqrt") || rightEquationPart.includes("^2")
+    equationContainsRoot(leftEquationPart, rightEquationPart)
+    || equationContainsPower(leftEquationPart, rightEquationPart)
   ) {
     return generateNerdamerFeedbackMessage(
       leftEquationPart,
@@ -392,6 +393,8 @@ function generateNerdamerFeedbackMessage(
   }
 
   if (optimalRearrangementStep) {
+    adviceButtonClickCounter = 0;
+
     return {
       message: "Sehr gut! Du hast einen der optimalen Umformungsschritte gefunden.",
       type: "info"
@@ -409,17 +412,33 @@ function getLastOperationsLength() {
   return lastOperations.length;
 }
 
-function getAdviceMessage() {
+function getAdviceMessage(leftEquationPart, rightEquationPart) {
+  adviceButtonClickCounter += 1;
+
+  if (equationContainsRoot(leftEquationPart, rightEquationPart)) {
+    if (adviceButtonClickCounter < 2) {
+      return "Versuch es erst einmal selbst.";
+    }
+
+    return "Versuch es doch mal mit Potenzieren";
+  } else if (equationContainsPower(leftEquationPart, rightEquationPart)) {
+    if (adviceButtonClickCounter < 2) {
+      return "Versuch es erst einmal selbst.";
+    }
+
+    return "Versuch es doch mal mit Wurzelziehen";
+  }
+
   if (rearrangementSteps.length === 0) {
-    return "Du hast die Gleichung bereits gelößt."
+    return "Du hast die Gleichung bereits gelößt.";
   } else {
     switch (true) {
       case (wrongCounter < 2):
-        return "Probier doch erstmal ein bisschen."
+        return "Versuch es erst einmal selbst.";
       case (wrongCounter < 4):
-        return window.getAdvice("weak");
+        return getAdvice("weak");
       case (wrongCounter >= 4):
-        return window.getAdvice("strong");
+        return getAdvice("strong");
     }
   }
 }
@@ -429,26 +448,26 @@ function getAdvice(type) {
     case "weak":
       switch (rearrangementSteps[getRandomInt(0, rearrangementSteps.length - 1)].type) {
         case "add":
-          return "Versuch es doch mal mit addieren."
+          return "Versuch es doch mal mit addieren.";
         case "subtract":
-          return "Versuch es doch mal mit subtrahieren."
+          return "Versuch es doch mal mit subtrahieren.";
         case "multiply":
-          return "Versuch es doch mal mit multiplizieren."
+          return "Versuch es doch mal mit multiplizieren.";
         case "divide":
-          return "Versuch es doch mal mit dividieren."
+          return "Versuch es doch mal mit dividieren.";
       }
       break;
     case "strong":
       const arrayElement = rearrangementSteps[getRandomInt(0, rearrangementSteps.length - 1)];
       switch (arrayElement.type) {
         case "add":
-          return "Mit +" + arrayElement.value + " umzuformen, wird dich bestimmt weiterbringen."
+          return "Mit +" + arrayElement.value + " umzuformen, wird dich bestimmt weiterbringen.";
         case "subtract":
-          return "Mit -" + arrayElement.value + " umzuformen, wird dich bestimmt weiterbringen."
+          return "Mit -" + arrayElement.value + " umzuformen, wird dich bestimmt weiterbringen.";
         case "multiply":
-          return "Mit *" + arrayElement.value + " umzuformen, wird dich bestimmt weiterbringen."
+          return "Mit *" + arrayElement.value + " umzuformen, wird dich bestimmt weiterbringen.";
         case "divide":
-          return "Mit /" + arrayElement.value + " umzuformen, wird dich bestimmt weiterbringen."
+          return "Mit /" + arrayElement.value + " umzuformen, wird dich bestimmt weiterbringen.";
       }
   }
 }
@@ -457,35 +476,25 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-
-function checkIfEquationContainsRootOrPower(leftEquationPart, rightEquationPart) {
-  return !(!leftEquationPart.includes("sqrt") && !rightEquationPart.includes("sqrt")
-    && !leftEquationPart.includes("^2") && !rightEquationPart.includes("^2"));
+function equationContainsRoot(leftEquationPart, rightEquationPart) {
+  return leftEquationPart.includes("sqrt") || rightEquationPart.includes("sqrt");
 }
 
-function testMathStepsSimplify() {
-  /*const steps = mathsteps.simplifyExpression('(15+2*x)/2');
-  console.log(steps[steps.length - 1].newNode.toString());
-
-  const steps = mathsteps.solveEquation('2*(2+x) = 0');
-
-  steps.forEach(step => {
-    console.log("before change: " + step.oldEquation.ascii());  // e.g. before change: 2x + 3x = 35
-    console.log("change: " + step.changeType);                  // e.g. change: SIMPLIFY_LEFT_SIDE
-    console.log("after change: " + step.newEquation.ascii());   // e.g. after change: 5x = 35
-    console.log("# of substeps: " + step.substeps.length);      // e.g. # of substeps: 2
-  });*/
+function equationContainsPower(leftEquationPart, rightEquationPart) {
+  return leftEquationPart.includes("^2") || rightEquationPart.includes("^2");
 }
 
 function resetWrongCounter() {
   wrongCounter = 0;
 }
 
+function resetAdviceButtonClickCounter() {
+  adviceButtonClickCounter = 0;
+}
+
 window.resetWrongCounter = resetWrongCounter;
+window.resetAdviceButtonClickCounter = resetAdviceButtonClickCounter;
 window.getAdviceMessage = getAdviceMessage;
-window.checkIfEquationContainsRootOrPower = checkIfEquationContainsRootOrPower;
-window.testMathStepsSimplify = testMathStepsSimplify;
-window.getAdvice = getAdvice;
 window.getLastOperationsLength = getLastOperationsLength;
 window.resetLastOperation = resetLastOperation;
 window.generateFeedbackMessage = generateFeedbackMessage;

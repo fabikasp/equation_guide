@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="icon" type="image/png" href="../img/favicon.png"/>
+    <title>EquationGuide</title>
 
     <link href="../stylesheets/vendor/bootstrap.min.css" rel="stylesheet">
     <link href="../stylesheets/equation-guide-styles.css" rel="stylesheet">
@@ -16,12 +17,12 @@
     <script src="../scripts/templates.js"></script>
     <script src="../scripts/event-handlers.js"></script>
     <script src="../dist/bundle.js"></script>
-
-    <title>EquationGuide</title>
 </head>
 <body>
 <div class="d-flex align-items-center min-vh-100">
     <div class="container text-center min-vw-100">
+        <h1 id="equation-guide-headline" class="mb-5">EquationGuide</h1>
+
         <div class="row form-group justify-content-center">
             <!-- inputs for defining the equation -->
             <input
@@ -108,24 +109,8 @@
         <!-- button section -->
         <div class="row justify-content-center">
             <a
-                    id="back-button"
-                    class="btn btn-secondary equation-guide-button mr-4"
-                    style="width: 10%"
-                    href="../../index.html"
-                    data-toggle="tooltip"
-                    data-placement="bottom"
-                    title="
-							Stellt den Ausgangszustand wieder her und
-							leitet zum Hauptmenü weiter.
-						"
-            >
-                Zurück
-            </a>
-
-            <a
                     id="help-button"
                     class="btn btn-warning equation-guide-button ml-4"
-                    style="width: 10%"
                     href="#"
                     data-toggle="tooltip"
                     data-placement="bottom"
