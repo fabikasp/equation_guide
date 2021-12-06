@@ -159,7 +159,7 @@ $(document).ready(function () {
       // Change , to . so mathsteps/nerdamer can handle it
       leftEquationPart = leftEquationPart.replace(/[,]/g, '.');
       rightEquationPart = rightEquationPart.replace(/[,]/g, '.');
-      console.log("1: " + leftEquationPart + rightEquationPart);
+      rearrangementStep = rearrangementStep.replace(/[,]/g, '.');
 
       var newLeftEquationPart = window.performRearrangementStep(
         leftEquationPart,
@@ -175,8 +175,6 @@ $(document).ready(function () {
 
       $('[data-toggle="tooltip"]').tooltip("hide");
 
-
-      console.log("2: " + newLeftEquationPart + newRightEquationPart);
       // Change . back to , to display it properly
       newLeftEquationPart = newLeftEquationPart.replace(/[.]/g, ',');
       newRightEquationPart = newRightEquationPart.replace(/[.]/g, ',');
@@ -217,7 +215,7 @@ $(document).ready(function () {
           })
         );
 
-        window.generateRearrangementStepsArray(newLeftEquationPart, newRightEquationPart);
+        window.generateRearrangementStepsArray(newLeftEquationPart.replace(/[,]/g, '.'), newRightEquationPart.replace(/[,]/g, '.'));
       } else {
        const feedbackMessage = window.generateFeedbackMessage(
           leftEquationPart,
@@ -228,7 +226,7 @@ $(document).ready(function () {
         );
 
         // Generate new rearrangementSteps array
-        window.generateRearrangementStepsArray(newLeftEquationPart, newRightEquationPart);
+        window.generateRearrangementStepsArray(newLeftEquationPart.replace(/[,]/g, '.'), newRightEquationPart.replace(/[,]/g, '.'));
 
         if (!jQuery.isEmptyObject(feedbackMessage)) {
           $("#alert-div").append(
@@ -315,7 +313,7 @@ $(document).ready(function () {
 
       let leftSide = parentElement.lastElementChild.children[0].children[0].value;
       let rightSide = parentElement.lastElementChild.children[0].children[2].value;
-      window.generateRearrangementStepsArray(leftSide, rightSide);
+      window.generateRearrangementStepsArray(leftSide.replace(/[,]/g, '.'), rightSide.replace(/[,]/g, '.'));
       window.resetLastOperation();
     }
     event.preventDefault();
