@@ -13,6 +13,10 @@ $(document).ready(function () {
 
     $("#alert-div").empty();
 
+    // Change , to . so mathsteps/nerdamer can handle it
+    leftEquationPart = leftEquationPart.replace(/[,]/g, '.');
+    rightEquationPart = rightEquationPart.replace(/[,]/g, '.');
+
     leftEquationPart = window.simplifyExpression(leftEquationPart);
     rightEquationPart = window.simplifyExpression(rightEquationPart);
 
@@ -68,7 +72,11 @@ $(document).ready(function () {
       // Start equation was evaluated successfully | generate feedback array with mathsteps | insert advice button
       $(AdviceButtonTemplate).insertAfter($("#start-button"));
 
-      window.generateRearrangementStepsArray(leftEquationPart, rightEquationPart, variable);
+      window.generateRearrangementStepsArray(leftEquationPart.replace(/[,]/g, '.'), rightEquationPart.replace(/[,]/g, '.'), variable);
+
+      // Change . to , to display it properly
+      leftEquationPart = leftEquationPart.replace(/[.]/g, ',');
+      rightEquationPart = rightEquationPart.replace(/[.]/g, ',');
 
       $("#alert-div").empty();
       $(".equation-input").attr("readonly", true);
@@ -148,6 +156,11 @@ $(document).ready(function () {
       $(".rearrangement-step-input").last().attr("readonly", true);
       $(".rearrangement-button").last().attr("disabled", true);
 
+      // Change , to . so mathsteps/nerdamer can handle it
+      leftEquationPart = leftEquationPart.replace(/[,]/g, '.');
+      rightEquationPart = rightEquationPart.replace(/[,]/g, '.');
+      console.log("1: " + leftEquationPart + rightEquationPart);
+
       var newLeftEquationPart = window.performRearrangementStep(
         leftEquationPart,
         arithmeticOperation,
@@ -161,6 +174,12 @@ $(document).ready(function () {
       );
 
       $('[data-toggle="tooltip"]').tooltip("hide");
+
+
+      console.log("2: " + newLeftEquationPart + newRightEquationPart);
+      // Change . back to , to display it properly
+      newLeftEquationPart = newLeftEquationPart.replace(/[.]/g, ',');
+      newRightEquationPart = newRightEquationPart.replace(/[.]/g, ',');
 
       $("#equation-rearrangement-div").append(
         RearrangementTemplate({

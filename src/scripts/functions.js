@@ -5,6 +5,7 @@ let wrongCounter = 0;
 let adviceButtonClickCounter = 0;
 
 function simplifyExpression(expression) {
+  //console.log("Simplify");
   if (expression.includes("sqrt")) {
     try {
       return nerdamer("simplify(" + expression + ")").toString();
@@ -14,8 +15,10 @@ function simplifyExpression(expression) {
   } else {
     const steps = mathsteps.simplifyExpression(expression);
     if (steps.length === 0) {
+      //console.log("Return: " + expression.replace(/[()]/g, ''));
       return expression.replace(/[()]/g, '');
     } else {
+      //console.log("Return: " + (steps[steps.length - 1].newNode.toString()).replace(/[()]/g, ''));
       return (steps[steps.length - 1].newNode.toString()).replace(/[()]/g, '');
     }
   }
@@ -210,8 +213,10 @@ function evaluateRearrangementStep(
     }
 
     simplifiedLeftEquationPart = simplifyExpression(leftRearrangementStep);
+    simplifiedRightEquationPart = simplifyExpression(rightRearrangementStep);
 
-    if ((/([^0-9+*\/\-x^[sqrt]()])/g).test(leftRearrangementStep) || (/([^0-9+*\/\-x^[sqrt]()])/g).test(rightRearrangementStep)) {
+    console.log(leftRearrangementStep, leftRearrangementStep);
+    if ((/([^0-9a-z+*\/\-^\s(sqrt)().,])/g).test(leftRearrangementStep) || (/([^0-9a-z+*\/\-^\s(sqrt)().,])/g).test(rightRearrangementStep)) {
       return "Der Umformungsschritt wird nicht unterstützt.";
     }
 
@@ -224,7 +229,6 @@ function evaluateRearrangementStep(
       return "Der Umformungsschritt wird nicht unterstützt.";
     }
 
-    simplifiedRightEquationPart = simplifyExpression(rightRearrangementStep);
 
     if (
       arithmeticOperation !== "sqrt"
