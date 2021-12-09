@@ -5,7 +5,7 @@ let wrongCounter = 0;
 let adviceButtonClickCounter = 0;
 
 function simplifyExpression(expression) {
-  if (expression.includes("sqrt")) {
+  if (expression.includes("sqrt") || expression.includes("^")) {
     try {
       return nerdamer("simplify(" + expression + ")").toString();
     } catch (e) {
@@ -14,10 +14,8 @@ function simplifyExpression(expression) {
   } else {
     const steps = mathsteps.simplifyExpression(expression);
     if (steps.length === 0) {
-      //console.log("Return: " + expression.replace(/[()]/g, ''));
       return expression.replace(/[()]/g, '');
     } else {
-      //console.log("Return: " + (steps[steps.length - 1].newNode.toString()).replace(/[()]/g, ''));
       return (steps[steps.length - 1].newNode.toString()).replace(/[()]/g, '');
     }
   }
@@ -26,15 +24,13 @@ function simplifyExpression(expression) {
 function testMathStepsSimplify() {
   //console.log((/([^0-9+*\/\-x])/g).test('st2'));
   //console.log((/([^0-9+*\/\-x^[sqrt]()])/g).test('sqrt(x)'));
-
-  console.log(generateRearrangementStepsArray());
-  /*const steps = mathsteps.solveEquation('2.2 x + 22 = 26.4');
+  const steps = mathsteps.solveEquation('20x+200=200');
   steps.forEach(step => {
     console.log("before change: " + step.oldEquation.ascii());  // e.g. before change: 2x + 3x = 35
     console.log("change: " + step.changeType);                  // e.g. change: SIMPLIFY_LEFT_SIDE
     console.log("after change: " + step.newEquation.ascii());   // e.g. after change: 5x = 35
     console.log("# of substeps: " + step.substeps.length);      // e.g. # of substeps: 2
-  });*/
+  });
 }
 
 function getEquationResult(leftEquationPart, rightEquationPart, variable) {
@@ -140,6 +136,13 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
       result.errorMessages.push(
         "Die Zielvariable muss in der Gleichung vorkommen."
       );
+    } else if ((/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(leftRearrangementStep) ||
+      (/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(rightRearrangementStep)
+    ) {
+      result.variableValid = false;
+      result.errorMessages.push(
+        "Ein Eingabefeld beinhaltet ein unzulässiges Zeichen."
+      );
     }
   } catch (e) {
     result.leftEquationValid = false;
@@ -211,12 +214,12 @@ function evaluateRearrangementStep(
         + rearrangementStep;
     }
 
-    //simplifiedLeftEquationPart = simplifyExpression(leftRearrangementStep);
-    //simplifiedRightEquationPart = simplifyExpression(rightRearrangementStep);
-
-    if ((/([^0-9a-z+*\/\-^\s(sqrt)().,])/g).test(leftRearrangementStep) || (/([^0-9a-z+*\/\-^\s(sqrt)().,])/g).test(rightRearrangementStep)) {
+    if ((/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(leftRearrangementStep) || (/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(rightRearrangementStep)) {
       return "Der Umformungsschritt wird nicht unterstützt.";
     }
+
+    //simplifiedLeftEquationPart = simplifyExpression(leftRearrangementStep);
+    //simplifiedRightEquationPart = simplifyExpression(rightRearrangementStep);
 
     /*
     if (
@@ -234,7 +237,6 @@ function evaluateRearrangementStep(
       return "Der Umformungsschritt wird nicht unterstützt.";
     }*/
   } catch (e) {
-    console.log("3");
     return "Der Umformungsschritt wird nicht unterstützt.";
   }
 
@@ -258,7 +260,6 @@ function performRearrangementStep(
 }
 
 function generateRearrangementStepsArray(leftEquationPart, rightEquationPart) {
-  console.log("generateRearrangementStepsArray: " + leftEquationPart, rightEquationPart);
   rearrangementSteps = []
   const equation = leftEquationPart + "=" + rightEquationPart;
 
@@ -316,6 +317,9 @@ function generateRearrangementStepsArray(leftEquationPart, rightEquationPart) {
           });
         }
         break;
+      case "FIND_ROOTS":
+        console.log(step);
+        break;
     }
   });
 }
@@ -348,7 +352,11 @@ function generateMathstepsFeedbackMessage(arithmeticOperation, rearrangementStep
   let arrayElement;
   const arithmeticOperatorToString = new Map([["+", "add"], ["-", "subtract"], ["*", "multiply"], ["/", "divide"]]);
 
+  console.log(arithmeticOperation, rearrangementStep, rearrangementSteps);
+
   arrayElement = rearrangementSteps.find(e => e.type === arithmeticOperatorToString.get(arithmeticOperation));
+
+  console.log(arrayElement);
 
   if (arrayElement === undefined) {
     wrongCounter += 1;
@@ -478,7 +486,6 @@ function getLastOperationsLength() {
 }
 
 function getAdviceMessage(leftEquationPart, rightEquationPart) {
-  console.log(rearrangementSteps);
   adviceButtonClickCounter += 1;
 
   if (equationContainsRoot(leftEquationPart, rightEquationPart)) {
