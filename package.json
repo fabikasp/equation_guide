@@ -4,6 +4,7 @@
     "concurrently": "^6.4.0",
     "http-server": "^14.0.0",
     "mathsteps": "^0.2.0",
+    "mocha": "^9.1.3",
     "watchify": "^4.0.0"
   },
   "name": "equationguide",
@@ -14,7 +15,8 @@
     "buildSingle": "browserify src/scripts/functions.js > src/dist/bundle.js",
     "build": "browserify src/scripts/event-handlers.js src/scripts/functions.js > src/dist/bundle.js",
     "watch": "watchify src/scripts/functions.js -o src/dist/bundle.js -v -d",
-    "start": "concurrently \"npm run watch\" \"http-server\""
+    "start": "concurrently \"npm run watch\" \"http-server\"",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
