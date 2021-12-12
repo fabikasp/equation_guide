@@ -13,6 +13,10 @@ $(document).ready(function () {
 
     $("#alert-div").empty();
 
+    // Change , to . so mathsteps/nerdamer can handle it
+    leftEquationPart = leftEquationPart.replace(/[,]/g, '.');
+    rightEquationPart = rightEquationPart.replace(/[,]/g, '.');
+
     leftEquationPart = window.simplifyExpression(leftEquationPart);
     rightEquationPart = window.simplifyExpression(rightEquationPart);
 
@@ -68,7 +72,11 @@ $(document).ready(function () {
       // Start equation was evaluated successfully | generate feedback array with mathsteps | insert advice button
       $(AdviceButtonTemplate).insertAfter($("#start-button"));
 
-      window.generateRearrangementStepsArray(leftEquationPart, rightEquationPart, variable);
+      window.generateRearrangementStepsArray(leftEquationPart.replace(/[,]/g, '.'), rightEquationPart.replace(/[,]/g, '.'), variable);
+
+      // Change . to , to display it properly
+      leftEquationPart = leftEquationPart.replace(/[.]/g, ',');
+      rightEquationPart = rightEquationPart.replace(/[.]/g, ',');
 
       $("#alert-div").empty();
       $(".equation-input").attr("readonly", true);
@@ -148,6 +156,11 @@ $(document).ready(function () {
       $(".rearrangement-step-input").last().attr("readonly", true);
       $(".rearrangement-button").last().attr("disabled", true);
 
+      // Change , to . so mathsteps/nerdamer can handle it
+      leftEquationPart = leftEquationPart.replace(/[,]/g, '.');
+      rightEquationPart = rightEquationPart.replace(/[,]/g, '.');
+      rearrangementStep = rearrangementStep.replace(/[,]/g, '.');
+
       var newLeftEquationPart = window.performRearrangementStep(
         leftEquationPart,
         arithmeticOperation,
@@ -161,6 +174,10 @@ $(document).ready(function () {
       );
 
       $('[data-toggle="tooltip"]').tooltip("hide");
+
+      // Change . back to , to display it properly
+      newLeftEquationPart = newLeftEquationPart.replace(/[.]/g, ',');
+      newRightEquationPart = newRightEquationPart.replace(/[.]/g, ',');
 
       $("#equation-rearrangement-div").append(
         RearrangementTemplate({
@@ -198,9 +215,9 @@ $(document).ready(function () {
           })
         );
 
-        window.generateRearrangementStepsArray(newLeftEquationPart, newRightEquationPart);
+        window.generateRearrangementStepsArray(newLeftEquationPart.replace(/[,]/g, '.'), newRightEquationPart.replace(/[,]/g, '.'), variable);
       } else {
-        const feedbackMessage = window.generateFeedbackMessage(
+       const feedbackMessage = window.generateFeedbackMessage(
           leftEquationPart,
           rightEquationPart,
           variable,
@@ -209,7 +226,7 @@ $(document).ready(function () {
         );
 
         // Generate new rearrangementSteps array
-        window.generateRearrangementStepsArray(newLeftEquationPart, newRightEquationPart);
+        window.generateRearrangementStepsArray(newLeftEquationPart.replace(/[,]/g, '.'), newRightEquationPart.replace(/[,]/g, '.'), variable);
 
         if (!jQuery.isEmptyObject(feedbackMessage)) {
           $("#alert-div").append(
@@ -295,7 +312,8 @@ $(document).ready(function () {
 
       let leftSide = parentElement.lastElementChild.children[0].children[0].value;
       let rightSide = parentElement.lastElementChild.children[0].children[2].value;
-      window.generateRearrangementStepsArray(leftSide, rightSide);
+      let variable = $("#variable-input")[0].value;
+      window.generateRearrangementStepsArray(leftSide.replace(/[,]/g, '.'), rightSide.replace(/[,]/g, '.'), variable);
       window.resetLastOperation();
     }
     event.preventDefault();
