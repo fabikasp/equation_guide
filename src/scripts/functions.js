@@ -124,12 +124,17 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
       result.errorMessages.push(
         "Die Zielvariable muss in der Gleichung vorkommen."
       );
-    } else if ((/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(leftEquationPart) ||
-      (/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(rightEquationPart)
+    } else if ((/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(leftEquationPart)
     ) {
-      result.variableValid = false;
+      result.leftEquationValid = false;
       result.errorMessages.push(
-        "Ein Eingabefeld beinhaltet ein unzulässiges Zeichen."
+        "Der linke Teil der Gleichung darf keine unzulässigen Zeichen enthalten."
+      );
+    } else if ((/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(rightEquationPart)
+    ) {
+      result.rightEquationValid = false;
+      result.errorMessages.push(
+        "Der rechte Teil der Gleichung darf keine unzulässigen Zeichen enthalten."
       );
     }
   } catch (e) {
@@ -291,7 +296,7 @@ function generateRearrangementStepsArray(leftEquationPart, rightEquationPart, va
         const equationArray = equation.split('');
         let number = "";
         for (let i = 0; i < variablePosition; i++) {
-          if(!isNaN(Number(equationArray[i])) || equationArray[i] === "/") {
+          if (!isNaN(Number(equationArray[i])) || equationArray[i] === "/") {
             number = number + equationArray[i];
           } else {
             number = "";
