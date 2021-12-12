@@ -22,15 +22,16 @@ function simplifyExpression(expression) {
 }
 
 function testMathStepsSimplify() {
+  console.log(rearrangementSteps);
   //console.log((/([^0-9+*\/\-x])/g).test('st2'));
   //console.log((/([^0-9+*\/\-x^[sqrt]()])/g).test('sqrt(x)'));
-  const steps = mathsteps.solveEquation('20x+200=200');
+  /*const steps = mathsteps.solveEquation('20x+200=200');
   steps.forEach(step => {
     console.log("before change: " + step.oldEquation.ascii());  // e.g. before change: 2x + 3x = 35
     console.log("change: " + step.changeType);                  // e.g. change: SIMPLIFY_LEFT_SIDE
     console.log("after change: " + step.newEquation.ascii());   // e.g. after change: 5x = 35
     console.log("# of substeps: " + step.substeps.length);      // e.g. # of substeps: 2
-  });
+  });*/
 }
 
 function getEquationResult(leftEquationPart, rightEquationPart, variable) {
@@ -136,8 +137,8 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
       result.errorMessages.push(
         "Die Zielvariable muss in der Gleichung vorkommen."
       );
-    } else if ((/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(leftRearrangementStep) ||
-      (/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(rightRearrangementStep)
+    } else if ((/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(leftEquationPart) ||
+      (/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(rightEquationPart)
     ) {
       result.variableValid = false;
       result.errorMessages.push(
@@ -259,7 +260,7 @@ function performRearrangementStep(
   );
 }
 
-function generateRearrangementStepsArray(leftEquationPart, rightEquationPart) {
+function generateRearrangementStepsArray(leftEquationPart, rightEquationPart, variable) {
   rearrangementSteps = []
   const equation = leftEquationPart + "=" + rightEquationPart;
 
@@ -318,7 +319,22 @@ function generateRearrangementStepsArray(leftEquationPart, rightEquationPart) {
         }
         break;
       case "FIND_ROOTS":
-        console.log(step);
+        const variablePosition = equation.search(variable);
+        const equationArray = equation.split('');
+        let number = "";
+        for (let i = 0; i < variablePosition; i++) {
+          if(!isNaN(Number(equationArray[i])) || equationArray[i] === "/") {
+            number = number + equationArray[i];
+          } else {
+            number = "";
+          }
+        }
+        if (number.includes("/")) {
+          const splitNumber = number.split("/");
+          rearrangementSteps.push({type: "multiply", value: splitNumber[1]});
+        } else {
+          rearrangementSteps.push({type: "divide", number});
+        }
         break;
     }
   });
@@ -352,11 +368,7 @@ function generateMathstepsFeedbackMessage(arithmeticOperation, rearrangementStep
   let arrayElement;
   const arithmeticOperatorToString = new Map([["+", "add"], ["-", "subtract"], ["*", "multiply"], ["/", "divide"]]);
 
-  console.log(arithmeticOperation, rearrangementStep, rearrangementSteps);
-
   arrayElement = rearrangementSteps.find(e => e.type === arithmeticOperatorToString.get(arithmeticOperation));
-
-  console.log(arrayElement);
 
   if (arrayElement === undefined) {
     wrongCounter += 1;

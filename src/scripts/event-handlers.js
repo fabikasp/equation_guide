@@ -215,7 +215,7 @@ $(document).ready(function () {
           })
         );
 
-        window.generateRearrangementStepsArray(newLeftEquationPart.replace(/[,]/g, '.'), newRightEquationPart.replace(/[,]/g, '.'));
+        window.generateRearrangementStepsArray(newLeftEquationPart.replace(/[,]/g, '.'), newRightEquationPart.replace(/[,]/g, '.'), variable);
       } else {
        const feedbackMessage = window.generateFeedbackMessage(
           leftEquationPart,
@@ -226,7 +226,7 @@ $(document).ready(function () {
         );
 
         // Generate new rearrangementSteps array
-        window.generateRearrangementStepsArray(newLeftEquationPart.replace(/[,]/g, '.'), newRightEquationPart.replace(/[,]/g, '.'));
+        window.generateRearrangementStepsArray(newLeftEquationPart.replace(/[,]/g, '.'), newRightEquationPart.replace(/[,]/g, '.'), variable);
 
         if (!jQuery.isEmptyObject(feedbackMessage)) {
           $("#alert-div").append(
@@ -313,7 +313,8 @@ $(document).ready(function () {
 
       let leftSide = parentElement.lastElementChild.children[0].children[0].value;
       let rightSide = parentElement.lastElementChild.children[0].children[2].value;
-      window.generateRearrangementStepsArray(leftSide.replace(/[,]/g, '.'), rightSide.replace(/[,]/g, '.'));
+      let variable = $("#variable-input")[0].value;
+      window.generateRearrangementStepsArray(leftSide.replace(/[,]/g, '.'), rightSide.replace(/[,]/g, '.'), variable);
       window.resetLastOperation();
     }
     event.preventDefault();
