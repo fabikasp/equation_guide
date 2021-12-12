@@ -5,12 +5,19 @@ let wrongCounter = 0;
 let adviceButtonClickCounter = 0;
 
 function simplifyExpression(expression) {
-  expression = expression.replace(",", ".");
-
-  try {
-    return nerdamer("simplify(" + expression + ")").toString();
-  } catch (e) {
-    return expression;
+  if (expression.includes("sqrt") || expression.includes("^")) {
+    try {
+      return nerdamer("simplify(" + expression + ")").toString();
+    } catch (e) {
+      return expression;
+    }
+  } else {
+    const steps = mathsteps.simplifyExpression(expression);
+    if (steps.length === 0) {
+      return expression.replace(/[()]/g, '');
+    } else {
+      return (steps[steps.length - 1].newNode.toString()).replace(/[()]/g, '');
+    }
   }
 }
 
@@ -117,6 +124,18 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
       result.errorMessages.push(
         "Die Zielvariable muss in der Gleichung vorkommen."
       );
+    } else if ((/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(leftEquationPart)
+    ) {
+      result.leftEquationValid = false;
+      result.errorMessages.push(
+        "Der linke Teil der Gleichung darf keine unzulässigen Zeichen enthalten."
+      );
+    } else if ((/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(rightEquationPart)
+    ) {
+      result.rightEquationValid = false;
+      result.errorMessages.push(
+        "Der rechte Teil der Gleichung darf keine unzulässigen Zeichen enthalten."
+      );
     }
   } catch (e) {
     result.leftEquationValid = false;
@@ -163,15 +182,15 @@ function evaluateRearrangementStep(
   arithmeticOperation,
   rearrangementStep
 ) {
-  if (rearrangementStep == "") {
+  if (rearrangementStep === "") {
     if (!["^2", "sqrt"].includes(arithmeticOperation)) {
       return "Der Umformungsschritt darf nicht leer sein.";
     }
   } else if (rearrangementStep.includes("=")) {
     return "Der Umformungsschritt darf kein Gleichheitszeichen enthalten.";
-  } else if (rearrangementStep == "0" && arithmeticOperation == "*") {
+  } else if (rearrangementStep === "0" && arithmeticOperation === "*") {
     return "Die Multiplikation mit 0 wird nicht unterstützt.";
-  } else if (rearrangementStep == "0" && arithmeticOperation == "/") {
+  } else if (rearrangementStep === "0" && arithmeticOperation === "/") {
     return "Die Division durch 0 wird nicht unterstützt.";
   }
 
@@ -188,21 +207,7 @@ function evaluateRearrangementStep(
         + rearrangementStep;
     }
 
-    simplifiedLeftEquationPart = simplifyExpression(leftRearrangementStep);
-
-    if (
-      arithmeticOperation != "sqrt"
-      && simplifiedLeftEquationPart == leftRearrangementStep
-    ) {
-      return "Der Umformungsschritt wird nicht unterstützt.";
-    }
-
-    simplifiedRightEquationPart = simplifyExpression(rightRearrangementStep);
-
-    if (
-      arithmeticOperation != "sqrt"
-      && simplifiedRightEquationPart == rightRearrangementStep
-    ) {
+    if ((/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(leftRearrangementStep) || (/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(rightRearrangementStep)) {
       return "Der Umformungsschritt wird nicht unterstützt.";
     }
   } catch (e) {
@@ -219,7 +224,7 @@ function performRearrangementStep(
   arithmeticOperation,
   rearrangementStep
 ) {
-  if (arithmeticOperation == "sqrt") {
+  if (arithmeticOperation === "sqrt") {
     return simplifyExpression("sqrt(" + expression + ")");
   }
 
@@ -228,7 +233,7 @@ function performRearrangementStep(
   );
 }
 
-function generateRearrangementStepsArray(leftEquationPart, rightEquationPart) {
+function generateRearrangementStepsArray(leftEquationPart, rightEquationPart, variable) {
   rearrangementSteps = []
   const equation = leftEquationPart + "=" + rightEquationPart;
 
@@ -237,19 +242,72 @@ function generateRearrangementStepsArray(leftEquationPart, rightEquationPart) {
   steps.forEach(step => {
     switch (step.changeType) {
       case "ADD_TO_BOTH_SIDES":
-        rearrangementSteps.push({type: "add", value: step.newEquation.leftNode.args[1].value});
+        if (step.newEquation.leftNode.args[1].value !== undefined) {
+          rearrangementSteps.push({type: "add", value: step.newEquation.leftNode.args[1].value});
+        } else {
+          rearrangementSteps.push({
+            type: "add",
+            value: step.newEquation.leftNode.args[1].args[0] + "/" + step.newEquation.leftNode.args[1].args[1]
+          });
+        }
         break;
       case "SUBTRACT_FROM_BOTH_SIDES":
-        rearrangementSteps.push({type: "subtract", value: step.newEquation.leftNode.args[1].value});
+        if (step.newEquation.leftNode.args[1].value !== undefined) {
+          rearrangementSteps.push({type: "subtract", value: step.newEquation.leftNode.args[1].value});
+        } else {
+          rearrangementSteps.push({
+            type: "subtract",
+            value: step.newEquation.leftNode.args[1].args[0] + "/" + step.newEquation.leftNode.args[1].args[1]
+          });
+        }
         break;
       case "MULTIPLY_BOTH_SIDES_BY_INVERSE_FRACTION":
-        rearrangementSteps.push({type: "multiply", value: step.newEquation.leftNode.args[1].value});
+        if (step.newEquation.leftNode.args[1].value !== undefined) {
+          rearrangementSteps.push({type: "multiply", value: step.newEquation.leftNode.args[1].value});
+        } else {
+          rearrangementSteps.push({
+            type: "multiply",
+            value: step.newEquation.leftNode.args[1].args[0] + "/" + step.newEquation.leftNode.args[1].args[1]
+          });
+        }
         break;
       case "MULTIPLY_TO_BOTH_SIDES":
-        rearrangementSteps.push({type: "multiply", value: step.newEquation.leftNode.args[1].value});
+        if (step.newEquation.leftNode.args[1].value !== undefined) {
+          rearrangementSteps.push({type: "multiply", value: step.newEquation.leftNode.args[1].value});
+        } else {
+          rearrangementSteps.push({
+            type: "multiply",
+            value: step.newEquation.leftNode.args[1].args[0] + "/" + step.newEquation.leftNode.args[1].args[1]
+          });
+        }
         break;
       case "DIVIDE_FROM_BOTH_SIDES":
-        rearrangementSteps.push({type: "divide", value: step.newEquation.leftNode.args[1].value});
+        if (step.newEquation.leftNode.args[1].value !== undefined) {
+          rearrangementSteps.push({type: "divide", value: step.newEquation.leftNode.args[1].value});
+        } else {
+          rearrangementSteps.push({
+            type: "divide",
+            value: step.newEquation.leftNode.args[1].args[0] + "/" + step.newEquation.leftNode.args[1].args[1]
+          });
+        }
+        break;
+      case "FIND_ROOTS":
+        const variablePosition = equation.search(variable);
+        const equationArray = equation.split('');
+        let number = "";
+        for (let i = 0; i < variablePosition; i++) {
+          if (!isNaN(Number(equationArray[i])) || equationArray[i] === "/") {
+            number = number + equationArray[i];
+          } else {
+            number = "";
+          }
+        }
+        if (number.includes("/")) {
+          const splitNumber = number.split("/");
+          rearrangementSteps.push({type: "multiply", value: splitNumber[1]});
+        } else {
+          rearrangementSteps.push({type: "divide", number});
+        }
         break;
     }
   });
