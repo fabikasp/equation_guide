@@ -21,19 +21,6 @@ function simplifyExpression(expression) {
   }
 }
 
-function testMathStepsSimplify() {
-  console.log(rearrangementSteps);
-  //console.log((/([^0-9+*\/\-x])/g).test('st2'));
-  //console.log((/([^0-9+*\/\-x^[sqrt]()])/g).test('sqrt(x)'));
-  /*const steps = mathsteps.solveEquation('20x+200=200');
-  steps.forEach(step => {
-    console.log("before change: " + step.oldEquation.ascii());  // e.g. before change: 2x + 3x = 35
-    console.log("change: " + step.changeType);                  // e.g. change: SIMPLIFY_LEFT_SIDE
-    console.log("after change: " + step.newEquation.ascii());   // e.g. after change: 5x = 35
-    console.log("# of substeps: " + step.substeps.length);      // e.g. # of substeps: 2
-  });*/
-}
-
 function getEquationResult(leftEquationPart, rightEquationPart, variable) {
   leftEquationPart = leftEquationPart.replace(",", ".");
   rightEquationPart = rightEquationPart.replace(",", ".");
@@ -577,7 +564,6 @@ function resetAdviceButtonClickCounter() {
   adviceButtonClickCounter = 0;
 }
 
-window.testMathStepsSimplify = testMathStepsSimplify;
 window.resetWrongCounter = resetWrongCounter;
 window.resetAdviceButtonClickCounter = resetAdviceButtonClickCounter;
 window.getAdviceMessage = getAdviceMessage;
