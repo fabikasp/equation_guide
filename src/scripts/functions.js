@@ -1,4 +1,5 @@
 const mathsteps = require("mathsteps");
+const nerdamer = require("nerdamer/all.min");
 let rearrangementSteps = [];
 let lastOperations = [];
 let wrongCounter = 0;
@@ -558,6 +559,7 @@ window.resetLastOperation = resetLastOperation;
 window.generateFeedbackMessage = generateFeedbackMessage;
 window.generateRearrangementStepsArray = generateRearrangementStepsArray;
 window.simplifyExpression = simplifyExpression;
+window.getEquationResult = getEquationResult;
 window.isFinalEquation = isFinalEquation;
 window.evaluateStartEquation = evaluateStartEquation;
 window.evaluateRearrangementStep = evaluateRearrangementStep;

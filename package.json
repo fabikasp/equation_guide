@@ -5,6 +5,7 @@
     "http-server": "^14.0.0",
     "jest": "^27.4.3",
     "mathsteps": "^0.2.0",
+    "nerdamer": "^1.1.13",
     "watchify": "^4.0.0"
   },
   "name": "equationguide",
