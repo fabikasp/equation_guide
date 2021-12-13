@@ -17,9 +17,6 @@ $(document).ready(function () {
     leftEquationPart = leftEquationPart.replace(/[,]/g, '.');
     rightEquationPart = rightEquationPart.replace(/[,]/g, '.');
 
-    leftEquationPart = window.simplifyExpression(leftEquationPart);
-    rightEquationPart = window.simplifyExpression(rightEquationPart);
-
     var startEquationEvaluation = window.evaluateStartEquation(
       leftEquationPart,
       rightEquationPart,

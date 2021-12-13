@@ -78,6 +78,11 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
           "Der linke Teil der Gleichung darf keine Exponenten ungleich 2 enthalten."
         );
       }
+    } else if ((/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(leftEquationPart)) {
+      result.leftEquationValid = false;
+      result.errorMessages.push(
+        "Der linke Teil der Gleichung darf keine unzulässigen Zeichen enthalten."
+      );
     }
 
     if (rightEquationPart == "") {
@@ -100,6 +105,11 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
           "Der rechte Teil der Gleichung darf keine Exponenten ungleich 2 enthalten."
         );
       }
+    } else if ((/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(rightEquationPart)) {
+      result.rightEquationValid = false;
+      result.errorMessages.push(
+        "Der rechte Teil der Gleichung darf keine unzulässigen Zeichen enthalten."
+      );
     }
 
     if (variable == "") {
@@ -125,18 +135,6 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
       result.errorMessages.push(
         "Die Zielvariable muss in der Gleichung vorkommen."
       );
-    } else if ((/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(leftEquationPart)
-    ) {
-      result.leftEquationValid = false;
-      result.errorMessages.push(
-        "Der linke Teil der Gleichung darf keine unzulässigen Zeichen enthalten."
-      );
-    } else if ((/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(rightEquationPart)
-    ) {
-      result.rightEquationValid = false;
-      result.errorMessages.push(
-        "Der rechte Teil der Gleichung darf keine unzulässigen Zeichen enthalten."
-      );
     }
   } catch (e) {
     result.leftEquationValid = false;
@@ -144,6 +142,9 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
     result.variableValid = false;
     result.errorMessages.push("Die Gleichung wird nicht unterstützt.");
   }
+
+  leftEquationPart = simplifyExpression(leftEquationPart);
+  rightEquationPart = simplifyExpression(rightEquationPart);
 
   if (result.errorMessages.length == 0) {
     try {
