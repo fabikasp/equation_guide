@@ -209,7 +209,10 @@ function evaluateRearrangementStep(
         + rearrangementStep;
     }
 
-    if ((/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(leftRearrangementStep) || (/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(rightRearrangementStep)) {
+    if (
+      (/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(leftRearrangementStep)
+      || (/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(rightRearrangementStep)
+    ) {
       return "Der Umformungsschritt wird nicht unterstützt.";
     }
   } catch (e) {
