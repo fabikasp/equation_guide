@@ -1,15 +1,44 @@
-#equation-guide-headline {
-  font-family: "Optima";
-  font-size: 100px;
+@media only screen and (min-width: 900px) {
+  #equation-guide-headline {
+    font-family: "Optima";
+    font-size: 100px;
+  }
+  #left-equation-input {
+    width: 25%;
+  }
+  #right-equation-input {
+    width: 25%;
+  }
+  #variable-input {
+    width:  9%;
+  }
+  #equals-sign {
+    width:  9%;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  #equation-guide-headline {
+    font-family: "Optima";
+    font-size: 40px;
+  }
+  #left-equation-input {
+    width: 95%;
+  }
+  #left-equation-input {
+    width: 95%;
+  }
+  #variable-input {
+    width: 25%;
+  }
+  #equals-sign {
+    width:  20%;
+  }
 }
 
 .equation-input {
   font-size: 20px;
   font-family: "Arial";
-}
-
-#variable-input {
-  width: 9%;
 }
 
 .equals-sign-input {
