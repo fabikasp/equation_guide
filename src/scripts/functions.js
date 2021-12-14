@@ -49,13 +49,32 @@ function isFinalEquation(leftEquationPart, rightEquationPart, variable) {
   return false;
 }
 
+function dissolveAbs(leftEquationPart, rightEquationPart, variable) {
+  result = {
+    "leftEquationPart": leftEquationPart,
+    "rightEquationPart": rightEquationPart
+  };
+
+  if (isFinalEquation(leftEquationPart, rightEquationPart, variable)) {
+    if (leftEquationPart == "abs(" + variable + ")") {
+      result.leftEquationPart = variable;
+      result.rightEquationPart += ", " + simplifyExpression("-(" + result.rightEquationPart + ")");
+    } else if (rightEquationPart == "abs(" + variable + ")") {
+      result.rightEquationPart = variable;
+      result.leftEquationPart += ", " + simplifyExpression("-(" + result.leftEquationPart + ")");
+    }
+  }
+
+  return result;
+}
+
 function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
   var result = {
     "leftEquationValid": true,
     "rightEquationValid": true,
     "variableValid": true,
     "errorMessages": []
-  }
+  };
 
   try {
     if (leftEquationPart == "") {
@@ -559,6 +578,7 @@ window.resetWrongCounter = resetWrongCounter;
 window.resetAdviceButtonClickCounter = resetAdviceButtonClickCounter;
 window.getAdviceMessage = getAdviceMessage;
 window.getLastOperationsLength = getLastOperationsLength;
+window.dissolveAbs = dissolveAbs;
 window.resetLastOperation = resetLastOperation;
 window.generateFeedbackMessage = generateFeedbackMessage;
 window.generateRearrangementStepsArray = generateRearrangementStepsArray;

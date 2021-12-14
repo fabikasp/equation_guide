@@ -194,6 +194,13 @@ $(document).ready(function () {
           variable
         )
       ) {
+        dissolvedEquation = window.dissolveAbs(newLeftEquationPart, newRightEquationPart, variable);
+
+        $(".left-rearrangement-input").last().removeClass("w-25").width("38.7%");
+        $(".right-rearrangement-input").last().removeClass("w-25").width("38.7%");
+        $(".left-rearrangement-input").last().val(dissolvedEquation.leftEquationPart);
+        $(".right-rearrangement-input").last().val(dissolvedEquation.rightEquationPart);
+
         $(".arithmetic-operation-select").last().remove();
         $(".rearrangement-step-input").last().remove();
         $(".rearrangement-button").last().remove();
