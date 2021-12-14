@@ -5,7 +5,7 @@
 require("../src/scripts/functions.js");
 
 test("empty rearrangement step with sqrt", () => {
-  let expectedResult = ""
+  let expectedResult = "";
 
   expect(evaluateRearrangementStep("20x", "200", "sqrt", "")).toBe(expectedResult);
 });
