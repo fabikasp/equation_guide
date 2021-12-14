@@ -493,14 +493,14 @@ function getAdviceMessage(leftEquationPart, rightEquationPart) {
   }
 
   if (rearrangementSteps.length === 0) {
-    return "Du hast die Gleichung bereits gelößt.";
+    return "Du hast die Gleichung bereits gelöst.";
   } else {
     switch (true) {
       case (wrongCounter < 2):
         return "Versuch es erst einmal selbst.";
       case (wrongCounter < 4):
         return getAdvice("weak");
-      case (wrongCounter >= 4):
+      default:
         return getAdvice("strong");
     }
   }

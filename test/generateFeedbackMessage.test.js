@@ -97,7 +97,7 @@ test("optimal mathsteps feedback due to correct addition", () => {
   expect(generateFeedbackMessage("2x-20", "200", "x", "+", "20")).toStrictEqual(expectedResult);
 });
 
-test("optimal mathsteps feedback due to correct substraction", () => {
+test("optimal mathsteps feedback due to correct subtraction", () => {
   generateRearrangementStepsArray("2x+20", "200", "x");
 
   expectedResult = {
@@ -141,7 +141,7 @@ test("good mathsteps feedback due to nearly correct addition", () => {
   expect(generateFeedbackMessage("x-50", "200", "x", "+", "30")).toStrictEqual(expectedResult);
 });
 
-test("good mathsteps feedback due to nearly correct substraction", () => {
+test("good mathsteps feedback due to nearly correct subtraction", () => {
   generateRearrangementStepsArray("x+50", "200", "x");
 
   expectedResult = {
