@@ -281,6 +281,7 @@ $(document).ready(function () {
   });
 
   $(document).on("click", "#help-button", function (event) {
+    window.test();
     if ($("#help-button").text().trim() == "Hilfe ausschalten") {
       $("#help-button").text("Hilfe einschalten");
       $('[data-toggle="tooltip"]').tooltip("hide");
