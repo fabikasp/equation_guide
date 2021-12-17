@@ -6,5 +6,9 @@ EquationGuide is a web application for supporting pupils solving equations.
 
 * Download [Node.js](https://nodejs.org/en/download/)
 * Run "npm install" in repository path
-* Run "http-server" in repository path
+* Run "npm start" in repository path
 * Open web application on localhost:8080
+
+## Testing
+
+* Run "npm test" in repository path

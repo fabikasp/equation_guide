@@ -1,4 +1,5 @@
 const mathsteps = require("mathsteps");
+const nerdamer = require("nerdamer/all.min");
 let rearrangementSteps = [];
 let lastOperations = [];
 let wrongCounter = 0;
@@ -48,13 +49,32 @@ function isFinalEquation(leftEquationPart, rightEquationPart, variable) {
   return false;
 }
 
+function dissolveAbs(leftEquationPart, rightEquationPart, variable) {
+  result = {
+    "leftEquationPart": leftEquationPart,
+    "rightEquationPart": rightEquationPart
+  };
+
+  if (isFinalEquation(leftEquationPart, rightEquationPart, variable)) {
+    if (leftEquationPart == "abs(" + variable + ")") {
+      result.leftEquationPart = variable;
+      result.rightEquationPart += ", " + simplifyExpression("-(" + result.rightEquationPart + ")");
+    } else if (rightEquationPart == "abs(" + variable + ")") {
+      result.rightEquationPart = variable;
+      result.leftEquationPart += ", " + simplifyExpression("-(" + result.leftEquationPart + ")");
+    }
+  }
+
+  return result;
+}
+
 function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
   var result = {
     "leftEquationValid": true,
     "rightEquationValid": true,
     "variableValid": true,
     "errorMessages": []
-  }
+  };
 
   try {
     if (leftEquationPart == "") {
@@ -77,6 +97,11 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
           "Der linke Teil der Gleichung darf keine Exponenten ungleich 2 enthalten."
         );
       }
+    } else if ((/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(leftEquationPart)) {
+      result.leftEquationValid = false;
+      result.errorMessages.push(
+        "Der linke Teil der Gleichung darf keine unzulässigen Zeichen enthalten."
+      );
     }
 
     if (rightEquationPart == "") {
@@ -99,6 +124,11 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
           "Der rechte Teil der Gleichung darf keine Exponenten ungleich 2 enthalten."
         );
       }
+    } else if ((/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(rightEquationPart)) {
+      result.rightEquationValid = false;
+      result.errorMessages.push(
+        "Der rechte Teil der Gleichung darf keine unzulässigen Zeichen enthalten."
+      );
     }
 
     if (variable == "") {
@@ -124,18 +154,6 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
       result.errorMessages.push(
         "Die Zielvariable muss in der Gleichung vorkommen."
       );
-    } else if ((/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(leftEquationPart)
-    ) {
-      result.leftEquationValid = false;
-      result.errorMessages.push(
-        "Der linke Teil der Gleichung darf keine unzulässigen Zeichen enthalten."
-      );
-    } else if ((/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(rightEquationPart)
-    ) {
-      result.rightEquationValid = false;
-      result.errorMessages.push(
-        "Der rechte Teil der Gleichung darf keine unzulässigen Zeichen enthalten."
-      );
     }
   } catch (e) {
     result.leftEquationValid = false;
@@ -143,6 +161,9 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
     result.variableValid = false;
     result.errorMessages.push("Die Gleichung wird nicht unterstützt.");
   }
+
+  leftEquationPart = simplifyExpression(leftEquationPart);
+  rightEquationPart = simplifyExpression(rightEquationPart);
 
   if (result.errorMessages.length == 0) {
     try {
@@ -207,7 +228,10 @@ function evaluateRearrangementStep(
         + rearrangementStep;
     }
 
-    if ((/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(leftRearrangementStep) || (/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(rightRearrangementStep)) {
+    if (
+      (/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(leftRearrangementStep)
+      || (/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(rightRearrangementStep)
+    ) {
       return "Der Umformungsschritt wird nicht unterstützt.";
     }
   } catch (e) {
@@ -488,14 +512,14 @@ function getAdviceMessage(leftEquationPart, rightEquationPart) {
   }
 
   if (rearrangementSteps.length === 0) {
-    return "Du hast die Gleichung bereits gelößt.";
+    return "Du hast die Gleichung bereits gelöst.";
   } else {
     switch (true) {
       case (wrongCounter < 2):
         return "Versuch es erst einmal selbst.";
       case (wrongCounter < 4):
         return getAdvice("weak");
-      case (wrongCounter >= 4):
+      default:
         return getAdvice("strong");
     }
   }
@@ -554,10 +578,12 @@ window.resetWrongCounter = resetWrongCounter;
 window.resetAdviceButtonClickCounter = resetAdviceButtonClickCounter;
 window.getAdviceMessage = getAdviceMessage;
 window.getLastOperationsLength = getLastOperationsLength;
+window.dissolveAbs = dissolveAbs;
 window.resetLastOperation = resetLastOperation;
 window.generateFeedbackMessage = generateFeedbackMessage;
 window.generateRearrangementStepsArray = generateRearrangementStepsArray;
 window.simplifyExpression = simplifyExpression;
+window.getEquationResult = getEquationResult;
 window.isFinalEquation = isFinalEquation;
 window.evaluateStartEquation = evaluateStartEquation;
 window.evaluateRearrangementStep = evaluateRearrangementStep;
