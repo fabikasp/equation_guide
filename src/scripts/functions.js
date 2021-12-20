@@ -574,17 +574,17 @@ function resetAdviceButtonClickCounter() {
   adviceButtonClickCounter = 0;
 }
 
-window.resetWrongCounter = resetWrongCounter;
-window.resetAdviceButtonClickCounter = resetAdviceButtonClickCounter;
-window.getAdviceMessage = getAdviceMessage;
-window.getLastOperationsLength = getLastOperationsLength;
-window.dissolveAbs = dissolveAbs;
-window.resetLastOperation = resetLastOperation;
-window.generateFeedbackMessage = generateFeedbackMessage;
-window.generateRearrangementStepsArray = generateRearrangementStepsArray;
 window.simplifyExpression = simplifyExpression;
 window.getEquationResult = getEquationResult;
 window.isFinalEquation = isFinalEquation;
+window.dissolveAbs = dissolveAbs;
 window.evaluateStartEquation = evaluateStartEquation;
 window.evaluateRearrangementStep = evaluateRearrangementStep;
 window.performRearrangementStep = performRearrangementStep;
+window.generateRearrangementStepsArray = generateRearrangementStepsArray;
+window.generateFeedbackMessage = generateFeedbackMessage;
+window.resetLastOperation = resetLastOperation;
+window.getLastOperationsLength = getLastOperationsLength;
+window.getAdviceMessage = getAdviceMessage;
+window.resetWrongCounter = resetWrongCounter;
+window.resetAdviceButtonClickCounter = resetAdviceButtonClickCounter;
