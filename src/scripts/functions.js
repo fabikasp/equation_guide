@@ -69,7 +69,7 @@ function dissolveAbs(leftEquationPart, rightEquationPart, variable) {
 }
 
 function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
-  var result = {
+  let result = {
     "leftEquationValid": true,
     "rightEquationValid": true,
     "variableValid": true,

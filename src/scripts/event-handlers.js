@@ -7,9 +7,9 @@ $(document).ready(function () {
 
   /* start button functionality */
   $(document).on("click", "#start-button", function (event) {
-    var leftEquationPart = $("#left-equation-input").val().toString().trim();
-    var rightEquationPart = $("#right-equation-input").val().toString().trim();
-    var variable = $("#variable-input").val().toString().trim();
+    let leftEquationPart = $("#left-equation-input").val().toString().trim();
+    let rightEquationPart = $("#right-equation-input").val().toString().trim();
+    let variable = $("#variable-input").val().toString().trim();
 
     $("#alert-div").empty();
 
@@ -17,7 +17,7 @@ $(document).ready(function () {
     leftEquationPart = leftEquationPart.replace(/[,]/g, '.');
     rightEquationPart = rightEquationPart.replace(/[,]/g, '.');
 
-    var startEquationEvaluation = window.evaluateStartEquation(
+    let startEquationEvaluation = window.evaluateStartEquation(
       leftEquationPart,
       rightEquationPart,
       variable
@@ -98,7 +98,7 @@ $(document).ready(function () {
   });
 
   $(document).on("input", ".arithmetic-operation-select", function (event) {
-    var arithmeticOperation = $(".arithmetic-operation-select option:selected").last().val().toString();
+    let arithmeticOperation = $(".arithmetic-operation-select option:selected").last().val().toString();
 
     disableRearrangementStep = ["^2", "sqrt"].includes(arithmeticOperation);
 
@@ -112,7 +112,7 @@ $(document).ready(function () {
   });
 
   $(document).on("input", ".rearrangement-step-input", function (event) {
-    var rearrangementStep = $(".rearrangement-step-input").last().val().toString().trim();
+    let rearrangementStep = $(".rearrangement-step-input").last().val().toString().trim();
 
     if (rearrangementStep != "" && ["+", "-", "*", "/"].includes(rearrangementStep[0])) {
       $(".arithmetic-operation-select").last().val(rearrangementStep[0]);
@@ -124,15 +124,15 @@ $(document).ready(function () {
 
   /* rearrangement button functionality */
   $(document).on("click", ".rearrangement-button", function (event) {
-    var leftEquationPart = $(".left-rearrangement-input").last().val().toString().trim();
-    var rightEquationPart = $(".right-rearrangement-input").last().val().toString().trim();
-    var arithmeticOperation = $(".arithmetic-operation-select option:selected").last().val().toString();
-    var rearrangementStep = $(".rearrangement-step-input").last().val().toString().trim();
-    var variable = $("#variable-input").val().toString().trim();
+    let leftEquationPart = $(".left-rearrangement-input").last().val().toString().trim();
+    let rightEquationPart = $(".right-rearrangement-input").last().val().toString().trim();
+    let arithmeticOperation = $(".arithmetic-operation-select option:selected").last().val().toString();
+    let rearrangementStep = $(".rearrangement-step-input").last().val().toString().trim();
+    let variable = $("#variable-input").val().toString().trim();
 
     $("#alert-div").empty();
 
-    var rearrangementStepEvaluation = window.evaluateRearrangementStep(
+    let rearrangementStepEvaluation = window.evaluateRearrangementStep(
       leftEquationPart,
       rightEquationPart,
       arithmeticOperation,
@@ -158,13 +158,13 @@ $(document).ready(function () {
       rightEquationPart = rightEquationPart.replace(/[,]/g, '.');
       rearrangementStep = rearrangementStep.replace(/[,]/g, '.');
 
-      var newLeftEquationPart = window.performRearrangementStep(
+      let newLeftEquationPart = window.performRearrangementStep(
         leftEquationPart,
         arithmeticOperation,
         rearrangementStep
       );
 
-      var newRightEquationPart = window.performRearrangementStep(
+      let newRightEquationPart = window.performRearrangementStep(
         rightEquationPart,
         arithmeticOperation,
         rearrangementStep
