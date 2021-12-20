@@ -89,7 +89,7 @@ $(document).ready(function () {
 
       $("#start-button").replaceWith(RestartButtonTemplate);
 
-      if ($("#help-button").text().trim() == "Hilfe ausschalten") {
+      if ($("#help-button").text().trim() === "Hilfe ausschalten") {
         $('[data-toggle="tooltip"]').tooltip("enable");
       }
     }
@@ -142,7 +142,7 @@ $(document).ready(function () {
     if (rearrangementStepEvaluation === "") {
       if (
         $(".left-rearrangement-input").length > 0
-        && $("#reset-button").length == 0
+        && $("#reset-button").length === 0
       ) {
         $(ResetButtonTemplate).insertAfter($("#restart-button"));
       }
@@ -183,7 +183,7 @@ $(document).ready(function () {
         })
       );
 
-      if ($("#help-button").text().trim() == "Hilfe ausschalten") {
+      if ($("#help-button").text().trim() === "Hilfe ausschalten") {
         $('[data-toggle="tooltip"]').tooltip("enable");
       }
 
@@ -277,7 +277,7 @@ $(document).ready(function () {
     $("#reset-button").remove();
     $("#advice-button").remove();
 
-    if ($("#help-button").text().trim() == "Hilfe ausschalten") {
+    if ($("#help-button").text().trim() === "Hilfe ausschalten") {
       $('[data-toggle="tooltip"]').tooltip("enable");
     }
 
@@ -285,7 +285,7 @@ $(document).ready(function () {
   });
 
   $(document).on("click", "#help-button", function (event) {
-    if ($("#help-button").text().trim() == "Hilfe ausschalten") {
+    if ($("#help-button").text().trim() === "Hilfe ausschalten") {
       $("#help-button").text("Hilfe einschalten");
       $('[data-toggle="tooltip"]').tooltip("hide");
       $('[data-toggle="tooltip"]').tooltip("disable");
@@ -324,8 +324,8 @@ $(document).ready(function () {
   });
 
   $(document).on("click", "#advice-button", function (event) {
-    let leftEquationPart = $('.left-rearrangement-input').last().val();
-    let rightEquationPart = $('.right-rearrangement-input').last().val();
+    let leftEquationPart = $('.left-rearrangement-input').last().val().toString().trim();
+    let rightEquationPart = $('.right-rearrangement-input').last().val().toString().trim();
 
     const alertDiv = $("#alert-div");
 

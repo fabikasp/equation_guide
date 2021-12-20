@@ -35,9 +35,9 @@ function getEquationResult(leftEquationPart, rightEquationPart, variable) {
 function isFinalEquation(leftEquationPart, rightEquationPart, variable) {
   try {
     if (
-      (leftEquationPart == variable || leftEquationPart == "abs(" + variable + ")")
+      (leftEquationPart === variable || leftEquationPart === "abs(" + variable + ")")
       && !rightEquationPart.includes(variable)
-      || (rightEquationPart == variable || rightEquationPart == "abs(" + variable + ")")
+      || (rightEquationPart === variable || rightEquationPart === "abs(" + variable + ")")
       && !leftEquationPart.includes(variable)
     ) {
       return true;
@@ -56,10 +56,10 @@ function dissolveAbs(leftEquationPart, rightEquationPart, variable) {
   };
 
   if (isFinalEquation(leftEquationPart, rightEquationPart, variable)) {
-    if (leftEquationPart == "abs(" + variable + ")") {
+    if (leftEquationPart === "abs(" + variable + ")") {
       result.leftEquationPart = variable;
       result.rightEquationPart += ", " + simplifyExpression("-(" + result.rightEquationPart + ")");
-    } else if (rightEquationPart == "abs(" + variable + ")") {
+    } else if (rightEquationPart === "abs(" + variable + ")") {
       result.rightEquationPart = variable;
       result.leftEquationPart += ", " + simplifyExpression("-(" + result.leftEquationPart + ")");
     }
@@ -77,7 +77,7 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
   };
 
   try {
-    if (leftEquationPart == "") {
+    if (leftEquationPart === "") {
       result.leftEquationValid = false;
       result.errorMessages.push(
         "Der linke Teil der Gleichung darf nicht leer sein."
@@ -104,7 +104,7 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
       );
     }
 
-    if (rightEquationPart == "") {
+    if (rightEquationPart === "") {
       result.rightEquationValid = false;
       result.errorMessages.push(
         "Der rechte Teil der Gleichung darf nicht leer sein."
@@ -131,7 +131,7 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
       );
     }
 
-    if (variable == "") {
+    if (variable === "") {
       result.variableValid = false;
       result.errorMessages.push(
         "Die Zielvariable darf nicht leer sein."
@@ -165,7 +165,7 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
   leftEquationPart = simplifyExpression(leftEquationPart);
   rightEquationPart = simplifyExpression(rightEquationPart);
 
-  if (result.errorMessages.length == 0) {
+  if (result.errorMessages.length === 0) {
     try {
       equationResult = getEquationResult(
         leftEquationPart,
@@ -173,13 +173,13 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
         variable
       );
 
-      if (equationResult == "") {
+      if (!equationResult) {
         throw new Error();
       }
 
       if (
         isFinalEquation(leftEquationPart, rightEquationPart, variable)
-        || leftEquationPart == rightEquationPart
+        || leftEquationPart === rightEquationPart
       ) {
         result.leftEquationValid = false;
         result.rightEquationValid = false;
@@ -216,7 +216,7 @@ function evaluateRearrangementStep(
   }
 
   try {
-    if (arithmeticOperation == "sqrt") {
+    if (arithmeticOperation === "sqrt") {
       leftRearrangementStep = "sqrt(" + leftEquationPart + ")";
       rightRearrangementStep = "sqrt(" + rightEquationPart + ")";
     } else {
@@ -405,14 +405,14 @@ function generateNerdamerFeedbackMessage(
 
   if (
     (leftEquationPart.includes("^2") || rightEquationPart.includes("^2"))
-    && arithmeticOperation == "sqrt"
+    && arithmeticOperation === "sqrt"
   ) {
     optimalRearrangementStep = true;
   }
 
   if (
     (leftEquationPart.includes("sqrt") || rightEquationPart.includes("sqrt"))
-    && arithmeticOperation == "^2"
+    && arithmeticOperation === "^2"
   ) {
     optimalRearrangementStep = true;
   }
