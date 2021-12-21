@@ -500,7 +500,7 @@ function getLastOperationsLength() {
   return lastOperations.length;
 }
 
-function getAdviceMessage(leftEquationPart, rightEquationPart) {
+function getAdviceMessage(leftEquationPart, rightEquationPart, variable) {
   adviceButtonClickCounter += 1;
 
   if (equationContainsRoot(leftEquationPart, rightEquationPart)) {
@@ -508,13 +508,21 @@ function getAdviceMessage(leftEquationPart, rightEquationPart) {
       return "Versuch es erst einmal selbst.";
     }
 
-    return "Versuch es doch mal mit Potenzieren";
+    if (powerIsNecessary(leftEquationPart, rightEquationPart, variable)) {
+      return "Versuch es doch mal mit Potenzieren";
+    } else {
+      return "Versuch es erst einmal ohne Potenzieren"
+    }
   } else if (equationContainsPower(leftEquationPart, rightEquationPart)) {
     if (adviceButtonClickCounter < 2) {
       return "Versuch es erst einmal selbst.";
     }
 
-    return "Versuch es doch mal mit Wurzelziehen";
+    if (rootIsNecessary(leftEquationPart, rightEquationPart, variable)) {
+      return "Versuch es doch mal mit Wurzelziehen";
+    } else {
+      return "Versuch es erst einmal ohne Wurzelziehen"
+    }
   }
 
   if (rearrangementSteps.length === 0) {
@@ -572,12 +580,60 @@ function equationContainsPower(leftEquationPart, rightEquationPart) {
   return leftEquationPart.includes("^2") || rightEquationPart.includes("^2");
 }
 
-function rootIsTheOnlyUsefulWay(leftEquationPart, rightEquationPart) {
-  return true;
+function rootIsNecessary(leftEquationPart, rightEquationPart, variable) {
+  if (!equationContainsPower(leftEquationPart, rightEquationPart)) {
+    return false;
+  }
+
+  if (leftEquationPart === variable + "^2") {
+    return true;
+  }
+
+  if ((/^\([0-9A-Za-z+*\/\-^\s(sqrt)().,]+\)\^2$/g).test(leftEquationPart)) {
+    if (leftEquationPart.includes(variable)) {
+      return true;
+    }
+  }
+
+  if (rightEquationPart === variable + "^2") {
+    return true;
+  }
+
+  if ((/^\([0-9A-Za-z+*\/\-^\s(sqrt)().,]+\)\^2$/g).test(rightEquationPart)) {
+    if (rightEquationPart.includes(variable)) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
-function powerIsTheOnlyUsefulWay(leftEquationPart, rightEquationPart) {
-  return true;
+function powerIsNecessary(leftEquationPart, rightEquationPart, variable) {
+  if (!equationContainsRoot(leftEquationPart, rightEquationPart)) {
+    return false;
+  }
+
+  if (leftEquationPart === "sqrt(" + variable + ")") {
+    return true;
+  }
+
+  if ((/^sqrt\([0-9A-Za-z+*\/\-^\s(sqrt)().,]+\)$/g).test(leftEquationPart)) {
+    if (leftEquationPart.includes(variable)) {
+      return true;
+    }
+  }
+
+  if (rightEquationPart === "sqrt(" + variable + ")") {
+    return true;
+  }
+
+  if ((/^sqrt\([0-9A-Za-z+*\/\-^\s(sqrt)().,]+\)$/g).test(rightEquationPart)) {
+    if (rightEquationPart.includes(variable)) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 function resetWrongCounter() {
@@ -602,7 +658,7 @@ window.getLastOperationsLength = getLastOperationsLength;
 window.getAdviceMessage = getAdviceMessage;
 window.equationContainsRoot = equationContainsRoot;
 window.equationContainsPower = equationContainsPower;
-window.rootIsTheOnlyUsefulWay = rootIsTheOnlyUsefulWay;
-window.powerIsTheOnlyUsefulWay = powerIsTheOnlyUsefulWay;
+window.rootIsNecessary = rootIsNecessary;
+window.powerIsNecessary = powerIsNecessary;
 window.resetWrongCounter = resetWrongCounter;
 window.resetAdviceButtonClickCounter = resetAdviceButtonClickCounter;

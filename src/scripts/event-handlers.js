@@ -326,6 +326,7 @@ $(document).ready(function () {
   $(document).on("click", "#advice-button", function (event) {
     let leftEquationPart = $('.left-rearrangement-input').last().val().toString().trim();
     let rightEquationPart = $('.right-rearrangement-input').last().val().toString().trim();
+    let variable = $("#variable-input").val().toString().trim();
 
     const alertDiv = $("#alert-div");
 
@@ -337,7 +338,7 @@ $(document).ready(function () {
 
     alertDiv.append(
       AlertTemplate({
-        text: window.getAdviceMessage(leftEquationPart, rightEquationPart),
+        text: window.getAdviceMessage(leftEquationPart, rightEquationPart, variable),
         alertType: "primary",
       })
     );

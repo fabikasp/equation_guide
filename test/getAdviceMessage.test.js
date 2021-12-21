@@ -11,16 +11,25 @@ test("nerdamer advice for power at first attempt", () => {
 
   expectedResult = "Versuch es erst einmal selbst.";
 
-  expect(getAdviceMessage("2x^2+20", "200")).toBe(expectedResult);
+  expect(getAdviceMessage("2x^2+20", "200", "x")).toBe(expectedResult);
 });
 
-test("nerdamer advice for power at second attempt", () => {
+test("nerdamer advice for power at second attempt with root feedback", () => {
   resetAdviceButtonClickCounter();
-  getAdviceMessage("2x^2+20", "200");
+  getAdviceMessage("x^2", "200");
 
   expectedResult = "Versuch es doch mal mit Wurzelziehen";
 
-  expect(getAdviceMessage("2x^2+20", "200")).toBe(expectedResult);
+  expect(getAdviceMessage("x^2", "200", "x")).toBe(expectedResult);
+});
+
+test("nerdamer advice for power at second attempt without root feedback", () => {
+  resetAdviceButtonClickCounter();
+  getAdviceMessage("2x^2+20", "200");
+
+  expectedResult = "Versuch es erst einmal ohne Wurzelziehen";
+
+  expect(getAdviceMessage("2x^2+20", "200", "x")).toBe(expectedResult);
 });
 
 test("nerdamer advice for sqrt at first attempt", () => {
@@ -28,16 +37,25 @@ test("nerdamer advice for sqrt at first attempt", () => {
 
   expectedResult = "Versuch es erst einmal selbst.";
 
-  expect(getAdviceMessage("sqrt(2x+20)", "200")).toBe(expectedResult);
+  expect(getAdviceMessage("sqrt(2x+20)", "200", "x")).toBe(expectedResult);
 });
 
-test("nerdamer advice for sqrt at second attempt", () => {
+test("nerdamer advice for sqrt at second attempt with power feedback", () => {
   resetAdviceButtonClickCounter();
   getAdviceMessage("sqrt(2x+20)", "200");
 
   expectedResult = "Versuch es doch mal mit Potenzieren";
 
-  expect(getAdviceMessage("sqrt(2x+20)", "200")).toBe(expectedResult);
+  expect(getAdviceMessage("sqrt(2x+20)", "200", "x")).toBe(expectedResult);
+});
+
+test("nerdamer advice for sqrt at second attempt without power feedback", () => {
+  resetAdviceButtonClickCounter();
+  getAdviceMessage("sqrt(2x+20)+20", "200");
+
+  expectedResult = "Versuch es erst einmal ohne Potenzieren";
+
+  expect(getAdviceMessage("sqrt(2x+20)+20", "200", "x")).toBe(expectedResult);
 });
 
 /* test mathsteps advices */
@@ -47,7 +65,7 @@ test("mathsteps advice with already solved equation", () => {
 
   expectedResult = "Du hast die Gleichung bereits gelöst.";
 
-  expect(getAdviceMessage("x", "60")).toBe(expectedResult);
+  expect(getAdviceMessage("x", "60", "x")).toBe(expectedResult);
 });
 
 test("mathsteps advice with too less attempts", () => {
@@ -56,7 +74,7 @@ test("mathsteps advice with too less attempts", () => {
 
   expectedResult = "Versuch es erst einmal selbst.";
 
-  expect(getAdviceMessage("2x", "400")).toBe(expectedResult);
+  expect(getAdviceMessage("2x", "400", "x")).toBe(expectedResult);
 });
 
 test("weak mathsteps advice for addition", () => {
@@ -67,7 +85,7 @@ test("weak mathsteps advice for addition", () => {
 
   expectedResult = "Versuch es doch mal mit addieren.";
 
-  expect(getAdviceMessage("x-20", "400")).toBe(expectedResult);
+  expect(getAdviceMessage("x-20", "400", "x")).toBe(expectedResult);
 });
 
 test("weak mathsteps advice for subtraction", () => {
@@ -78,7 +96,7 @@ test("weak mathsteps advice for subtraction", () => {
 
   expectedResult = "Versuch es doch mal mit subtrahieren.";
 
-  expect(getAdviceMessage("x-20", "400")).toBe(expectedResult);
+  expect(getAdviceMessage("x-20", "400", "x")).toBe(expectedResult);
 });
 
 test("weak mathsteps advice for division", () => {
@@ -89,7 +107,7 @@ test("weak mathsteps advice for division", () => {
 
   expectedResult = "Versuch es doch mal mit dividieren.";
 
-  expect(getAdviceMessage("2x", "400")).toBe(expectedResult);
+  expect(getAdviceMessage("2x", "400", "x")).toBe(expectedResult);
 });
 
 test("weak mathsteps advice for multiplication", () => {
@@ -100,7 +118,7 @@ test("weak mathsteps advice for multiplication", () => {
 
   expectedResult = "Versuch es doch mal mit multiplizieren.";
 
-  expect(getAdviceMessage("x/2", "400")).toBe(expectedResult);
+  expect(getAdviceMessage("x/2", "400", "x")).toBe(expectedResult);
 });
 
 test("strong mathsteps advice for addition", () => {
@@ -113,7 +131,7 @@ test("strong mathsteps advice for addition", () => {
 
   expectedResult = "Mit +20 umzuformen, wird dich bestimmt weiterbringen.";
 
-  expect(getAdviceMessage("x-20", "400")).toBe(expectedResult);
+  expect(getAdviceMessage("x-20", "400", "x")).toBe(expectedResult);
 });
 
 test("strong mathsteps advice for subtraction", () => {
@@ -126,7 +144,7 @@ test("strong mathsteps advice for subtraction", () => {
 
   expectedResult = "Mit -20 umzuformen, wird dich bestimmt weiterbringen.";
 
-  expect(getAdviceMessage("x+20", "400")).toBe(expectedResult);
+  expect(getAdviceMessage("x+20", "400", "x")).toBe(expectedResult);
 });
 
 test("strong mathsteps advice for division", () => {
@@ -139,7 +157,7 @@ test("strong mathsteps advice for division", () => {
 
   expectedResult = "Mit /2 umzuformen, wird dich bestimmt weiterbringen.";
 
-  expect(getAdviceMessage("2x", "400")).toBe(expectedResult);
+  expect(getAdviceMessage("2x", "400", "x")).toBe(expectedResult);
 });
 
 test("strong mathsteps advice for multiplication", () => {
@@ -152,5 +170,5 @@ test("strong mathsteps advice for multiplication", () => {
 
   expectedResult = "Mit *30 umzuformen, wird dich bestimmt weiterbringen.";
 
-  expect(getAdviceMessage("x/30", "400")).toBe(expectedResult);
+  expect(getAdviceMessage("x/30", "400", "x")).toBe(expectedResult);
 });
