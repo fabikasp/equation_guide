@@ -409,21 +409,15 @@ function generateNerdamerFeedbackMessage(
 ) {
   let optimalRearrangementStep = false;
 
-  if (
-    (leftEquationPart.includes("^2") || rightEquationPart.includes("^2"))
-    && arithmeticOperation === "sqrt"
-  ) {
+  if (rootIsNecessary(leftEquationPart, rightEquationPart, variable) && arithmeticOperation === "sqrt") {
     optimalRearrangementStep = true;
   }
 
-  if (
-    (leftEquationPart.includes("sqrt") || rightEquationPart.includes("sqrt"))
-    && arithmeticOperation === "^2"
-  ) {
+  if (powerIsNecessary(leftEquationPart, rightEquationPart, variable) && arithmeticOperation === "^2") {
     optimalRearrangementStep = true;
   }
 
-  if (!optimalRearrangementStep) {
+  if (!optimalRearrangementStep && !["sqrt", "^2"].includes(arithmeticOperation)) {
     countLeftNumbersBeforeRearrangement = leftEquationPart.replace(/[^0-9]/g, "").length;
     countRightNumbersBeforeRearrangement = rightEquationPart.replace(/[^0-9]/g, "").length;
 
@@ -486,6 +480,11 @@ function generateNerdamerFeedbackMessage(
     return {
       message: "Sehr gut! Du hast einen der optimalen Umformungsschritte gefunden.",
       type: "info"
+    }
+  } else {
+    return {
+      message: "Das war leider kein optimaler Umformungsschritt. Du kannst den Schritt rückgängig oder einfach weiter machen.",
+      type: "warning"
     }
   }
 
@@ -643,6 +642,9 @@ function resetWrongCounter() {
 function resetAdviceButtonClickCounter() {
   adviceButtonClickCounter = 0;
 }
+
+// Feedback von Nerdamer Gleichungen eingrenzen
+// Kleinigkeit erledigen
 
 window.simplifyExpression = simplifyExpression;
 window.getEquationResult = getEquationResult;

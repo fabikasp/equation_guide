@@ -12,7 +12,7 @@ test("nerdamer feedback with sqrt rearrangement on equation with ^2", () => {
     type: "info"
   };
 
-  expect(generateFeedbackMessage("2x^2+20", "200", "x", "sqrt", "")).toStrictEqual(expectedResult);
+  expect(generateFeedbackMessage("x^2", "200", "x", "sqrt", "")).toStrictEqual(expectedResult);
 });
 
 test("nerdamer feedback with ^2 rearrangement on equation with sqrt", () => {
@@ -78,10 +78,22 @@ test("nerdamer feedback with operand reducation in right equation part with vari
   expect(generateFeedbackMessage("50x+20y^2", "600x+20+5y", "x", "-", "5y")).toStrictEqual(expectedResult);
 });
 
-test("empty nerdamer feedback", () => {
-  expectedResult = {};
+test("negative nerdamer feedback due to false subtraction", () => {
+  expectedResult = {
+    message: "Das war leider kein optimaler Umformungsschritt. Du kannst den Schritt rückgängig oder einfach weiter machen.",
+    type: "warning"
+  };
 
   expect(generateFeedbackMessage("50x+50y^2+50", "620", "x", "-", "5")).toStrictEqual(expectedResult);
+});
+
+test("negative nerdamer feedback due to too early root", () => {
+  expectedResult = {
+    message: "Das war leider kein optimaler Umformungsschritt. Du kannst den Schritt rückgängig oder einfach weiter machen.",
+    type: "warning"
+  };
+
+  expect(generateFeedbackMessage("200+20y", "(x+20)^2-20", "x", "sqrt", "")).toStrictEqual(expectedResult);
 });
 
 /* test mathsteps feedback */
