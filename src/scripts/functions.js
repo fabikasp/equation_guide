@@ -572,6 +572,14 @@ function equationContainsPower(leftEquationPart, rightEquationPart) {
   return leftEquationPart.includes("^2") || rightEquationPart.includes("^2");
 }
 
+function rootIsTheOnlyUsefulWay(leftEquationPart, rightEquationPart) {
+  return true;
+}
+
+function powerIsTheOnlyUsefulWay(leftEquationPart, rightEquationPart) {
+  return true;
+}
+
 function resetWrongCounter() {
   wrongCounter = 0;
 }
@@ -592,5 +600,9 @@ window.generateFeedbackMessage = generateFeedbackMessage;
 window.resetLastOperation = resetLastOperation;
 window.getLastOperationsLength = getLastOperationsLength;
 window.getAdviceMessage = getAdviceMessage;
+window.equationContainsRoot = equationContainsRoot;
+window.equationContainsPower = equationContainsPower;
+window.rootIsTheOnlyUsefulWay = rootIsTheOnlyUsefulWay;
+window.powerIsTheOnlyUsefulWay = powerIsTheOnlyUsefulWay;
 window.resetWrongCounter = resetWrongCounter;
 window.resetAdviceButtonClickCounter = resetAdviceButtonClickCounter;
