@@ -480,15 +480,13 @@ function generateNerdamerFeedbackMessage(
     return {
       message: "Sehr gut! Du hast einen der optimalen Umformungsschritte gefunden.",
       type: "info"
-    }
-  } else {
-    return {
-      message: "Das war leider kein optimaler Umformungsschritt. Du kannst den Schritt rückgängig oder einfach weiter machen.",
-      type: "warning"
-    }
+    };
   }
 
-  return {};
+  return {
+    message: "Das war leider kein optimaler Umformungsschritt. Du kannst den Schritt rückgängig oder einfach weiter machen.",
+    type: "warning"
+  };
 }
 
 function resetLastOperation() {
@@ -642,9 +640,6 @@ function resetWrongCounter() {
 function resetAdviceButtonClickCounter() {
   adviceButtonClickCounter = 0;
 }
-
-// Feedback von Nerdamer Gleichungen eingrenzen
-// Kleinigkeit erledigen
 
 window.simplifyExpression = simplifyExpression;
 window.getEquationResult = getEquationResult;
