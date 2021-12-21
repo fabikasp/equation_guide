@@ -8,16 +8,17 @@ let adviceButtonClickCounter = 0;
 function simplifyExpression(expression) {
   if (expression.includes("sqrt") || expression.includes("^")) {
     try {
-      return nerdamer("simplify(" + expression + ")").toString();
+      return nerdamer("simplify(" + expression + ")").toString().replace(/\s/g, "");
     } catch (e) {
-      return expression;
+      return expression.replace(/\s/g, "");
     }
   } else {
     const steps = mathsteps.simplifyExpression(expression);
+
     if (steps.length === 0) {
-      return expression.replace(/[()]/g, '');
+      return expression.replace(/\s/g, "");
     } else {
-      return (steps[steps.length - 1].newNode.toString()).replace(/[()]/g, '');
+      return (steps[steps.length - 1].newNode.toString()).replace(/\s/g, "");
     }
   }
 }
@@ -29,7 +30,7 @@ function getEquationResult(leftEquationPart, rightEquationPart, variable) {
   return nerdamer.solveEquations(
     leftEquationPart + "=" + rightEquationPart,
     variable
-  ).toString();
+  ).toString().replace(/\s/g, "");
 }
 
 function isFinalEquation(leftEquationPart, rightEquationPart, variable) {
@@ -73,6 +74,8 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
     "leftEquationValid": true,
     "rightEquationValid": true,
     "variableValid": true,
+    "leftEquationPart": leftEquationPart,
+    "rightEquationPart": rightEquationPart,
     "errorMessages": []
   };
 
@@ -164,6 +167,9 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
 
   leftEquationPart = simplifyExpression(leftEquationPart);
   rightEquationPart = simplifyExpression(rightEquationPart);
+
+  result.leftEquationPart = leftEquationPart;
+  result.rightEquationPart = rightEquationPart;
 
   if (result.errorMessages.length === 0) {
     try {

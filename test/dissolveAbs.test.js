@@ -25,7 +25,7 @@ test("equation without abs", () => {
 test("simple equation with abs in left equation part", () => {
   let expectedResult = {
     "leftEquationPart": "x",
-    "rightEquationPart": "30, -30"
+    "rightEquationPart": "30, -(30)"
   };
 
   expect(dissolveAbs("abs(x)", "30", "x")).toStrictEqual(expectedResult);
@@ -42,7 +42,7 @@ test("complex equation with abs in left equation part", () => {
 
 test("simple equation with abs in right equation part", () => {
   let expectedResult = {
-    "leftEquationPart": "2x, -2x",
+    "leftEquationPart": "2x, -(2x)",
     "rightEquationPart": "y"
   };
 
@@ -51,9 +51,9 @@ test("simple equation with abs in right equation part", () => {
 
 test("complex equation with abs in right equation part", () => {
   let expectedResult = {
-    "leftEquationPart": "+20 x + 200 s + 336 + 90 z, -20 x + -200 s + -336 + -90 z",
+    "leftEquationPart": "20x+200s+336+90z, -20x+-200s+-336+-90z",
     "rightEquationPart": "y"
   };
 
-  expect(dissolveAbs("+20 x + 200 s + 336 + 90 z", "abs(y)", "y")).toStrictEqual(expectedResult);
+  expect(dissolveAbs("20x+200s+336+90z", "abs(y)", "y")).toStrictEqual(expectedResult);
 });

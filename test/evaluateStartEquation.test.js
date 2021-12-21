@@ -11,6 +11,8 @@ test("equation with empty left equation part", () => {
     "leftEquationValid": false,
     "rightEquationValid": true,
     "variableValid": true,
+    "leftEquationPart": "",
+    "rightEquationPart": "200x",
     "errorMessages": ["Der linke Teil der Gleichung darf nicht leer sein."]
   };
 
@@ -22,6 +24,8 @@ test("equation with equal sign in left equation part", () => {
     "leftEquationValid": false,
     "rightEquationValid": true,
     "variableValid": true,
+    "leftEquationPart": "2=x",
+    "rightEquationPart": "200x",
     "errorMessages": ["Der linke Teil der Gleichung darf kein Gleichheitszeichen enthalten."]
   };
 
@@ -33,6 +37,8 @@ test("equation with ^3 in left equation part", () => {
     "leftEquationValid": false,
     "rightEquationValid": true,
     "variableValid": true,
+    "leftEquationPart": "x^3",
+    "rightEquationPart": "200x",
     "errorMessages": ["Der linke Teil der Gleichung darf keine Exponenten ungleich 2 enthalten."]
   };
 
@@ -44,6 +50,8 @@ test("equation with float power in left equation part", () => {
     "leftEquationValid": false,
     "rightEquationValid": true,
     "variableValid": true,
+    "leftEquationPart": "x^(13/10)",
+    "rightEquationPart": "200x",
     "errorMessages": ["Der linke Teil der Gleichung darf keine Exponenten ungleich 2 enthalten."]
   };
 
@@ -55,6 +63,8 @@ test("equation with forbidden characters in left equation part", () => {
     "leftEquationValid": false,
     "rightEquationValid": true,
     "variableValid": true,
+    "leftEquationPart": "2&&&x",
+    "rightEquationPart": "200x",
     "errorMessages": ["Der linke Teil der Gleichung darf keine unzulässigen Zeichen enthalten."]
   };
 
@@ -68,6 +78,8 @@ test("equation with empty right equation part", () => {
     "leftEquationValid": true,
     "rightEquationValid": false,
     "variableValid": true,
+    "leftEquationPart": "100x",
+    "rightEquationPart": "",
     "errorMessages": ["Der rechte Teil der Gleichung darf nicht leer sein."]
   };
 
@@ -79,6 +91,8 @@ test("equation with equal sign in right equation part", () => {
     "leftEquationValid": true,
     "rightEquationValid": false,
     "variableValid": true,
+    "leftEquationPart": "100x",
+    "rightEquationPart": "2=x",
     "errorMessages": ["Der rechte Teil der Gleichung darf kein Gleichheitszeichen enthalten."]
   };
 
@@ -90,6 +104,8 @@ test("equation with ^5 in right equation part", () => {
     "leftEquationValid": true,
     "rightEquationValid": false,
     "variableValid": true,
+    "leftEquationPart": "100x",
+    "rightEquationPart": "x^5",
     "errorMessages": ["Der rechte Teil der Gleichung darf keine Exponenten ungleich 2 enthalten."]
   };
 
@@ -101,6 +117,8 @@ test("equation with float power in right equation part", () => {
     "leftEquationValid": true,
     "rightEquationValid": false,
     "variableValid": true,
+    "leftEquationPart": "100x",
+    "rightEquationPart": "x^(17/5)",
     "errorMessages": ["Der rechte Teil der Gleichung darf keine Exponenten ungleich 2 enthalten."]
   };
 
@@ -112,6 +130,8 @@ test("equation with forbidden characters in right equation part", () => {
     "leftEquationValid": true,
     "rightEquationValid": false,
     "variableValid": true,
+    "leftEquationPart": "200",
+    "rightEquationPart": "2§$x",
     "errorMessages": ["Der rechte Teil der Gleichung darf keine unzulässigen Zeichen enthalten."]
   };
 
@@ -125,6 +145,8 @@ test("equation with empty variable", () => {
     "leftEquationValid": true,
     "rightEquationValid": true,
     "variableValid": false,
+    "leftEquationPart": "200",
+    "rightEquationPart": "20x",
     "errorMessages": ["Die Zielvariable darf nicht leer sein."]
   };
 
@@ -136,6 +158,8 @@ test("equation with variable with more than one character", () => {
     "leftEquationValid": true,
     "rightEquationValid": true,
     "variableValid": false,
+    "leftEquationPart": "200",
+    "rightEquationPart": "20x",
     "errorMessages": ["Die Zielvariable darf nur ein Zeichen enthalten."]
   };
 
@@ -147,6 +171,8 @@ test("equation with variable with invalid characters", () => {
     "leftEquationValid": true,
     "rightEquationValid": true,
     "variableValid": false,
+    "leftEquationPart": "200",
+    "rightEquationPart": "20x",
     "errorMessages": ["Die Zielvariable muss ein Klein- oder Großbuchstabe (a-z, A-Z) sein."]
   };
 
@@ -158,6 +184,8 @@ test("equation with unreferenced variable", () => {
     "leftEquationValid": true,
     "rightEquationValid": true,
     "variableValid": false,
+    "leftEquationPart": "200",
+    "rightEquationPart": "20x",
     "errorMessages": ["Die Zielvariable muss in der Gleichung vorkommen."]
   };
 
@@ -171,6 +199,8 @@ test("equation with multiple validation errors", () => {
     "leftEquationValid": false,
     "rightEquationValid": false,
     "variableValid": false,
+    "leftEquationPart": "2=2",
+    "rightEquationPart": "15&&x",
     "errorMessages": [
       "Der linke Teil der Gleichung darf kein Gleichheitszeichen enthalten.",
       "Der rechte Teil der Gleichung darf keine unzulässigen Zeichen enthalten.",
@@ -188,6 +218,8 @@ test("equation with nerdamer solution error", () => {
     "leftEquationValid": false,
     "rightEquationValid": false,
     "variableValid": false,
+    "leftEquationPart": "20x+200",
+    "rightEquationPart": "20x+300",
     "errorMessages": ["Die Gleichung wird nicht unterstützt."]
   };
 
@@ -199,6 +231,8 @@ test("already solved equation due to identical equation parts", () => {
     "leftEquationValid": false,
     "rightEquationValid": false,
     "variableValid": false,
+    "leftEquationPart": "20x",
+    "rightEquationPart": "20x",
     "errorMessages": ["Die Gleichung ist bereits gelöst."]
   };
 
@@ -210,6 +244,8 @@ test("already solved equation due to completely simplified equation", () => {
     "leftEquationValid": false,
     "rightEquationValid": false,
     "variableValid": false,
+    "leftEquationPart": "x",
+    "rightEquationPart": "300y",
     "errorMessages": ["Die Gleichung ist bereits gelöst."]
   };
 
@@ -223,6 +259,8 @@ test("successfully validated equation", () => {
     "leftEquationValid": true,
     "rightEquationValid": true,
     "variableValid": true,
+    "leftEquationPart": "20x+4000y+6000",
+    "rightEquationPart": "200+10x",
     "errorMessages": []
   };
 

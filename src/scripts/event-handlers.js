@@ -80,8 +80,8 @@ $(document).ready(function () {
 
       $("#equation-rearrangement-div").append(
         RearrangementTemplate({
-          leftEquationPart: leftEquationPart,
-          rightEquationPart: rightEquationPart
+          leftEquationPart: startEquationEvaluation.leftEquationPart,
+          rightEquationPart: startEquationEvaluation.rightEquationPart
         })
       );
 
