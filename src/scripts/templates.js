@@ -90,7 +90,7 @@ RearrangementTemplate = ({ leftEquationPart, rightEquationPart }) => `
 
       <!-- rearrangement button -->
       <button
-        class="btn btn-success rearrangement-button ml-2"
+        class="btn btn-success rearrangement-button"
         data-toggle="tooltip"
         data-placement="top"
         title="
