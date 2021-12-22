@@ -5,14 +5,6 @@ let wrongCounter = 0;
 let adviceButtonClickCounter = 0;
 let rearrangementStepsGenerated = true;
 
-if (window.matchMedia("(min-width: 900px)").matches) {
-  console.log("bog");
-}
-
-if (window.matchMedia("(max-width: 900px)").matches) {
-  console.log("smul");
-}
-
 function simplifyExpression(expression) {
   if (expression.includes("sqrt") || expression.includes("^")) {
     try {
@@ -580,11 +572,6 @@ function resetAdviceButtonClickCounter() {
   adviceButtonClickCounter = 0;
 }
 
-function test() {
-  console.log(rearrangementSteps);
-}
-
-window.test = test;
 window.resetWrongCounter = resetWrongCounter;
 window.resetAdviceButtonClickCounter = resetAdviceButtonClickCounter;
 window.getAdviceMessage = getAdviceMessage;
