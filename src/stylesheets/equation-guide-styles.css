@@ -1,33 +1,142 @@
-#equation-guide-headline {
-  font-family: "Optima";
-  font-size: 100px;
+@media only screen and (min-width: 900px) {
+    #equation-guide-headline {
+        font-family: "Optima";
+        font-size: 100px;
+    }
+
+    #left-equation-input {
+        width: 25%;
+    }
+
+    #right-equation-input {
+        width: 25%;
+    }
+
+    #variable-input {
+        width: 9%;
+    }
+
+    #equals-sign {
+        width: 4%;
+    }
+
+    #rearrangement-button {
+        width: 8%;
+    }
+
+    #help-button {
+        width: 20%;
+    }
+
+    #start-button {
+        width: 20%;
+    }
+
+    #reset-button {
+        width: 20%;
+    }
+
+    #restart-button {
+        width: 20%;
+    }
+
+    #advice-button {
+        width: 20%;
+    }
+
+    .left-rearrangement-input {
+        width: 20%;
+    }
+
+    .equals-sign-input {
+        width: 4%;
+    }
+
+    .right-rearrangement-input {
+        width: 25%;
+    }
+
+    .arithmetic-operation-select {
+        width: 6%;
+    }
+
+    .rearrangement-step-input {
+        width: 15%
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    #equation-guide-headline {
+        font-family: "Optima";
+        font-size: 40px;
+    }
+
+    #left-equation-input {
+        width: 70%;
+    }
+
+    #equals-sign {
+        width: 20%;
+    }
+
+    #right-equation-input {
+        width: 70%;
+    }
+
+    #variable-input {
+        width: 20%;
+    }
+
+    #rearrangement-button {
+        width: 80%;
+    }
+
+    #help-button {
+        width: 80%;
+    }
+
+    #start-button {
+        width: 80%;
+    }
+
+    #reset-button {
+        width: 80%;
+    }
+
+    #restart-button {
+        width: 80%;
+    }
+
+    #advice-button {
+        width: 80%;
+    }
+
+    .left-rearrangement-input {
+        width: 70%;
+    }
+
+    .equals-sign-input {
+        width: 20%;
+    }
+
+    .right-rearrangement-input {
+        width: 85%;
+    }
+
+    .arithmetic-operation-select {
+        width: 20%;
+    }
+
+    .rearrangement-step-input {
+        width: 65%
+    }
 }
 
 .equation-input {
-  font-size: 20px;
-  font-family: "Arial";
-}
-
-#variable-input {
-  width: 9%;
-}
-
-.equals-sign-input {
-  width: 4%;
-}
-
-.arithmetic-operation-select {
-  width: 6%;
+    font-size: 20px;
+    font-family: "Arial";
 }
 
 .equation-guide-button {
-  width: 13%;
-}
-
-.rearrangement-button {
-  width: 8%;
-}
-
-.rearrangement-step-input {
-  width: 15%;
+    width: 13%;
 }

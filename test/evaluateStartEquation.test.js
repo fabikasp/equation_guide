@@ -7,7 +7,7 @@ require("../src/scripts/functions.js");
 /* test validation of left equation part */
 
 test("equation with empty left equation part", () => {
-  let expectedResult = {
+  const expectedResult = {
     "leftEquationValid": false,
     "rightEquationValid": true,
     "variableValid": true,
@@ -20,7 +20,7 @@ test("equation with empty left equation part", () => {
 });
 
 test("equation with equal sign in left equation part", () => {
-  let expectedResult = {
+  const expectedResult = {
     "leftEquationValid": false,
     "rightEquationValid": true,
     "variableValid": true,
@@ -33,7 +33,7 @@ test("equation with equal sign in left equation part", () => {
 });
 
 test("equation with ^3 in left equation part", () => {
-  let expectedResult = {
+  const expectedResult = {
     "leftEquationValid": false,
     "rightEquationValid": true,
     "variableValid": true,
@@ -46,7 +46,7 @@ test("equation with ^3 in left equation part", () => {
 });
 
 test("equation with float power in left equation part", () => {
-  let expectedResult = {
+  const expectedResult = {
     "leftEquationValid": false,
     "rightEquationValid": true,
     "variableValid": true,
@@ -59,7 +59,7 @@ test("equation with float power in left equation part", () => {
 });
 
 test("equation with forbidden characters in left equation part", () => {
-  let expectedResult = {
+  const expectedResult = {
     "leftEquationValid": false,
     "rightEquationValid": true,
     "variableValid": true,
@@ -74,7 +74,7 @@ test("equation with forbidden characters in left equation part", () => {
 /* test validation of right equation part */
 
 test("equation with empty right equation part", () => {
-  let expectedResult = {
+  const expectedResult = {
     "leftEquationValid": true,
     "rightEquationValid": false,
     "variableValid": true,
@@ -87,7 +87,7 @@ test("equation with empty right equation part", () => {
 });
 
 test("equation with equal sign in right equation part", () => {
-  let expectedResult = {
+  const expectedResult = {
     "leftEquationValid": true,
     "rightEquationValid": false,
     "variableValid": true,
@@ -100,7 +100,7 @@ test("equation with equal sign in right equation part", () => {
 });
 
 test("equation with ^5 in right equation part", () => {
-  let expectedResult = {
+  const expectedResult = {
     "leftEquationValid": true,
     "rightEquationValid": false,
     "variableValid": true,
@@ -113,7 +113,7 @@ test("equation with ^5 in right equation part", () => {
 });
 
 test("equation with float power in right equation part", () => {
-  let expectedResult = {
+  const expectedResult = {
     "leftEquationValid": true,
     "rightEquationValid": false,
     "variableValid": true,
@@ -126,7 +126,7 @@ test("equation with float power in right equation part", () => {
 });
 
 test("equation with forbidden characters in right equation part", () => {
-  let expectedResult = {
+  const expectedResult = {
     "leftEquationValid": true,
     "rightEquationValid": false,
     "variableValid": true,
@@ -141,7 +141,7 @@ test("equation with forbidden characters in right equation part", () => {
 /* test validation of variable */
 
 test("equation with empty variable", () => {
-  let expectedResult = {
+  const expectedResult = {
     "leftEquationValid": true,
     "rightEquationValid": true,
     "variableValid": false,
@@ -154,7 +154,7 @@ test("equation with empty variable", () => {
 });
 
 test("equation with variable with more than one character", () => {
-  let expectedResult = {
+  const expectedResult = {
     "leftEquationValid": true,
     "rightEquationValid": true,
     "variableValid": false,
@@ -167,7 +167,7 @@ test("equation with variable with more than one character", () => {
 });
 
 test("equation with variable with invalid characters", () => {
-  let expectedResult = {
+  const expectedResult = {
     "leftEquationValid": true,
     "rightEquationValid": true,
     "variableValid": false,
@@ -180,7 +180,7 @@ test("equation with variable with invalid characters", () => {
 });
 
 test("equation with unreferenced variable", () => {
-  let expectedResult = {
+  const expectedResult = {
     "leftEquationValid": true,
     "rightEquationValid": true,
     "variableValid": false,
@@ -195,7 +195,7 @@ test("equation with unreferenced variable", () => {
 /* hybrid test */
 
 test("equation with multiple validation errors", () => {
-  let expectedResult = {
+  const expectedResult = {
     "leftEquationValid": false,
     "rightEquationValid": false,
     "variableValid": false,
@@ -214,7 +214,7 @@ test("equation with multiple validation errors", () => {
 /* test higher validations */
 
 test("equation with nerdamer solution error", () => {
-  let expectedResult = {
+  const expectedResult = {
     "leftEquationValid": false,
     "rightEquationValid": false,
     "variableValid": false,
@@ -227,7 +227,7 @@ test("equation with nerdamer solution error", () => {
 });
 
 test("already solved equation due to identical equation parts", () => {
-  let expectedResult = {
+  const expectedResult = {
     "leftEquationValid": false,
     "rightEquationValid": false,
     "variableValid": false,
@@ -240,7 +240,7 @@ test("already solved equation due to identical equation parts", () => {
 });
 
 test("already solved equation due to completely simplified equation", () => {
-  let expectedResult = {
+  const expectedResult = {
     "leftEquationValid": false,
     "rightEquationValid": false,
     "variableValid": false,
@@ -255,7 +255,7 @@ test("already solved equation due to completely simplified equation", () => {
 /* test success case */
 
 test("successfully validated equation", () => {
-  let expectedResult = {
+  const expectedResult = {
     "leftEquationValid": true,
     "rightEquationValid": true,
     "variableValid": true,
