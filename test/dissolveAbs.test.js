@@ -25,7 +25,7 @@ test("equation without abs", () => {
 test("simple equation with abs in left equation part", () => {
   let expectedResult = {
     "leftEquationPart": "x",
-    "rightEquationPart": "30, -30"
+    "rightEquationPart": "30, -(30)"
   };
 
   expect(dissolveAbs("abs(x)", "30", "x")).toStrictEqual(expectedResult);
@@ -42,7 +42,7 @@ test("complex equation with abs in left equation part", () => {
 
 test("simple equation with abs in right equation part", () => {
   let expectedResult = {
-    "leftEquationPart": "2x, -2x",
+    "leftEquationPart": "2x, -(2x)",
     "rightEquationPart": "y"
   };
 

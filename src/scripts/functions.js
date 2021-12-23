@@ -357,7 +357,7 @@ function generateFeedbackMessage(
   rearrangementStep
 ) {
   if (!rearrangementStepsGenerated) {
-    return {message: "Leider kann für diese Art von Gleichung kein Feedback gegeben werden.", type: "info"}
+    return {message: "Leider kann für diese Art von Gleichungen kein Feedback gegeben werden.", type: "info"}
   }
 
   if (
@@ -511,10 +511,6 @@ function getLastOperationsLength() {
 }
 
 function getAdviceMessage(leftEquationPart, rightEquationPart) {
-  if (!rearrangementStepsGenerated) {
-    return "Leider können für diese Art von Gleichungen keine Tipps gegeben werden.";
-  }
-
   adviceButtonClickCounter += 1;
 
   if (equationContainsRoot(leftEquationPart, rightEquationPart)) {
@@ -529,6 +525,10 @@ function getAdviceMessage(leftEquationPart, rightEquationPart) {
     }
 
     return "Versuch es doch mal mit Wurzelziehen";
+  }
+
+  if (!rearrangementStepsGenerated) {
+    return "Leider können für diese Art von Gleichungen keine Tipps gegeben werden.";
   }
 
   if (rearrangementSteps.length === 0) {
@@ -594,6 +594,16 @@ function resetAdviceButtonClickCounter() {
   adviceButtonClickCounter = 0;
 }
 
+function returnRearrangementStepsArray() {
+  return rearrangementSteps;
+}
+
+function returnRearrangementStepsGenerated() {
+  return rearrangementStepsGenerated;
+}
+
+window.returnRearrangementStepsGenerated = returnRearrangementStepsGenerated;
+window.returnRearrangementStepsArray = returnRearrangementStepsArray;
 window.resetWrongCounter = resetWrongCounter;
 window.resetAdviceButtonClickCounter = resetAdviceButtonClickCounter;
 window.getAdviceMessage = getAdviceMessage;

@@ -184,3 +184,14 @@ test("bad mathsteps feedback", () => {
 
   expect(generateFeedbackMessage("30x+50", "20x+800", "x", "*", "2")).toStrictEqual(expectedResult);
 });
+
+test("complex equations lead to no feedback", () => {
+  generateRearrangementStepsArray("(2x+1)/(3x+2)", "2", "x");
+
+  expectedResult = {
+    message: "Leider kann für diese Art von Gleichungen kein Feedback gegeben werden.",
+    type: "info"
+  };
+
+  expect(generateFeedbackMessage("(2x+1)/(3x+2)", "2", "x", "+", "2")).toStrictEqual(expectedResult);
+});

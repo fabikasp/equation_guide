@@ -154,3 +154,11 @@ test("strong mathsteps advice for multiplication", () => {
 
   expect(getAdviceMessage("x/30", "400")).toBe(expectedResult);
 });
+
+test("complex equations lead to no advice", () => {
+  generateRearrangementStepsArray("(2x+1)/(3x+2)", "2", "x");
+
+  expectedResult = "Leider können für diese Art von Gleichungen keine Tipps gegeben werden.";
+
+  expect(getAdviceMessage("(2x+1)/(3x+2)", "2")).toBe(expectedResult);
+});
