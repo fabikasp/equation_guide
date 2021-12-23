@@ -27,7 +27,7 @@ test("nerdamer advice for power at second attempt without root feedback", () => 
   resetAdviceButtonClickCounter();
   getAdviceMessage("2x^2+20", "200");
 
-  expectedResult = "Versuch es erst einmal ohne Wurzelziehen";
+  const expectedResult = "Versuch es erst einmal ohne Wurzelziehen";
 
   expect(getAdviceMessage("2x^2+20", "200", "x")).toBe(expectedResult);
 });
@@ -53,7 +53,7 @@ test("nerdamer advice for sqrt at second attempt without power feedback", () => 
   resetAdviceButtonClickCounter();
   getAdviceMessage("sqrt(2x+20)+20", "200");
 
-  expectedResult = "Versuch es erst einmal ohne Potenzieren";
+  const expectedResult = "Versuch es erst einmal ohne Potenzieren";
 
   expect(getAdviceMessage("sqrt(2x+20)+20", "200", "x")).toBe(expectedResult);
 });

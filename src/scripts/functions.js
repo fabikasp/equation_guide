@@ -661,27 +661,14 @@ function resetAdviceButtonClickCounter() {
   adviceButtonClickCounter = 0;
 }
 
-<<<<<<< HEAD
-=======
-function returnRearrangementStepsArray() {
+function getRearrangementStepsArray() {
   return rearrangementSteps;
 }
 
-function returnRearrangementStepsGenerated() {
+function getRearrangementStepsGenerated() {
   return rearrangementStepsGenerated;
 }
 
-window.returnRearrangementStepsGenerated = returnRearrangementStepsGenerated;
-window.returnRearrangementStepsArray = returnRearrangementStepsArray;
-window.resetWrongCounter = resetWrongCounter;
-window.resetAdviceButtonClickCounter = resetAdviceButtonClickCounter;
-window.getAdviceMessage = getAdviceMessage;
-window.getLastOperationsLength = getLastOperationsLength;
-window.dissolveAbs = dissolveAbs;
-window.resetLastOperation = resetLastOperation;
-window.generateFeedbackMessage = generateFeedbackMessage;
-window.generateRearrangementStepsArray = generateRearrangementStepsArray;
->>>>>>> main
 window.simplifyExpression = simplifyExpression;
 window.getEquationResult = getEquationResult;
 window.isFinalEquation = isFinalEquation;
@@ -700,3 +687,5 @@ window.rootIsNecessary = rootIsNecessary;
 window.powerIsNecessary = powerIsNecessary;
 window.resetWrongCounter = resetWrongCounter;
 window.resetAdviceButtonClickCounter = resetAdviceButtonClickCounter;
+window.getRearrangementStepsArray = getRearrangementStepsArray;
+window.getRearrangementStepsGenerated = getRearrangementStepsGenerated;

@@ -79,7 +79,7 @@ test("nerdamer feedback with operand reducation in right equation part with vari
 });
 
 test("negative nerdamer feedback due to false subtraction", () => {
-  expectedResult = {
+  const expectedResult = {
     message: "Das war leider kein optimaler Umformungsschritt. Du kannst den Schritt rückgängig oder einfach weiter machen.",
     type: "warning"
   };
@@ -88,7 +88,7 @@ test("negative nerdamer feedback due to false subtraction", () => {
 });
 
 test("negative nerdamer feedback due to too early root", () => {
-  expectedResult = {
+  const expectedResult = {
     message: "Das war leider kein optimaler Umformungsschritt. Du kannst den Schritt rückgängig oder einfach weiter machen.",
     type: "warning"
   };

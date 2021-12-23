@@ -11,8 +11,8 @@ test("generateRearrangementStepsArray with simple addition", () => {
 
   const expectedResult = [{"type": "add", "value": "2"}];
 
-  expect(returnRearrangementStepsArray()).toStrictEqual(expectedResult);
-  expect(returnRearrangementStepsGenerated()).toBe(true);
+  expect(getRearrangementStepsArray()).toStrictEqual(expectedResult);
+  expect(getRearrangementStepsGenerated()).toBe(true);
 });
 
 test("generateRearrangementStepsArray with simple subtraction", () => {
@@ -20,8 +20,8 @@ test("generateRearrangementStepsArray with simple subtraction", () => {
 
   const expectedResult = [{"type": "subtract", "value": "2"}];
 
-  expect(returnRearrangementStepsArray()).toStrictEqual(expectedResult);
-  expect(returnRearrangementStepsGenerated()).toBe(true);
+  expect(getRearrangementStepsArray()).toStrictEqual(expectedResult);
+  expect(getRearrangementStepsGenerated()).toBe(true);
 });
 
 test("generateRearrangementStepsArray with simple multiplication", () => {
@@ -29,8 +29,8 @@ test("generateRearrangementStepsArray with simple multiplication", () => {
 
   const expectedResult = [{"type": "multiply", "value": "2"}];
 
-  expect(returnRearrangementStepsArray()).toStrictEqual(expectedResult);
-  expect(returnRearrangementStepsGenerated()).toBe(true);
+  expect(getRearrangementStepsArray()).toStrictEqual(expectedResult);
+  expect(getRearrangementStepsGenerated()).toBe(true);
 });
 
 test("generateRearrangementStepsArray with simple division", () => {
@@ -38,8 +38,8 @@ test("generateRearrangementStepsArray with simple division", () => {
 
   const expectedResult = [{"type": "divide", "value": "2"}];
 
-  expect(returnRearrangementStepsArray()).toStrictEqual(expectedResult);
-  expect(returnRearrangementStepsGenerated()).toBe(true);
+  expect(getRearrangementStepsArray()).toStrictEqual(expectedResult);
+  expect(getRearrangementStepsGenerated()).toBe(true);
 });
 
 test("generateRearrangementStepsArray with multiple steps (add & multiply)", () => {
@@ -47,8 +47,8 @@ test("generateRearrangementStepsArray with multiple steps (add & multiply)", () 
 
   const expectedResult = [{"type": "add", "value": "2"},{"type": "multiply", "value": "2"}];
 
-  expect(returnRearrangementStepsArray()).toStrictEqual(expectedResult);
-  expect(returnRearrangementStepsGenerated()).toBe(true);
+  expect(getRearrangementStepsArray()).toStrictEqual(expectedResult);
+  expect(getRearrangementStepsGenerated()).toBe(true);
 });
 
 test("generateRearrangementStepsArray with multiple steps (add & divide)", () => {
@@ -56,8 +56,8 @@ test("generateRearrangementStepsArray with multiple steps (add & divide)", () =>
 
   const expectedResult = [{"type": "add", "value": "2"},{"type": "divide", "value": "2"}];
 
-  expect(returnRearrangementStepsArray()).toStrictEqual(expectedResult);
-  expect(returnRearrangementStepsGenerated()).toBe(true);
+  expect(getRearrangementStepsArray()).toStrictEqual(expectedResult);
+  expect(getRearrangementStepsGenerated()).toBe(true);
 });
 
 test("generateRearrangementStepsArray with multiple steps (subtract & divide)", () => {
@@ -65,8 +65,8 @@ test("generateRearrangementStepsArray with multiple steps (subtract & divide)", 
 
   const expectedResult = [{"type": "subtract", "value": "2"},{"type": "divide", "value": "2"}];
 
-  expect(returnRearrangementStepsArray()).toStrictEqual(expectedResult);
-  expect(returnRearrangementStepsGenerated()).toBe(true);
+  expect(getRearrangementStepsArray()).toStrictEqual(expectedResult);
+  expect(getRearrangementStepsGenerated()).toBe(true);
 });
 
 test("generateRearrangementStepsArray with multiple steps (subtract & multiply)", () => {
@@ -74,13 +74,12 @@ test("generateRearrangementStepsArray with multiple steps (subtract & multiply)"
 
   const expectedResult = [{"type": "subtract", "value": "2"},{"type": "multiply", "value": "2"}];
 
-  expect(returnRearrangementStepsArray()).toStrictEqual(expectedResult);
-  expect(returnRearrangementStepsGenerated()).toBe(true);
+  expect(getRearrangementStepsArray()).toStrictEqual(expectedResult);
+  expect(getRearrangementStepsGenerated()).toBe(true);
 });
 
 test("complex equations lead to no relevant steps being created", () => {
   generateRearrangementStepsArray("(2x+1)/(3x+2)", "2", "x");
 
-  expect(returnRearrangementStepsGenerated()).toBe(false);
+  expect(getRearrangementStepsGenerated()).toBe(false);
 });
-
