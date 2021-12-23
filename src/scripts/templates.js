@@ -1,4 +1,4 @@
-RearrangementTemplate = ({ leftEquationPart, rightEquationPart }) => `
+RearrangementTemplate = ({leftEquationPart, rightEquationPart}) => `
   <div class="equation-rearrangement-step-div">
     <div class="row form-group justify-content-center">
       <!-- inputs for defining the rearranged equation -->
@@ -6,8 +6,7 @@ RearrangementTemplate = ({ leftEquationPart, rightEquationPart }) => `
         class="
           form-control
           equation-input
-          w-25
-          mr-2
+          m-2
           text-center
           left-rearrangement-input
         "
@@ -23,6 +22,7 @@ RearrangementTemplate = ({ leftEquationPart, rightEquationPart }) => `
           text-center
           font-weight-bold
           equals-sign-input
+          m-2
         "
         type="text"
         value="="
@@ -33,8 +33,7 @@ RearrangementTemplate = ({ leftEquationPart, rightEquationPart }) => `
         class="
           form-control
           equation-input
-          w-25
-          ml-2
+          m-2
           text-center
           right-rearrangement-input
         "
@@ -49,7 +48,7 @@ RearrangementTemplate = ({ leftEquationPart, rightEquationPart }) => `
           bootstrap-select
           form-control
           equation-input
-          ml-2
+          m-2
           arithmetic-operation-select
         "
         data-toggle="tooltip"
@@ -73,7 +72,7 @@ RearrangementTemplate = ({ leftEquationPart, rightEquationPart }) => `
           form-control
           equation-input
           rearrangement-step-input
-          ml-2
+          m-2
           text-center
         "
         type="text"
@@ -91,7 +90,8 @@ RearrangementTemplate = ({ leftEquationPart, rightEquationPart }) => `
 
       <!-- rearrangement button -->
       <button
-        class="btn btn-success rearrangement-button ml-2"
+        id="rearrangement-button"
+        class="btn btn-success rearrangement-button m-2"
         data-toggle="tooltip"
         data-placement="top"
         title="
@@ -108,7 +108,7 @@ RearrangementTemplate = ({ leftEquationPart, rightEquationPart }) => `
 StartButtonTemplate = `
   <button
     id="start-button"
-    class="btn btn-primary equation-guide-button"
+    class="btn btn-primary equation-guide-button m-2"
     data-toggle="tooltip"
     data-placement="bottom"
     title="
@@ -123,7 +123,7 @@ StartButtonTemplate = `
 RestartButtonTemplate = `
   <button
     id="restart-button"
-    class="btn btn-primary equation-guide-button"
+    class="btn btn-primary equation-guide-button m-2"
     data-toggle="tooltip"
     data-placement="bottom"
     title="
@@ -138,7 +138,7 @@ RestartButtonTemplate = `
 ResetButtonTemplate = `
   <a
     id="reset-button"
-    class="btn btn-dark equation-guide-button ml-4"
+    class="btn btn-dark equation-guide-button m-2"
     href="#"
     data-toggle="tooltip"
     data-placement="bottom"
@@ -153,7 +153,7 @@ ResetButtonTemplate = `
 AdviceButtonTemplate = `
   <button
     id="advice-button"
-    class="btn btn-success equation-guide-button ml-4 advice-button"
+    class="btn btn-success equation-guide-button advice-button m-2"
     href="#"
     data-toggle="tooltip"
     data-placement="bottom"
@@ -165,6 +165,6 @@ AdviceButtonTemplate = `
   </button>
 `
 
-AlertTemplate = ({ text, alertType }) => `
+AlertTemplate = ({text, alertType}) => `
   <div class="alert alert-${alertType} w-50 mx-auto">${text}</div>
 `;

@@ -7,7 +7,7 @@ require("../src/scripts/functions.js");
 /* test nerdamer feedback */
 
 test("nerdamer feedback with sqrt rearrangement on equation with ^2", () => {
-  expectedResult = {
+  const expectedResult = {
     message: "Sehr gut! Du hast einen der optimalen Umformungsschritte gefunden.",
     type: "info"
   };
@@ -16,7 +16,7 @@ test("nerdamer feedback with sqrt rearrangement on equation with ^2", () => {
 });
 
 test("nerdamer feedback with ^2 rearrangement on equation with sqrt", () => {
-  expectedResult = {
+  const expectedResult = {
     message: "Sehr gut! Du hast einen der optimalen Umformungsschritte gefunden.",
     type: "info"
   };
@@ -25,7 +25,7 @@ test("nerdamer feedback with ^2 rearrangement on equation with sqrt", () => {
 });
 
 test("nerdamer feedback with operand reduction in left equation part", () => {
-  expectedResult = {
+  const expectedResult = {
     message: "Sehr gut! Du hast einen der optimalen Umformungsschritte gefunden.",
     type: "info"
   };
@@ -34,7 +34,7 @@ test("nerdamer feedback with operand reduction in left equation part", () => {
 });
 
 test("nerdamer feedback with operand reduction in right equation part", () => {
-  expectedResult = {
+  const expectedResult = {
     message: "Sehr gut! Du hast einen der optimalen Umformungsschritte gefunden.",
     type: "info"
   };
@@ -43,7 +43,7 @@ test("nerdamer feedback with operand reduction in right equation part", () => {
 });
 
 test("nerdamer feedback with variable elimination in right equation part", () => {
-  expectedResult = {
+  const expectedResult = {
     message: "Sehr gut! Du hast einen der optimalen Umformungsschritte gefunden.",
     type: "info"
   };
@@ -52,7 +52,7 @@ test("nerdamer feedback with variable elimination in right equation part", () =>
 });
 
 test("nerdamer feedback with variable elimination in left equation part", () => {
-  expectedResult = {
+  const expectedResult = {
     message: "Sehr gut! Du hast einen der optimalen Umformungsschritte gefunden.",
     type: "info"
   };
@@ -61,7 +61,7 @@ test("nerdamer feedback with variable elimination in left equation part", () => 
 });
 
 test("nerdamer feedback with operand reducation in left equation part with variable in both parts", () => {
-  expectedResult = {
+  const expectedResult = {
     message: "Sehr gut! Du hast einen der optimalen Umformungsschritte gefunden.",
     type: "info"
   };
@@ -70,7 +70,7 @@ test("nerdamer feedback with operand reducation in left equation part with varia
 });
 
 test("nerdamer feedback with operand reducation in right equation part with variable in both parts", () => {
-  expectedResult = {
+  const expectedResult = {
     message: "Sehr gut! Du hast einen der optimalen Umformungsschritte gefunden.",
     type: "info"
   };
@@ -79,7 +79,7 @@ test("nerdamer feedback with operand reducation in right equation part with vari
 });
 
 test("empty nerdamer feedback", () => {
-  expectedResult = {};
+  const expectedResult = {};
 
   expect(generateFeedbackMessage("50x+50y^2+50", "620", "x", "-", "5")).toStrictEqual(expectedResult);
 });
@@ -89,7 +89,7 @@ test("empty nerdamer feedback", () => {
 test("optimal mathsteps feedback due to correct addition", () => {
   generateRearrangementStepsArray("2x-20", "200", "x");
 
-  expectedResult = {
+  const expectedResult = {
     message: "Sehr gut! Du hast einen der optimalen Umformungsschritte gefunden.",
     type: "info"
   };
@@ -100,7 +100,7 @@ test("optimal mathsteps feedback due to correct addition", () => {
 test("optimal mathsteps feedback due to correct subtraction", () => {
   generateRearrangementStepsArray("2x+20", "200", "x");
 
-  expectedResult = {
+  const expectedResult = {
     message: "Sehr gut! Du hast einen der optimalen Umformungsschritte gefunden.",
     type: "info"
   };
@@ -111,7 +111,7 @@ test("optimal mathsteps feedback due to correct subtraction", () => {
 test("optimal mathsteps feedback due to correct division", () => {
   generateRearrangementStepsArray("2x+50", "200", "x");
 
-  expectedResult = {
+  const expectedResult = {
     message: "Sehr gut! Du hast einen der optimalen Umformungsschritte gefunden.",
     type: "info"
   };
@@ -122,7 +122,7 @@ test("optimal mathsteps feedback due to correct division", () => {
 test("optimal mathsteps feedback due to correct multiplication", () => {
   generateRearrangementStepsArray("x/2+50", "200", "x");
 
-  expectedResult = {
+  const expectedResult = {
     message: "Sehr gut! Du hast einen der optimalen Umformungsschritte gefunden.",
     type: "info"
   };
@@ -133,7 +133,7 @@ test("optimal mathsteps feedback due to correct multiplication", () => {
 test("good mathsteps feedback due to nearly correct addition", () => {
   generateRearrangementStepsArray("x-50", "200", "x");
 
-  expectedResult = {
+  const expectedResult = {
     message: "Gut! Das ist der richtige Weg, aber versuch es vielleicht mit einem anderen Wert.",
     type: "warning"
   };
@@ -144,7 +144,7 @@ test("good mathsteps feedback due to nearly correct addition", () => {
 test("good mathsteps feedback due to nearly correct subtraction", () => {
   generateRearrangementStepsArray("x+50", "200", "x");
 
-  expectedResult = {
+  const expectedResult = {
     message: "Gut! Das ist der richtige Weg, aber versuch es vielleicht mit einem anderen Wert.",
     type: "warning"
   };
@@ -155,7 +155,7 @@ test("good mathsteps feedback due to nearly correct subtraction", () => {
 test("good mathsteps feedback due to nearly correct division", () => {
   generateRearrangementStepsArray("15x+50", "500", "x");
 
-  expectedResult = {
+  const expectedResult = {
     message: "Gut! Das ist der richtige Weg, aber versuch es vielleicht mit einem anderen Wert.",
     type: "warning"
   };
@@ -166,7 +166,7 @@ test("good mathsteps feedback due to nearly correct division", () => {
 test("good mathsteps feedback due to nearly correct multiplication", () => {
   generateRearrangementStepsArray("x/30+50", "500", "x");
 
-  expectedResult = {
+  const expectedResult = {
     message: "Gut! Das ist der richtige Weg, aber versuch es vielleicht mit einem anderen Wert.",
     type: "warning"
   };
@@ -177,10 +177,21 @@ test("good mathsteps feedback due to nearly correct multiplication", () => {
 test("bad mathsteps feedback", () => {
   generateRearrangementStepsArray("30x+50", "20x+800", "x");
 
-  expectedResult = {
+  const expectedResult = {
     message: "Das war leider kein optimaler Umformungsschritt. Du kannst den Schritt rückgängig oder einfach weiter machen.",
     type: "warning"
   };
 
   expect(generateFeedbackMessage("30x+50", "20x+800", "x", "*", "2")).toStrictEqual(expectedResult);
+});
+
+test("complex equations lead to no feedback", () => {
+  generateRearrangementStepsArray("(2x+1)/(3x+2)", "2", "x");
+
+  const expectedResult = {
+    message: "Leider kann für diese Art von Gleichungen kein Feedback gegeben werden.",
+    type: "info"
+  };
+
+  expect(generateFeedbackMessage("(2x+1)/(3x+2)", "2", "x", "+", "2")).toStrictEqual(expectedResult);
 });
