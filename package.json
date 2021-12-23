@@ -3,7 +3,9 @@
     "browserify": "^17.0.0",
     "concurrently": "^6.4.0",
     "http-server": "^14.0.0",
+    "jest": "^27.4.3",
     "mathsteps": "^0.2.0",
+    "nerdamer": "^1.1.13",
     "watchify": "^4.0.0"
   },
   "name": "equationguide",
@@ -14,7 +16,8 @@
     "buildSingle": "browserify src/scripts/functions.js > src/dist/bundle.js",
     "build": "browserify src/scripts/event-handlers.js src/scripts/functions.js > src/dist/bundle.js",
     "watch": "watchify src/scripts/functions.js -o src/dist/bundle.js -v -d",
-    "start": "concurrently \"npm run watch\" \"http-server\""
+    "start": "concurrently \"npm run watch\" \"http-server\"",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
