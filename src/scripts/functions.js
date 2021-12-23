@@ -77,8 +77,6 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
     "errorMessages": []
   };
 
-  console.log("Validate: " + leftEquationPart)
-
   try {
     if (leftEquationPart == "") {
       result.leftEquationValid = false;
@@ -514,7 +512,7 @@ function getLastOperationsLength() {
 
 function getAdviceMessage(leftEquationPart, rightEquationPart) {
   if (!rearrangementStepsGenerated) {
-    return "Leider kann für diese Art von Gleichung keine Tipps gegeben werden.";
+    return "Leider können für diese Art von Gleichungen keine Tipps gegeben werden.";
   }
 
   adviceButtonClickCounter += 1;

@@ -20,32 +20,32 @@
         width: 4%;
     }
 
-    .rearrangement-button {
-        width: 25%;
+    #rearrangement-button {
+        width: 8%;
     }
 
     #help-button {
-        width: 25%;
+        width: 20%;
     }
 
     #start-button {
-        width: 25%;
+        width: 20%;
     }
 
     #reset-button {
-        width: 25%;
+        width: 20%;
     }
 
     #restart-button {
-        width: 25%;
+        width: 20%;
     }
 
     #advice-button {
-        width: 25%;
+        width: 20%;
     }
 
     .left-rearrangement-input {
-        width: 25%;
+        width: 20%;
     }
 
     .equals-sign-input {
@@ -87,7 +87,7 @@
         width: 20%;
     }
 
-    .rearrangement-button {
+    #rearrangement-button {
         width: 80%;
     }
 

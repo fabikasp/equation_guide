@@ -1,4 +1,4 @@
-RearrangementTemplate = ({ leftEquationPart, rightEquationPart }) => `
+RearrangementTemplate = ({leftEquationPart, rightEquationPart}) => `
   <div class="equation-rearrangement-step-div">
     <div class="row form-group justify-content-center">
       <!-- inputs for defining the rearranged equation -->
@@ -90,7 +90,8 @@ RearrangementTemplate = ({ leftEquationPart, rightEquationPart }) => `
 
       <!-- rearrangement button -->
       <button
-        class="btn btn-success rearrangement-button"
+        id="rearrangement-button"
+        class="btn btn-success rearrangement-button m-2"
         data-toggle="tooltip"
         data-placement="top"
         title="
@@ -164,6 +165,6 @@ AdviceButtonTemplate = `
   </button>
 `
 
-AlertTemplate = ({ text, alertType }) => `
+AlertTemplate = ({text, alertType}) => `
   <div class="alert alert-${alertType} w-50 mx-auto">${text}</div>
 `;
