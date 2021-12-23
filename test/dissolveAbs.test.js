@@ -5,7 +5,7 @@
 require("../src/scripts/functions.js");
 
 test("unsolved equation", () => {
-  let expectedResult = {
+  const expectedResult = {
     "leftEquationPart": "abs(x)*30",
     "rightEquationPart": "30"
   };
@@ -14,7 +14,7 @@ test("unsolved equation", () => {
 });
 
 test("equation without abs", () => {
-  let expectedResult = {
+  const expectedResult = {
     "leftEquationPart": "x",
     "rightEquationPart": "30"
   };
@@ -23,7 +23,7 @@ test("equation without abs", () => {
 });
 
 test("simple equation with abs in left equation part", () => {
-  let expectedResult = {
+  const expectedResult = {
     "leftEquationPart": "x",
     "rightEquationPart": "30, -(30)"
   };
@@ -32,7 +32,7 @@ test("simple equation with abs in left equation part", () => {
 });
 
 test("complex equation with abs in left equation part", () => {
-  let expectedResult = {
+  const expectedResult = {
     "leftEquationPart": "x",
     "rightEquationPart": "20*z+200*y+360+sqrt(y), -(20*z+200*y+360+sqrt(y))"
   };
@@ -41,7 +41,7 @@ test("complex equation with abs in left equation part", () => {
 });
 
 test("simple equation with abs in right equation part", () => {
-  let expectedResult = {
+  const expectedResult = {
     "leftEquationPart": "2x, -(2x)",
     "rightEquationPart": "y"
   };
@@ -50,7 +50,7 @@ test("simple equation with abs in right equation part", () => {
 });
 
 test("complex equation with abs in right equation part", () => {
-  let expectedResult = {
+  const expectedResult = {
     "leftEquationPart": "+20 x + 200 s + 336 + 90 z, -20 x + -200 s + -336 + -90 z",
     "rightEquationPart": "y"
   };
