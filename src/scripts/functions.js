@@ -9,16 +9,17 @@ let rearrangementStepsGenerated = true;
 function simplifyExpression(expression) {
   if (expression.includes("sqrt") || expression.includes("^")) {
     try {
-      return nerdamer("simplify(" + expression + ")").toString();
+      return nerdamer("simplify(" + expression + ")").toString().replace(/\s/g, "");
     } catch (e) {
-      return expression;
+      return expression.replace(/\s/g, "");
     }
   } else {
     const steps = mathsteps.simplifyExpression(expression);
+
     if (steps.length === 0) {
-      return expression;
+      return expression.replace(/\s/g, "");
     } else {
-      return (steps[steps.length - 1].newNode.toString());
+      return (steps[steps.length - 1].newNode.toString()).replace(/\s/g, "");
     }
   }
 }
@@ -30,15 +31,15 @@ function getEquationResult(leftEquationPart, rightEquationPart, variable) {
   return nerdamer.solveEquations(
     leftEquationPart + "=" + rightEquationPart,
     variable
-  ).toString();
+  ).toString().replace(/\s/g, "");
 }
 
 function isFinalEquation(leftEquationPart, rightEquationPart, variable) {
   try {
     if (
-      (leftEquationPart == variable || leftEquationPart == "abs(" + variable + ")")
+      (leftEquationPart === variable || leftEquationPart === "abs(" + variable + ")")
       && !rightEquationPart.includes(variable)
-      || (rightEquationPart == variable || rightEquationPart == "abs(" + variable + ")")
+      || (rightEquationPart === variable || rightEquationPart === "abs(" + variable + ")")
       && !leftEquationPart.includes(variable)
     ) {
       return true;
@@ -57,10 +58,10 @@ function dissolveAbs(leftEquationPart, rightEquationPart, variable) {
   };
 
   if (isFinalEquation(leftEquationPart, rightEquationPart, variable)) {
-    if (leftEquationPart == "abs(" + variable + ")") {
+    if (leftEquationPart === "abs(" + variable + ")") {
       result.leftEquationPart = variable;
       result.rightEquationPart += ", " + simplifyExpression("-(" + result.rightEquationPart + ")");
-    } else if (rightEquationPart == "abs(" + variable + ")") {
+    } else if (rightEquationPart === "abs(" + variable + ")") {
       result.rightEquationPart = variable;
       result.leftEquationPart += ", " + simplifyExpression("-(" + result.leftEquationPart + ")");
     }
@@ -70,15 +71,17 @@ function dissolveAbs(leftEquationPart, rightEquationPart, variable) {
 }
 
 function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
-  var result = {
+  let result = {
     "leftEquationValid": true,
     "rightEquationValid": true,
     "variableValid": true,
+    "leftEquationPart": leftEquationPart,
+    "rightEquationPart": rightEquationPart,
     "errorMessages": []
   };
 
   try {
-    if (leftEquationPart == "") {
+    if (leftEquationPart === "") {
       result.leftEquationValid = false;
       result.errorMessages.push(
         "Der linke Teil der Gleichung darf nicht leer sein."
@@ -105,7 +108,7 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
       );
     }
 
-    if (rightEquationPart == "") {
+    if (rightEquationPart === "") {
       result.rightEquationValid = false;
       result.errorMessages.push(
         "Der rechte Teil der Gleichung darf nicht leer sein."
@@ -132,7 +135,7 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
       );
     }
 
-    if (variable == "") {
+    if (variable === "") {
       result.variableValid = false;
       result.errorMessages.push(
         "Die Zielvariable darf nicht leer sein."
@@ -166,7 +169,10 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
   leftEquationPart = simplifyExpression(leftEquationPart);
   rightEquationPart = simplifyExpression(rightEquationPart);
 
-  if (result.errorMessages.length == 0) {
+  result.leftEquationPart = leftEquationPart;
+  result.rightEquationPart = rightEquationPart;
+
+  if (result.errorMessages.length === 0) {
     try {
       equationResult = getEquationResult(
         leftEquationPart,
@@ -174,13 +180,13 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
         variable
       );
 
-      if (equationResult == "") {
+      if (!equationResult) {
         throw new Error();
       }
 
       if (
         isFinalEquation(leftEquationPart, rightEquationPart, variable)
-        || leftEquationPart == rightEquationPart
+        || leftEquationPart === rightEquationPart
       ) {
         result.leftEquationValid = false;
         result.rightEquationValid = false;
@@ -217,7 +223,7 @@ function evaluateRearrangementStep(
   }
 
   try {
-    if (arithmeticOperation == "sqrt") {
+    if (arithmeticOperation === "sqrt") {
       leftRearrangementStep = "sqrt(" + leftEquationPart + ")";
       rightRearrangementStep = "sqrt(" + rightEquationPart + ")";
     } else {
@@ -419,21 +425,15 @@ function generateNerdamerFeedbackMessage(
 ) {
   let optimalRearrangementStep = false;
 
-  if (
-    (leftEquationPart.includes("^2") || rightEquationPart.includes("^2"))
-    && arithmeticOperation == "sqrt"
-  ) {
+  if (rootIsNecessary(leftEquationPart, rightEquationPart, variable) && arithmeticOperation === "sqrt") {
     optimalRearrangementStep = true;
   }
 
-  if (
-    (leftEquationPart.includes("sqrt") || rightEquationPart.includes("sqrt"))
-    && arithmeticOperation == "^2"
-  ) {
+  if (powerIsNecessary(leftEquationPart, rightEquationPart, variable) && arithmeticOperation === "^2") {
     optimalRearrangementStep = true;
   }
 
-  if (!optimalRearrangementStep) {
+  if (!optimalRearrangementStep && !["sqrt", "^2"].includes(arithmeticOperation)) {
     countLeftNumbersBeforeRearrangement = leftEquationPart.replace(/[^0-9]/g, "").length;
     countRightNumbersBeforeRearrangement = rightEquationPart.replace(/[^0-9]/g, "").length;
 
@@ -496,10 +496,13 @@ function generateNerdamerFeedbackMessage(
     return {
       message: "Sehr gut! Du hast einen der optimalen Umformungsschritte gefunden.",
       type: "info"
-    }
+    };
   }
 
-  return {};
+  return {
+    message: "Das war leider kein optimaler Umformungsschritt. Du kannst den Schritt rückgängig oder einfach weiter machen.",
+    type: "warning"
+  };
 }
 
 function resetLastOperation() {
@@ -510,7 +513,7 @@ function getLastOperationsLength() {
   return lastOperations.length;
 }
 
-function getAdviceMessage(leftEquationPart, rightEquationPart) {
+function getAdviceMessage(leftEquationPart, rightEquationPart, variable) {
   adviceButtonClickCounter += 1;
 
   if (equationContainsRoot(leftEquationPart, rightEquationPart)) {
@@ -518,13 +521,21 @@ function getAdviceMessage(leftEquationPart, rightEquationPart) {
       return "Versuch es erst einmal selbst.";
     }
 
-    return "Versuch es doch mal mit Potenzieren";
+    if (powerIsNecessary(leftEquationPart, rightEquationPart, variable)) {
+      return "Versuch es doch mal mit Potenzieren";
+    } else {
+      return "Versuch es erst einmal ohne Potenzieren"
+    }
   } else if (equationContainsPower(leftEquationPart, rightEquationPart)) {
     if (adviceButtonClickCounter < 2) {
       return "Versuch es erst einmal selbst.";
     }
 
-    return "Versuch es doch mal mit Wurzelziehen";
+    if (rootIsNecessary(leftEquationPart, rightEquationPart, variable)) {
+      return "Versuch es doch mal mit Wurzelziehen";
+    } else {
+      return "Versuch es erst einmal ohne Wurzelziehen"
+    }
   }
 
   if (!rearrangementStepsGenerated) {
@@ -586,6 +597,62 @@ function equationContainsPower(leftEquationPart, rightEquationPart) {
   return leftEquationPart.includes("^2") || rightEquationPart.includes("^2");
 }
 
+function rootIsNecessary(leftEquationPart, rightEquationPart, variable) {
+  if (!equationContainsPower(leftEquationPart, rightEquationPart)) {
+    return false;
+  }
+
+  if (leftEquationPart === variable + "^2") {
+    return true;
+  }
+
+  if ((/^\([0-9A-Za-z+*\/\-^\s(sqrt)().,]+\)\^2$/g).test(leftEquationPart)) {
+    if (leftEquationPart.includes(variable)) {
+      return true;
+    }
+  }
+
+  if (rightEquationPart === variable + "^2") {
+    return true;
+  }
+
+  if ((/^\([0-9A-Za-z+*\/\-^\s(sqrt)().,]+\)\^2$/g).test(rightEquationPart)) {
+    if (rightEquationPart.includes(variable)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function powerIsNecessary(leftEquationPart, rightEquationPart, variable) {
+  if (!equationContainsRoot(leftEquationPart, rightEquationPart)) {
+    return false;
+  }
+
+  if (leftEquationPart === "sqrt(" + variable + ")") {
+    return true;
+  }
+
+  if ((/^sqrt\([0-9A-Za-z+*\/\-^\s(sqrt)().,]+\)$/g).test(leftEquationPart)) {
+    if (leftEquationPart.includes(variable)) {
+      return true;
+    }
+  }
+
+  if (rightEquationPart === "sqrt(" + variable + ")") {
+    return true;
+  }
+
+  if ((/^sqrt\([0-9A-Za-z+*\/\-^\s(sqrt)().,]+\)$/g).test(rightEquationPart)) {
+    if (rightEquationPart.includes(variable)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 function resetWrongCounter() {
   wrongCounter = 0;
 }
@@ -594,27 +661,31 @@ function resetAdviceButtonClickCounter() {
   adviceButtonClickCounter = 0;
 }
 
-function returnRearrangementStepsArray() {
+function getRearrangementStepsArray() {
   return rearrangementSteps;
 }
 
-function returnRearrangementStepsGenerated() {
+function getRearrangementStepsGenerated() {
   return rearrangementStepsGenerated;
 }
 
-window.returnRearrangementStepsGenerated = returnRearrangementStepsGenerated;
-window.returnRearrangementStepsArray = returnRearrangementStepsArray;
-window.resetWrongCounter = resetWrongCounter;
-window.resetAdviceButtonClickCounter = resetAdviceButtonClickCounter;
-window.getAdviceMessage = getAdviceMessage;
-window.getLastOperationsLength = getLastOperationsLength;
-window.dissolveAbs = dissolveAbs;
-window.resetLastOperation = resetLastOperation;
-window.generateFeedbackMessage = generateFeedbackMessage;
-window.generateRearrangementStepsArray = generateRearrangementStepsArray;
 window.simplifyExpression = simplifyExpression;
 window.getEquationResult = getEquationResult;
 window.isFinalEquation = isFinalEquation;
+window.dissolveAbs = dissolveAbs;
 window.evaluateStartEquation = evaluateStartEquation;
 window.evaluateRearrangementStep = evaluateRearrangementStep;
 window.performRearrangementStep = performRearrangementStep;
+window.generateRearrangementStepsArray = generateRearrangementStepsArray;
+window.generateFeedbackMessage = generateFeedbackMessage;
+window.resetLastOperation = resetLastOperation;
+window.getLastOperationsLength = getLastOperationsLength;
+window.getAdviceMessage = getAdviceMessage;
+window.equationContainsRoot = equationContainsRoot;
+window.equationContainsPower = equationContainsPower;
+window.rootIsNecessary = rootIsNecessary;
+window.powerIsNecessary = powerIsNecessary;
+window.resetWrongCounter = resetWrongCounter;
+window.resetAdviceButtonClickCounter = resetAdviceButtonClickCounter;
+window.getRearrangementStepsArray = getRearrangementStepsArray;
+window.getRearrangementStepsGenerated = getRearrangementStepsGenerated;
