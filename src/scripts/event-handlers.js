@@ -211,7 +211,7 @@ $(document).ready(function () {
           variable
         )
       ) {
-        /* abs(x) = y is transformed to x = y, -y */
+        /* "abs(x) = y" is transformed into "x = y, -y" */
         dissolvedEquation = window.dissolveAbs(newLeftEquationPart, newRightEquationPart, variable);
 
         /* Rearrangement equation inputs are highlighted when they contain the result */

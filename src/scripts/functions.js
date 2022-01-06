@@ -24,6 +24,7 @@ function simplifyExpression(expression) {
   }
 }
 
+/* Get nerdamer result for equation */
 function getEquationResult(leftEquationPart, rightEquationPart, variable) {
   leftEquationPart = leftEquationPart.replace(",", ".");
   rightEquationPart = rightEquationPart.replace(",", ".");
@@ -34,8 +35,10 @@ function getEquationResult(leftEquationPart, rightEquationPart, variable) {
   ).toString().replace(/\s/g, "");
 }
 
+/* Checks if given equation is already solved */
 function isFinalEquation(leftEquationPart, rightEquationPart, variable) {
   try {
+    /* If variable or abs(variable) is only string in one equation part and the other equation part does not contain the variable the equation is solved */
     if (
       (leftEquationPart === variable || leftEquationPart === "abs(" + variable + ")")
       && !rightEquationPart.includes(variable)
@@ -51,6 +54,7 @@ function isFinalEquation(leftEquationPart, rightEquationPart, variable) {
   return false;
 }
 
+/* Transform "abs(x) = y" into "x = y, -y" */
 function dissolveAbs(leftEquationPart, rightEquationPart, variable) {
   result = {
     "leftEquationPart": leftEquationPart,
@@ -250,6 +254,7 @@ function evaluateRearrangementStep(
   return "";
 }
 
+/* Perform rearrangement step on given equation part */
 function performRearrangementStep(
   expression,
   arithmeticOperation,
@@ -355,6 +360,7 @@ function generateRearrangementStepsArray(leftEquationPart, rightEquationPart, va
   });
 }
 
+/* Generates feedback messages depending on mathsteps feedback array or equation characteristics */
 function generateFeedbackMessage(
   leftEquationPart,
   rightEquationPart,
@@ -362,10 +368,12 @@ function generateFeedbackMessage(
   arithmeticOperation,
   rearrangementStep
 ) {
+  /* If mathsteps feedback array could not be generated feedback is not possible */
   if (!rearrangementStepsGenerated) {
     return {message: "Leider kann für diese Art von Gleichungen kein Feedback gegeben werden.", type: "info"}
   }
 
+  /* If only nerdamer can give feedback */
   if (
     equationContainsRoot(leftEquationPart, rightEquationPart)
     || equationContainsPower(leftEquationPart, rightEquationPart)
@@ -379,6 +387,7 @@ function generateFeedbackMessage(
     );
   }
 
+  /* If mathsteps can give feedback */
   return generateMathstepsFeedbackMessage(arithmeticOperation, rearrangementStep);
 }
 
@@ -585,14 +594,17 @@ function getAdvice(type) {
   }
 }
 
+/* Get random integer value between min and max value */
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
+/* Returns if equation contains sqrt or not */
 function equationContainsRoot(leftEquationPart, rightEquationPart) {
   return leftEquationPart.includes("sqrt") || rightEquationPart.includes("sqrt");
 }
 
+/* Returns if equation contains power or not */
 function equationContainsPower(leftEquationPart, rightEquationPart) {
   return leftEquationPart.includes("^2") || rightEquationPart.includes("^2");
 }
@@ -653,18 +665,22 @@ function powerIsNecessary(leftEquationPart, rightEquationPart, variable) {
   return false;
 }
 
+/* assign wrong counter value 0 due to equation restart or something like that */
 function resetWrongCounter() {
   wrongCounter = 0;
 }
 
+/* assign advice button click counter value 0 due to equation restart or something like that */
 function resetAdviceButtonClickCounter() {
   adviceButtonClickCounter = 0;
 }
 
+/* Getter for mathsteps feedback array */
 function getRearrangementStepsArray() {
   return rearrangementSteps;
 }
 
+/* Getter for the information whether mathsteps feedback array has been generated or not */
 function getRearrangementStepsGenerated() {
   return rearrangementStepsGenerated;
 }
