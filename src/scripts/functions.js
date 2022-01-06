@@ -74,6 +74,7 @@ function dissolveAbs(leftEquationPart, rightEquationPart, variable) {
   return result;
 }
 
+/* Returns start equation validation information and the simplified equation */
 function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
   let result = {
     "leftEquationValid": true,
@@ -95,16 +96,19 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
       result.errorMessages.push(
         "Der linke Teil der Gleichung darf kein Gleichheitszeichen enthalten."
       );
+    /* If left equation part contains power */
     } else if (leftEquationPart.includes("^")) {
       countPowerSymbols = leftEquationPart.split("^").length - 1;
       countSquarePowers = leftEquationPart.split("^2").length - 1;
 
+      /* If number of square powers and number of powers is not equal the equation is invalid */
       if (countPowerSymbols != countSquarePowers) {
         result.leftEquationValid = false;
         result.errorMessages.push(
           "Der linke Teil der Gleichung darf keine Exponenten ungleich 2 enthalten."
         );
       }
+    /* Regex verification */
     } else if ((/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(leftEquationPart)) {
       result.leftEquationValid = false;
       result.errorMessages.push(
@@ -122,16 +126,19 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
       result.errorMessages.push(
         "Der rechte Teil der Gleichung darf kein Gleichheitszeichen enthalten."
       );
+    /* If right equation part contains power */
     } else if (rightEquationPart.includes("^")) {
       countPowerSymbols = rightEquationPart.split("^").length - 1;
       countSquarePowers = rightEquationPart.split("^2").length - 1;
 
+      /* If number of square powers and number of powers is not equal the equation is invalid */
       if (countPowerSymbols != countSquarePowers) {
         result.rightEquationValid = false;
         result.errorMessages.push(
           "Der rechte Teil der Gleichung darf keine Exponenten ungleich 2 enthalten."
         );
       }
+    /* Regex verification */
     } else if ((/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(rightEquationPart)) {
       result.rightEquationValid = false;
       result.errorMessages.push(
@@ -144,16 +151,19 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
       result.errorMessages.push(
         "Die Zielvariable darf nicht leer sein."
       );
+    /* If variable contains more than one char */
     } else if (variable.length != 1) {
       result.variableValid = false;
       result.errorMessages.push(
         "Die Zielvariable darf nur ein Zeichen enthalten."
       );
+    /* Regex verification */
     } else if (!variable.match("[a-zA-Z]")) {
       result.variableValid = false;
       result.errorMessages.push(
         "Die Zielvariable muss ein Klein- oder Großbuchstabe (a-z, A-Z) sein."
       );
+    /* If variable is not included in equation the equation is invalid */
     } else if (
       !leftEquationPart.includes(variable)
       && !rightEquationPart.includes(variable)
@@ -163,6 +173,7 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
         "Die Zielvariable muss in der Gleichung vorkommen."
       );
     }
+  /* The equation is invalid if an exception is thrown */
   } catch (e) {
     result.leftEquationValid = false;
     result.rightEquationValid = false;
@@ -170,12 +181,14 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
     result.errorMessages.push("Die Gleichung wird nicht unterstützt.");
   }
 
+  /* Simplify equation after basic validations */
   leftEquationPart = simplifyExpression(leftEquationPart);
   rightEquationPart = simplifyExpression(rightEquationPart);
 
   result.leftEquationPart = leftEquationPart;
   result.rightEquationPart = rightEquationPart;
 
+  /* If equation passed basic validations */
   if (result.errorMessages.length === 0) {
     try {
       equationResult = getEquationResult(
@@ -188,6 +201,7 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
         throw new Error();
       }
 
+      /* If the equation is already solved it is invalid */
       if (
         isFinalEquation(leftEquationPart, rightEquationPart, variable)
         || leftEquationPart === rightEquationPart
@@ -197,6 +211,7 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
         result.variableValid = false;
         result.errorMessages.push("Die Gleichung ist bereits gelöst.");
       }
+    /* If equation result is empty or flawed the equation is invalid */
     } catch (e) {
       result.leftEquationValid = false;
       result.rightEquationValid = false;
