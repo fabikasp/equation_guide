@@ -223,6 +223,7 @@ function evaluateStartEquation(leftEquationPart, rightEquationPart, variable) {
   return result;
 }
 
+/* Returns an empty string or an error message after rearrangement step validation */
 function evaluateRearrangementStep(
   leftEquationPart,
   rightEquationPart,
@@ -230,40 +231,41 @@ function evaluateRearrangementStep(
   rearrangementStep
 ) {
   if (rearrangementStep === "") {
+    /* Rearrangement step can only be empty when arithmetic operation is power or sqrt */
     if (!["^2", "sqrt"].includes(arithmeticOperation)) {
       return "Der Umformungsschritt darf nicht leer sein.";
     }
   } else if (rearrangementStep.includes("=")) {
     return "Der Umformungsschritt darf kein Gleichheitszeichen enthalten.";
+  /* Multiplication with 0 is not allowed */
   } else if (rearrangementStep === "0" && arithmeticOperation === "*") {
     return "Die Multiplikation mit 0 wird nicht unterstützt.";
+  /* Division by 0 is not allowed */
   } else if (rearrangementStep === "0" && arithmeticOperation === "/") {
     return "Die Division durch 0 wird nicht unterstützt.";
   }
 
-  try {
-    if (arithmeticOperation === "sqrt") {
-      leftRearrangementStep = "sqrt(" + leftEquationPart + ")";
-      rightRearrangementStep = "sqrt(" + rightEquationPart + ")";
-    } else {
-      leftRearrangementStep = "(" + leftEquationPart + ")"
-        + arithmeticOperation
-        + rearrangementStep;
-      rightRearrangementStep = "(" + rightEquationPart + ")"
-        + arithmeticOperation
-        + rearrangementStep;
-    }
+  if (arithmeticOperation === "sqrt") {
+    leftRearrangementStep = "sqrt(" + leftEquationPart + ")";
+    rightRearrangementStep = "sqrt(" + rightEquationPart + ")";
+  } else {
+    leftRearrangementStep = "(" + leftEquationPart + ")"
+      + arithmeticOperation
+      + rearrangementStep;
+    rightRearrangementStep = "(" + rightEquationPart + ")"
+      + arithmeticOperation
+      + rearrangementStep;
+  }
 
-    if (
-      (/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(leftRearrangementStep)
-      || (/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(rightRearrangementStep)
-    ) {
-      return "Der Umformungsschritt wird nicht unterstützt.";
-    }
-  } catch (e) {
+  /* Regex verification */
+  if (
+    (/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(leftRearrangementStep)
+    || (/([^0-9A-Za-z+*\/\-^\s(sqrt)().,])/g).test(rightRearrangementStep)
+  ) {
     return "Der Umformungsschritt wird nicht unterstützt.";
   }
 
+  /* If rearrangement step is validated successfully it will be added to the operations array */
   lastOperations.push({type: arithmeticOperation, value: rearrangementStep});
 
   return "";
@@ -440,6 +442,7 @@ function generateMathstepsFeedbackMessage(arithmeticOperation, rearrangementStep
   return feedbackMessage;
 }
 
+/* Generates a feedback message for equations containing power or sqrt */
 function generateNerdamerFeedbackMessage(
   leftEquationPart,
   rightEquationPart,
@@ -449,15 +452,19 @@ function generateNerdamerFeedbackMessage(
 ) {
   let optimalRearrangementStep = false;
 
+  /* If no other arithmetic operation than root is useful and arithmetic operation is sqrt it is an optimal step */
   if (rootIsNecessary(leftEquationPart, rightEquationPart, variable) && arithmeticOperation === "sqrt") {
     optimalRearrangementStep = true;
   }
 
+  /* If no other arithmetic operation than power is useful and arithmetic operation is power it is an optimal step */
   if (powerIsNecessary(leftEquationPart, rightEquationPart, variable) && arithmeticOperation === "^2") {
     optimalRearrangementStep = true;
   }
 
+  /* If arithmetic operation is not sqrt or power and it is no optimal rearrangement step yet the result is final */
   if (!optimalRearrangementStep && !["sqrt", "^2"].includes(arithmeticOperation)) {
+    /* Count numbers in both equation parts before and after rearrangement step */
     countLeftNumbersBeforeRearrangement = leftEquationPart.replace(/[^0-9]/g, "").length;
     countRightNumbersBeforeRearrangement = rightEquationPart.replace(/[^0-9]/g, "").length;
 
@@ -467,6 +474,7 @@ function generateNerdamerFeedbackMessage(
     countLeftNumbersAfterRearrangement = rearrangedLeftEquationPart.replace(/[^0-9]/g, "").length;
     countRightNumbersAfterRearrangement = rearrangedRightEquationPart.replace(/[^0-9]/g, "").length;
 
+    /* Check if amount of left numbers has reduced after rearrangement step when variable is only in left part */
     if (
       leftEquationPart.includes(variable)
       && !rightEquationPart.includes(variable)
@@ -475,6 +483,7 @@ function generateNerdamerFeedbackMessage(
       optimalRearrangementStep = true;
     }
 
+    /* Check if amount of right numbers has reduced after rearrangement step when variable is only in right part */
     if (
       rightEquationPart.includes(variable)
       && !leftEquationPart.includes(variable)
@@ -484,6 +493,7 @@ function generateNerdamerFeedbackMessage(
     }
 
     if (leftEquationPart.includes(variable) && rightEquationPart.includes(variable)) {
+      /* If only one part contains variable after rearrangement step it is an optimal step */
       if (
         rearrangedLeftEquationPart.includes(variable)
         && !rearrangedRightEquationPart.includes(variable)
@@ -491,6 +501,7 @@ function generateNerdamerFeedbackMessage(
         optimalRearrangementStep = true;
       }
 
+      /* Check if amount of left numbers has reduced after rearrangement step when variable is in left part */
       if (
         rearrangedLeftEquationPart.includes(variable)
         && countLeftNumbersAfterRearrangement < countLeftNumbersBeforeRearrangement
@@ -498,6 +509,7 @@ function generateNerdamerFeedbackMessage(
         optimalRearrangementStep = true;
       }
 
+      /* If only one part contains variable after rearrangement step it is an optimal step */
       if (
         rearrangedRightEquationPart.includes(variable)
         && !rearrangedLeftEquationPart.includes(variable)
@@ -505,6 +517,7 @@ function generateNerdamerFeedbackMessage(
         optimalRearrangementStep = true;
       }
 
+      /* Check if amount of right numbers has reduced after rearrangement step when variable is in right part */
       if (
         rearrangedRightEquationPart.includes(variable)
         && countRightNumbersAfterRearrangement < countRightNumbersBeforeRearrangement
@@ -514,6 +527,7 @@ function generateNerdamerFeedbackMessage(
     }
   }
 
+  /* Return feedback depending on whether the step is optimal */
   if (optimalRearrangementStep) {
     adviceButtonClickCounter = 0;
 
@@ -529,32 +543,40 @@ function generateNerdamerFeedbackMessage(
   };
 }
 
+/* Deletes last operation out of array */
 function resetLastOperation() {
   lastOperations.pop();
 }
 
+/* Returns amount of saved operations */
 function getLastOperationsLength() {
   return lastOperations.length;
 }
 
+/* Returns an advice message depending on the equation */
 function getAdviceMessage(leftEquationPart, rightEquationPart, variable) {
+  /* Increase the amount of tip button clicks */
   adviceButtonClickCounter += 1;
 
   if (equationContainsRoot(leftEquationPart, rightEquationPart)) {
+    /* If the user clicks the tip button less than 2 times no useful tip is returned */
     if (adviceButtonClickCounter < 2) {
       return "Versuch es erst einmal selbst.";
     }
 
+    /* If power is the only useful operation the user should use power as arithmetic operation */
     if (powerIsNecessary(leftEquationPart, rightEquationPart, variable)) {
       return "Versuch es doch mal mit Potenzieren";
     } else {
       return "Versuch es erst einmal ohne Potenzieren"
     }
   } else if (equationContainsPower(leftEquationPart, rightEquationPart)) {
+    /* If the user clicks the tip button less than 2 times no useful tip is returned */
     if (adviceButtonClickCounter < 2) {
       return "Versuch es erst einmal selbst.";
     }
 
+    /* If root is the only useful operation the user should use root as arithmetic operation */
     if (rootIsNecessary(leftEquationPart, rightEquationPart, variable)) {
       return "Versuch es doch mal mit Wurzelziehen";
     } else {
@@ -624,25 +646,30 @@ function equationContainsPower(leftEquationPart, rightEquationPart) {
   return leftEquationPart.includes("^2") || rightEquationPart.includes("^2");
 }
 
+/* Checks if root is the only useful arithmetic operation */
 function rootIsNecessary(leftEquationPart, rightEquationPart, variable) {
   if (!equationContainsPower(leftEquationPart, rightEquationPart)) {
     return false;
   }
 
+  /* If equation has the shape "x^2=y" root is necessary */
   if (leftEquationPart === variable + "^2") {
     return true;
   }
 
+  /* If equation has the shape "(x+y+z)^2=g" and the variable is included in the bracket root is necessary */
   if ((/^\([0-9A-Za-z+*\/\-^\s(sqrt)().,]+\)\^2$/g).test(leftEquationPart)) {
     if (leftEquationPart.includes(variable)) {
       return true;
     }
   }
 
+  /* If equation has the shape "x^2=y" root is necessary */
   if (rightEquationPart === variable + "^2") {
     return true;
   }
 
+  /* If equation has the shape "(x+y+z)^2=g" and the variable is included in the bracket root is necessary */
   if ((/^\([0-9A-Za-z+*\/\-^\s(sqrt)().,]+\)\^2$/g).test(rightEquationPart)) {
     if (rightEquationPart.includes(variable)) {
       return true;
@@ -652,25 +679,30 @@ function rootIsNecessary(leftEquationPart, rightEquationPart, variable) {
   return false;
 }
 
+/* Checks if power is the only useful arithmetic operation */
 function powerIsNecessary(leftEquationPart, rightEquationPart, variable) {
   if (!equationContainsRoot(leftEquationPart, rightEquationPart)) {
     return false;
   }
 
+  /* If equation has the shape "sqrt(x)=y" power is necessary */
   if (leftEquationPart === "sqrt(" + variable + ")") {
     return true;
   }
 
+  /* If equation has the shape "sqrt(x+y+z)=g" and the variable is included in the bracket power is necessary */
   if ((/^sqrt\([0-9A-Za-z+*\/\-^\s(sqrt)().,]+\)$/g).test(leftEquationPart)) {
     if (leftEquationPart.includes(variable)) {
       return true;
     }
   }
 
+  /* If equation has the shape "sqrt(x)=y" power is necessary */
   if (rightEquationPart === "sqrt(" + variable + ")") {
     return true;
   }
 
+  /* If equation has the shape "sqrt(x+y+z)=g" and the variable is included in the bracket power is necessary */
   if ((/^sqrt\([0-9A-Za-z+*\/\-^\s(sqrt)().,]+\)$/g).test(rightEquationPart)) {
     if (rightEquationPart.includes(variable)) {
       return true;
