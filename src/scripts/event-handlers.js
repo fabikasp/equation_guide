@@ -1,19 +1,22 @@
 $(document).ready(function () {
+  /* Insert start button before help button */
   $(StartButtonTemplate).insertBefore($("#help-button"));
 
+  /* Enable help feature by default */
   $('[data-toggle="tooltip"]').tooltip("enable");
 
   $("#left-equation-input").focus();
 
-  /* start button functionality */
+  /* Start button functionality */
   $(document).on("click", "#start-button", function (event) {
     let leftEquationPart = $("#left-equation-input").val().toString().trim();
     let rightEquationPart = $("#right-equation-input").val().toString().trim();
     let variable = $("#variable-input").val().toString().trim();
 
+    /* Alerts are cleared */
     $("#alert-div").empty();
 
-    // Change , to . so mathsteps/nerdamer can handle it
+    /* Change , to . so mathsteps/nerdamer can handle it */
     leftEquationPart = leftEquationPart.replace(/[,]/g, '.');
     rightEquationPart = rightEquationPart.replace(/[,]/g, '.');
 
@@ -24,6 +27,7 @@ $(document).ready(function () {
     );
 
     if (startEquationEvaluation.errorMessages.length > 0) {
+      /* Write error messages in alerts */
       startEquationEvaluation.errorMessages.forEach((errorMessage, i) => {
         $("#alert-div").append(
           AlertTemplate({text: errorMessage, alertType: "danger"})
@@ -51,6 +55,7 @@ $(document).ready(function () {
     if (!startEquationEvaluation.variableValid) {
       $("#variable-input").addClass("is-invalid");
 
+      /* Focus variable input when both equation parts are valid, else inputs are focused */
       if (
         startEquationEvaluation.leftEquationValid
         && startEquationEvaluation.rightEquationValid
@@ -61,23 +66,26 @@ $(document).ready(function () {
       $("#variable-input").removeClass("is-invalid");
     }
 
+    /* If start equation was evaluated successfully */
     if (
       startEquationEvaluation.leftEquationValid
       && startEquationEvaluation.rightEquationValid
       && startEquationEvaluation.variableValid
     ) {
-      // Start equation was evaluated successfully | generate feedback array with mathsteps | insert advice button
+      /* Insert advice button after start button */
       $(AdviceButtonTemplate).insertAfter($("#start-button"));
 
+      /* Generate mathsteps feedback array */
       window.generateRearrangementStepsArray(leftEquationPart.replace(/[,]/g, '.'), rightEquationPart.replace(/[,]/g, '.'), variable);
 
-      // Change . to , to display it properly
+      /* Change . to , to display it properly */
       leftEquationPart = leftEquationPart.replace(/[.]/g, ',');
       rightEquationPart = rightEquationPart.replace(/[.]/g, ',');
 
-      $("#alert-div").empty();
+      /* Start equation must not be manipulated anymore */
       $(".equation-input").attr("readonly", true);
 
+      /* Insert rearrangement template */
       $("#equation-rearrangement-div").append(
         RearrangementTemplate({
           leftEquationPart: startEquationEvaluation.leftEquationPart,
@@ -85,6 +93,7 @@ $(document).ready(function () {
         })
       );
 
+      /* Avoid tooltip bug and replace start button with restart button */
       $('[data-toggle="tooltip"]').tooltip("hide");
 
       $("#start-button").replaceWith(RestartButtonTemplate);
@@ -97,11 +106,12 @@ $(document).ready(function () {
     event.preventDefault();
   });
 
+  /* Arithmetic operation select functionality */
   $(document).on("input", ".arithmetic-operation-select", function (event) {
     let arithmeticOperation = $(".arithmetic-operation-select option:selected").last().val().toString();
 
+    /* Rearrangement step is not necessary when arithmetic operation is power or sqrt */
     disableRearrangementStep = ["^2", "sqrt"].includes(arithmeticOperation);
-
     $(".rearrangement-step-input").last().attr("readonly", disableRearrangementStep);
 
     if (disableRearrangementStep) {
@@ -111,9 +121,11 @@ $(document).ready(function () {
     event.preventDefault();
   });
 
+  /* Rearrangement step input functionality */
   $(document).on("input", ".rearrangement-step-input", function (event) {
     let rearrangementStep = $(".rearrangement-step-input").last().val().toString().trim();
 
+    /* If first char of rearrangement step is arithmetic operation it will be deleted and transferred to arithmetic operation select */
     if (rearrangementStep != "" && ["+", "-", "*", "/"].includes(rearrangementStep[0])) {
       $(".arithmetic-operation-select").last().val(rearrangementStep[0]);
       $(".rearrangement-step-input").last().val(rearrangementStep.substring(1));
@@ -130,6 +142,7 @@ $(document).ready(function () {
     let rearrangementStep = $(".rearrangement-step-input").last().val().toString().trim();
     let variable = $("#variable-input").val().toString().trim();
 
+    /* Alerts are cleared */
     $("#alert-div").empty();
 
     let rearrangementStepEvaluation = window.evaluateRearrangementStep(
@@ -139,7 +152,9 @@ $(document).ready(function () {
       rearrangementStep
     );
 
+    /* If rearrangement step is valid */
     if (rearrangementStepEvaluation === "") {
+      /* If one rearrangement took place and reset button is not already existing */
       if (
         $(".left-rearrangement-input").length > 0
         && $("#reset-button").length === 0
@@ -149,11 +164,12 @@ $(document).ready(function () {
 
       $(".rearrangement-step-input").last().removeClass("is-invalid");
 
+      /* Last rearrangement template must not be manipulated anymore */
       $(".arithmetic-operation-select").last().attr("readonly", true);
       $(".rearrangement-step-input").last().attr("readonly", true);
       $(".rearrangement-button").last().attr("disabled", true);
 
-      // Change , to . so mathsteps/nerdamer can handle it
+      /* Change , to . so mathsteps/nerdamer can handle it */
       leftEquationPart = leftEquationPart.replace(/[,]/g, '.');
       rightEquationPart = rightEquationPart.replace(/[,]/g, '.');
       rearrangementStep = rearrangementStep.replace(/[,]/g, '.');
@@ -170,11 +186,12 @@ $(document).ready(function () {
         rearrangementStep
       );
 
-      $('[data-toggle="tooltip"]').tooltip("hide");
-
-      // Change . back to , to display it properly
+      /* Change . back to , to display it properly */
       newLeftEquationPart = newLeftEquationPart.replace(/[.]/g, ',');
       newRightEquationPart = newRightEquationPart.replace(/[.]/g, ',');
+
+      /* Avoid tooltip bug and insert new rearrangement template */
+      $('[data-toggle="tooltip"]').tooltip("hide");
 
       $("#equation-rearrangement-div").append(
         RearrangementTemplate({
@@ -194,16 +211,14 @@ $(document).ready(function () {
           variable
         )
       ) {
+        /* abs(x) = y is transformed to x = y, -y */
         dissolvedEquation = window.dissolveAbs(newLeftEquationPart, newRightEquationPart, variable);
 
+        /* Rearrangement equation inputs are highlighted when they contain the result */
         $(".left-rearrangement-input").last().removeClass("w-25").width("38.7%");
         $(".right-rearrangement-input").last().removeClass("w-25").width("38.7%");
         $(".left-rearrangement-input").last().val(dissolvedEquation.leftEquationPart);
         $(".right-rearrangement-input").last().val(dissolvedEquation.rightEquationPart);
-
-        $(".arithmetic-operation-select").last().remove();
-        $(".rearrangement-step-input").last().remove();
-        $(".rearrangement-button").last().remove();
 
         $(".left-rearrangement-input").last().addClass("bg-success");
         $(".right-rearrangement-input").last().addClass("bg-success");
@@ -212,6 +227,12 @@ $(document).ready(function () {
         $(".right-rearrangement-input").last().addClass("text-white");
         $(".equals-sign-input").last().addClass("text-white");
 
+        /* Rearrangement step tools are deleted because equation is solved */
+        $(".arithmetic-operation-select").last().remove();
+        $(".rearrangement-step-input").last().remove();
+        $(".rearrangement-button").last().remove();
+
+        /* Write success message in alert */
         $("#alert-div").append(
           AlertTemplate({
             text: "Die Gleichung wurde erfolgreich umgeformt.",
@@ -219,7 +240,9 @@ $(document).ready(function () {
           })
         );
 
+        /* Mathsteps feedback array is updated */
         window.generateRearrangementStepsArray(newLeftEquationPart.replace(/[,]/g, '.'), newRightEquationPart.replace(/[,]/g, '.'), variable);
+      /* If it is not the final equation */
       } else {
        const feedbackMessage = window.generateFeedbackMessage(
           leftEquationPart,
@@ -229,9 +252,10 @@ $(document).ready(function () {
           rearrangementStep
         );
 
-        // Generate new rearrangementSteps array
+        /* Generate new mathsteps rearrangement steps array */
         window.generateRearrangementStepsArray(newLeftEquationPart.replace(/[,]/g, '.'), newRightEquationPart.replace(/[,]/g, '.'), variable);
 
+        /* If feedback message is not empty it will be written in an alert */
         if (!jQuery.isEmptyObject(feedbackMessage)) {
           $("#alert-div").append(
             AlertTemplate({
@@ -241,9 +265,11 @@ $(document).ready(function () {
           );
         }
       }
+    /* If rearrangement step is not valid */
     } else {
       $(".rearrangement-step-input").last().addClass("is-invalid");
 
+      /* Write error message in alert */
       $("#alert-div").append(
         AlertTemplate({
           text: rearrangementStepEvaluation,
@@ -255,13 +281,16 @@ $(document).ready(function () {
     event.preventDefault();
   });
 
-  /* restart button functionality */
+  /* Restart button functionality */
   $(document).on("click", "#restart-button", function (event) {
+    /* Feedback and tip state is reset */
     window.resetWrongCounter();
     window.resetAdviceButtonClickCounter();
 
+    /* Alerts are cleared */
     $("#alert-div").empty();
 
+    /* Clear rearrangement templates and reset start equation tools */
     $(".equation-rearrangement-step-div").remove();
     $("#left-equation-input").attr("readonly", false);
     $("#right-equation-input").attr("readonly", false);
@@ -271,6 +300,7 @@ $(document).ready(function () {
     $("#variable-input").val("");
     $("#left-equation-input").focus();
 
+    /* Avoid tooltip bug and reset button section */
     $('[data-toggle="tooltip"]').tooltip("hide");
 
     $("#restart-button").replaceWith(StartButtonTemplate);
@@ -284,11 +314,14 @@ $(document).ready(function () {
     event.preventDefault();
   });
 
+  /* Help button functionality */
   $(document).on("click", "#help-button", function (event) {
+    /* If help feature is switched on it will be switched off */
     if ($("#help-button").text().trim() === "Hilfe ausschalten") {
       $("#help-button").text("Hilfe einschalten");
       $('[data-toggle="tooltip"]').tooltip("hide");
       $('[data-toggle="tooltip"]').tooltip("disable");
+    /* If help feature is switched off it will be switched on */
     } else {
       $("#help-button").text("Hilfe ausschalten");
       $('[data-toggle="tooltip"]').tooltip("enable");
@@ -297,6 +330,7 @@ $(document).ready(function () {
     event.preventDefault();
   });
 
+  /* Reset button functionality */
   $(document).on("click", "#reset-button", function (event) {
     $("#alert-div").empty();
     if (window.getLastOperationsLength() === 0) {
@@ -323,6 +357,7 @@ $(document).ready(function () {
     event.preventDefault();
   });
 
+  /* Advice button functionality */
   $(document).on("click", "#advice-button", function (event) {
     let leftEquationPart = $('.left-rearrangement-input').last().val().toString().trim();
     let rightEquationPart = $('.right-rearrangement-input').last().val().toString().trim();

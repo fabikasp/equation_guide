@@ -1,3 +1,4 @@
+/* Rearrangement template depending on equation from last step  */
 RearrangementTemplate = ({leftEquationPart, rightEquationPart}) => `
   <div class="equation-rearrangement-step-div">
     <div class="row form-group justify-content-center">
@@ -165,6 +166,7 @@ AdviceButtonTemplate = `
   </button>
 `
 
+/* Alert depending on alert color and inner text */
 AlertTemplate = ({text, alertType}) => `
   <div class="alert alert-${alertType} w-50 mx-auto">${text}</div>
 `;

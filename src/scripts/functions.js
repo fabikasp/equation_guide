@@ -669,6 +669,7 @@ function getRearrangementStepsGenerated() {
   return rearrangementStepsGenerated;
 }
 
+/* Make functions available for other files */
 window.simplifyExpression = simplifyExpression;
 window.getEquationResult = getEquationResult;
 window.isFinalEquation = isFinalEquation;
