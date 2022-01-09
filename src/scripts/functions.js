@@ -613,14 +613,14 @@ function getAdviceMessage(leftEquationPart, rightEquationPart, variable) {
     }
   }
 
-  /* mathsteps section */
+  /* Mathsteps section */
 
-  /* if the rearrangementStepsGenerated boolean is false, the generateRearragnementSteps function was unable to generate the optimal rearrangment steps */
+  /* If the rearrangementStepsGenerated boolean is false, the generateRearragnementSteps function was unable to generate the optimal rearrangment steps */
   if (!rearrangementStepsGenerated) {
     return "Leider können für diese Art von Gleichungen keine Tipps gegeben werden.";
   }
 
-  /* if rearrgementSteps length is equal to zero, the equation is already solved */
+  /* If rearrgementSteps length is equal to zero, the equation is already solved */
   if (rearrangementSteps.length === 0) {
     return "Du hast die Gleichung bereits gelöst.";
   } else {
@@ -757,12 +757,12 @@ function powerIsNecessary(leftEquationPart, rightEquationPart, variable) {
   return false;
 }
 
-/* assign wrong counter value 0 due to equation restart or something like that */
+/* Assign wrong counter value 0 due to equation restart or something like that */
 function resetWrongCounter() {
   wrongCounter = 0;
 }
 
-/* assign advice button click counter value 0 due to equation restart or something like that */
+/* Assign advice button click counter value 0 due to equation restart or something like that */
 function resetAdviceButtonClickCounter() {
   adviceButtonClickCounter = 0;
 }
