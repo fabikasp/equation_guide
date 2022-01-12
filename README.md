@@ -21,7 +21,7 @@ Flussdiagramm
 2. Ausführung von `npm install` im Repository-Verzeichnis, um alle Abhängigkeiten
    der Software zu installieren
 3. Ausführung von `npm start` im Repository-Verzeichnis, um die Software zu starten
-4. Aufruf von `http://localhost:8080` in einem beliebigen Browser, um die Software
+4. Aufruf von [http://localhost:8080](http://localhost:8080) in einem beliebigen Browser, um die Software
    nutzen zu können
 
 ## Testing
