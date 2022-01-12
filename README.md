@@ -1,7 +1,7 @@
 # EquationGuide
 
 Die Digitalisierung der Schulen und computergestützte Entlastung der Lehrkräfte in Deutschland
-ist eine unausweichliche Aufgabe der nächsten Jahre. Visualisierungen und Beschreibungen
+sind unausweichliche Aufgaben der nächsten Jahre. Visualisierungen und Beschreibungen
 mathematischer Probleme sind für SchülerInnen mittlerweile überall auffindbar. Für
 bestimmte mathematische Aufgabentypen fehlen allerdings automatische Feedbacksysteme.
 
