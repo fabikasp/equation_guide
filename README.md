@@ -48,17 +48,17 @@ Repository-Verzeichnis ausgeführt werden.
 
 ## Werkzeuge und Softwarearchitektur
 
-*JavaScript und jQuery*
+**JavaScript und jQuery**
 
-*HTML, CSS und Bootstrap*
+**HTML, CSS und Bootstrap**
 
-*Browserify*
+**Browserify**
 
-*Nerdamer*
+**Nerdamer**
 
-*mathsteps*
+**mathsteps**
 
-*Jest*
+**Jest**
 
 - Funktionalitäten (Erzeugen der Formulare Desktop / Mobile, Startvalidierung, Feedback- und Tippgenerierung, Hilfe-Feature, Validierung der        
   Umformungsschritte, Eventhandler hinter Umformungsschritt-Input, Neustart, Zurücksetzen, Ergebnisformatierung etc.)
