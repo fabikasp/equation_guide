@@ -46,24 +46,23 @@ den nächsten Umformungsschritt.
 Zur Ausführung der implementierten Unit-Tests muss der Befehl `npm test` im
 Repository-Verzeichnis ausgeführt werden.
 
-## Werkzeuge
+## Werkzeuge und Softwarearchitektur
 
-_JavaScript und jQuery_
+*JavaScript und jQuery*
 
-_HTML, CSS und Bootstrap_
+*HTML, CSS und Bootstrap*
 
-_Nerdamer_
+*Browserify*
 
-_mathsteps_
+*Nerdamer*
 
-_Jest_
+*mathsteps*
+
+*Jest*
 
 - Funktionalitäten (Erzeugen der Formulare Desktop / Mobile, Startvalidierung, Feedback- und Tippgenerierung, Hilfe-Feature, Validierung der        
   Umformungsschritte, Eventhandler hinter Umformungsschritt-Input, Neustart, Zurücksetzen, Ergebnisformatierung etc.)
-
-## Softwarearchitektur
-
-- Softwarearchitektur
+- in jedem Punkt darauf eingehen, in welchem Ordner das gespeichert ist
 
 ## Ausblick
 
