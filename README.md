@@ -12,7 +12,24 @@ positive oder negative Rückmeldungen zur Vorgehensweise.
 
 ## Verwendung
 
-Flussdiagramm
+1. Eingabe des linken und rechten Teils der Gleichung
+2. Eingabe der Zielvariable, nach der die Gleichung umgestellt werden soll
+3. Betätigung des Buttons `Start`
+4. Eingabe der Rechenoperation, die auf die Gleichung angewendet werden soll
+5. Eingabe des Umformungsschritts, der auf die Gleichung angewendet werden soll
+6. Betätigung des Buttons `Umformen`
+7. Wiederholung von 4. - 6. bis die Gleichung gelöst ist
+
+Zum Ein- und Ausschalten der Bedienungshilfe kann der Button `Hilfe einschalten`
+bzw. `Hilfe ausschalten` verwendet werden.
+
+Falls der Vorgang von vorne begonnen werden möchte, muss der Button `Neustart`
+betätigt werden.
+
+Zum Löschen des letzten Umformungsschritts wird der Button `Zurücksetzen` verwendet.
+
+Durch die Betätigung des Buttons `Tipp` erhält man einen zufälligen Tipp für
+den nächsten Umformungsschritt.
 
 ## Installation und Ausführung
 
