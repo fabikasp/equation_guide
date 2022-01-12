@@ -23,8 +23,8 @@ positive oder negative Rückmeldungen zur Vorgehensweise.
 Zum Ein- und Ausschalten der Bedienungshilfe kann der Button `Hilfe einschalten`
 bzw. `Hilfe ausschalten` verwendet werden.
 
-Falls der Vorgang von vorne begonnen werden möchte, muss der Button `Neustart`
-betätigt werden.
+Der Button `Neustart` kann betätigt werden, wenn ein neuer Lösungsprozess
+mit einer neuen Gleichung gestartet werden soll.
 
 Zum Löschen des letzten Umformungsschritts wird der Button `Zurücksetzen` verwendet.
 
