@@ -52,7 +52,14 @@ Repository-Verzeichnis ausgeführt werden.
 
 Für die Strukturierung und Gestaltung der DOM-Elemente werden HTML sowie CSS und
 das CSS-Framework Bootstrap verwendet. Die Landing-Page, die sofort zur Hauptseite
-weiterleitet, befindet sich in der Datei [index.html](./index.html).
+weiterleitet, befindet sich in der Datei [index.html](./index.html). Die Hauptseite
+ist in [equation-guide.html](./src/view/equation-guide.html) gespeichert. Die zur
+Gestaltung notwendigen Dateien befinden sich im Verzeichnis [stylesheets](./src/stylesheets).
+Die zur Nutzung von Bootstrap notwendige *.css-Datei ist im Verzeichnis
+[vendor](./src/stylesheets/vendor) abgelegt. Um individuelle, von Bootstrap unabhängige
+Gestaltungen anwenden und die gesamte Website für Mobilgeräte optimieren zu können,
+wird zusätzlich die Datei [equation-guide-styles.css](./src/stylesheets/equation-guide-styles.css)
+genutzt.
 
 **JavaScript und jQuery**
 
@@ -75,17 +82,40 @@ in den DOM geladen.
 
 **Browserify**
 
+**mathsteps**
+
 **Nerdamer**
 
-**mathsteps**
+[Nerdamer](https://nerdamer.com/) ist eine JavaScript-Bibliothek zur Auswertung
+mathematischer Ausdrücke, Gleichungen und Gleichungssysteme. Im Gegensatz zu
+`mathsteps` unterstützt `Nerdamer` Wurzeln und Potenzen. Aus diesem Grund wird
+die Bibliothek zur Vereinfachung von Gleichungen verwendet, die `mathsteps` nicht
+vereinfachen kann. Des Weiteren wird `Nerdamer` genutzt, um bei der Validierung
+der Startgleichung zu überprüfen, ob die vorliegende Gleichung überhaupt gelöst
+werden kann. Für Gleichungen, die Wurzeln und Potenzen enthalten, wird `Nerdamer`
+zudem zur Feedback- und Tippgenerierung verwendet. Allerdings bietet die Bibliothek
+keine schrittweise Lösung von Gleichungen an. Dementsprechend bringt die Feedback-
+und Tipplogik für Gleichungen dieser Art höhere Anforderungen mit sich. Die Logik
+beinhaltet u.a. das Zählen von Operanden vor und nach einer Umformung sowie das
+Ermitteln der Notwendigkeit des Wurzelziehens oder Potenzierens als Umformungsschritt.
 
 **Jest**
 
+Es soll gewährleistet sein, dass infolge von Änderungen am Code, überprüft werden kann,
+ob alle Funktionalitäten der Software weiterhin korrekt funktionieren. Zu diesem Zweck
+wurden das Test-Framework `Jest` in das Softwareprojekt integriert und Unit-Tests
+für nahezu alle in der Datei [functions.js](./src/scripts/functions.js) befindlichen Funktionen
+angefertigt. Die genannten Unit-Tests liegen im Verzeichnis [test](./test).
+
+-- später Löschen --
 - Funktionalitäten (Erzeugen der Formulare Desktop / Mobile, Startvalidierung, Feedback- und Tippgenerierung, Hilfe-Feature, Validierung der        
   Umformungsschritte, Eventhandler hinter Umformungsschritt-Input, Neustart, Zurücksetzen, Ergebnisformatierung etc.)
 - in jedem Punkt darauf eingehen, in welchem Ordner das gespeichert ist
+-- später Löschen --
 
 ## Ausblick
 
+-- später Löschen --
 - Known Bugs (siehe Bugs in Trello)
 - Gleichungssysteme
+-- später Löschen --
