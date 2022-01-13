@@ -48,9 +48,30 @@ Repository-Verzeichnis ausgeführt werden.
 
 ## Werkzeuge und Softwarearchitektur
 
+**HTML, CSS und Bootstrap**
+
+Für die Strukturierung und Gestaltung der DOM-Elemente werden HTML sowie CSS und
+das CSS-Framework Bootstrap verwendet. Die Landing-Page, die sofort zur Hauptseite
+weiterleitet, befindet sich in der Datei [index.html](./index.html).
+
 **JavaScript und jQuery**
 
-**HTML, CSS und Bootstrap**
+Zur Umsetzung der Funktionalitäten der DOM-Elemente werden JavaScript und jQuery
+verwendet. Weder eine zusätzliche Bibliothek noch ein zusätzliches Framework
+zur Erstellung von Webapplikationen werden genutzt. Die entsprechenden *.js-Dateien
+befinden sich im Verzeichnis [scripts](./src/scripts). Im Unterverzeichnis
+[vendor](./src/scripts/vendor) sind alle zur Nutzung von jQuery und Bootstrap
+notwendigen *.js-Dateien zu finden. In der Datei [event-handlers.js](./src/scripts/event-handlers.js)
+sind alle Event-Handler implementiert, um auf relevante DOM-Ereignisse wie z.B.
+auf das Drücken des `Start`-Buttons reagieren zu können. Um auf einfache Art und Weise
+auf DOM-Elemente zuzugreifen, findet jQuery Anwendung. Die infolge eines DOM-Ereignisses
+auszuführende Logik ist in der Datei [functions.js](./src/scripts/functions.js)
+implementiert. Dazu gehören u.a. die Validierung der Startgleichung und von Umformungsschritten,
+die Feedback- und Tippgenerierung oder die Vereinfachung und Formatierung von
+Zwischen- oder Endergebnissen. Dynamische DOM-Elemente, die nicht über die gesamte Laufzeit der Website
+angezeigt werden, befinden sich in der Datei [templates.js](./src/scripts/templates.js)
+und werden bei Bedarf in der Datei [event-handlers.js](./src/scripts/event-handlers.js)
+in den DOM geladen.
 
 **Browserify**
 
