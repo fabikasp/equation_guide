@@ -113,7 +113,10 @@ angefertigt. Die genannten Unit-Tests liegen im Verzeichnis [test](./test).
 - in jedem Punkt darauf eingehen, in welchem Ordner das gespeichert ist
 -- später Löschen --
 
-## Ausblick
+## Limitierungen und Ausblick
+
+Die Funktionalitäten der Website bringen ein paar Limitierungen mit sich. Eine davon ist
+auf die hybride Nutzung von `Nerdamer` und `mathsteps` zurückzuführen (ist das noch so?)...
 
 -- später Löschen --
 - Known Bugs (siehe Bugs in Trello)
