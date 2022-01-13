@@ -101,9 +101,9 @@ Ermitteln der Notwendigkeit des Wurzelziehens oder Potenzierens als Umformungssc
 
 **Jest**
 
-Es soll gewährleistet sein, dass infolge von Änderungen am Code, überprüft werden kann,
+Es soll gewährleistet sein, dass infolge von Änderungen am Code überprüft werden kann,
 ob alle Funktionalitäten der Software weiterhin korrekt funktionieren. Zu diesem Zweck
-wurden das Test-Framework `Jest` in das Softwareprojekt integriert und Unit-Tests
+wurden das Test-Framework [Jest](https://jestjs.io/) in das Softwareprojekt integriert und Unit-Tests
 für nahezu alle in der Datei [functions.js](./src/scripts/functions.js) befindlichen Funktionen
 angefertigt. Die genannten Unit-Tests liegen im Verzeichnis [test](./test).
 
