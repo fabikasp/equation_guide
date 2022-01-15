@@ -55,11 +55,10 @@ das CSS-Framework Bootstrap verwendet. Die Landing-Page, die sofort zur Hauptsei
 weiterleitet, befindet sich in der Datei [index.html](./index.html). Die Hauptseite
 ist in [equation-guide.html](./src/view/equation-guide.html) gespeichert. Die zur
 Gestaltung notwendigen Dateien befinden sich im Verzeichnis [stylesheets](./src/stylesheets).
-Die zur Nutzung von Bootstrap notwendige *.css-Datei ist im Verzeichnis
-[vendor](./src/stylesheets/vendor) abgelegt. Um individuelle, von Bootstrap unabhängige
-Gestaltungen anwenden und die gesamte Website für Mobilgeräte optimieren zu können,
-wird zusätzlich die Datei [equation-guide-styles.css](./src/stylesheets/equation-guide-styles.css)
-genutzt.
+Im Verzeichnis [vendor](./src/stylesheets/vendor) ist die zur Nutzung von Bootstrap notwendige
+*.css-Datei abgelegt. Um individuelle, von Bootstrap unabhängige Gestaltungen anwenden und
+die gesamte Website auf unterschiedliche Bildschirmgrößen abstimmen zu können, wird zusätzlich die Datei
+[equation-guide-styles.css](./src/stylesheets/equation-guide-styles.css) genutzt.
 
 **JavaScript und jQuery**
 
@@ -101,11 +100,11 @@ Ermitteln der Notwendigkeit des Wurzelziehens oder Potenzierens als Umformungssc
 
 **Jest**
 
-Es soll gewährleistet sein, dass infolge von Änderungen am Code überprüft werden kann,
-ob alle Funktionalitäten der Software weiterhin korrekt funktionieren. Zu diesem Zweck
-wurden das Test-Framework [Jest](https://jestjs.io/) in das Softwareprojekt integriert und Unit-Tests
-für nahezu alle in der Datei [functions.js](./src/scripts/functions.js) befindlichen Funktionen
-angefertigt. Die genannten Unit-Tests liegen im Verzeichnis [test](./test).
+Es soll gewährleistet sein, dass die Software gewisse Anforderungen erfüllt und dass infolge
+von Änderungen am Code überprüft werden kann, ob alle Funktionalitäten der Software weiterhin korrekt
+funktionieren. Zu diesem Zweck wurden das Test-Framework [Jest](https://jestjs.io/) in das
+Softwareprojekt integriert und Unit-Tests für nahezu alle in der Datei [functions.js](./src/scripts/functions.js)
+befindlichen Funktionen angefertigt. Die genannten Unit-Tests liegen im Verzeichnis [test](./test).
 
 -- später Löschen --
 - Funktionalitäten (Erzeugen der Formulare Desktop / Mobile, Startvalidierung, Feedback- und Tippgenerierung, Hilfe-Feature, Validierung der        
@@ -115,7 +114,7 @@ angefertigt. Die genannten Unit-Tests liegen im Verzeichnis [test](./test).
 
 ## Limitierungen und Ausblick
 
-Die Funktionalitäten der Website bringen ein paar Limitierungen mit sich. Eine davon ist
+Die Funktionalitäten der Website beinhalten ein paar Limitierungen. Eine davon ist
 auf die hybride Nutzung von `Nerdamer` und `mathsteps` zurückzuführen (ist das noch so?)...
 
 -- später Löschen --
