@@ -81,28 +81,28 @@ in den DOM geladen.
 ### mathsteps
 
 [Mathsteps](https://github.com/google/mathsteps) ist ein `NPM`-Modul, welches zum Vereinfachen und Lösen von
-Gleichungen verwendet werden kann. Zusätzlich gibt es ein `step`-Array aus, welche Informationen zu jeden
-Lösungschritt angibt. Dieses Array wurde verwendet, um Informationen für die optimalen Umformungsschritte
-zu entnehmen. Außerdem wurde `mathsteps` auch zum Vereinfach von Gleichungen verwendet. Es kann jedoch keine
-Wurzeln und Potenzen handhaben, deshalb wird es nur bei einfach Gleichungen benutzt. 
+Gleichungen verwendet werden kann. Zusätzlich gibt es ein `step`-Array aus, welche Informationen zu jedem
+Lösungsschritt angibt. Dieses Array wurde verwendet, um Informationen für die optimalen Umformungsschritte
+zu entnehmen. Außerdem wurde `mathsteps` auch zum Vereinfachen von Gleichungen verwendet. Es kann jedoch keine
+Wurzeln und Potenzen handhaben, deshalb wird es nur bei einfachen Gleichungen benutzt. 
 
 ### Browserify
 
 Bei [Browserify](https://browserify.org/) handelt es sich um ein JavaScript Bundler Tool,
 welches es ermöglicht Backend Module von [NPM](https://www.npmjs.com/) in einer Frontend-Umgebung
-zu verwenden. Dabei durchsucht `Browserify` die [functions.js](./src/scripts/functions.js) nach `require()` 
+zu verwenden. Dabei durchsucht `Browserify` die [functions.js](./src/scripts/functions.js) Datei nach `require()` 
 Aufrufen und analysiert diese. Nachfolgend wird ein Bundle erstellt, welches alle Funktionalitäten der
 [functions.js](./src/scripts/functions.js) Datei enthält, aber auch zusätzliche die Funktionalitäten der erforderten 
-`NPM`-Module. Diese Bundle-Datei kann dann mit Hilfe eines `<script>` tags dem Browser
+`NPM`-Module. Diese Bundle-Datei kann dann mithilfe eines `<script>` tags dem Browser
 zur Verfügung gestellt werden. Somit können die `NPM`-Module problemlos in der 
 [functions.js](./src/scripts/functions.js) Datei verwendet und im Browser ausgeführt werden.
 
-Im Fall von `mathsteps` ist `Browserify` zwingend notwenig, da es nicht als Script im Brwoser eingefügt werden
-kann. Zusätzlich wurde `Nerdamer` auch mit Hilfe von `Browserify` eingebunden. 
+Im Fall von `mathsteps` ist `Browserify` zwingend notwendig, da es nicht als Script im Browser eingefügt werden
+kann. Zusätzlich wurde `Nerdamer` auch mithilfe von `Browserify` eingebunden. 
 
-Zusätzlich stellt `Browserify` auch noch eine "watch modus" in Form von 
+Zusätzlich stellt `Browserify` auch noch einen "watch modus" in Form von 
 [watchify](https://github.com/browserify/watchify) zur Verfügung. Dieser ermöglich es auf eine
-bestimmte Datei oder mehreren zu schauen und bei Änderungen automatisch die Bundle-Datei neu zu bauen.
+bestimmte oder mehreren Dateien zu schauen und bei Änderungen automatisch die Bundle-Datei neu zu bauen.
 Somit muss das Bundle nicht nach jeder Änderung manuell gebaut werden.
 
 ### Nerdamer
@@ -138,58 +138,59 @@ befindlichen Funktionen angefertigt. Die genannten Unit-Tests liegen im Verzeich
 
 Die Funktionalitäten der Website beinhalten ein paar Limitierungen. Eine davon ist
 auf die hybride Nutzung von `Nerdamer` und `mathsteps` zurückzuführen. Beide Programme führen die Vereinfachung
-von Gleichungen unterschiedlich durch und wenn eine Gleichung dazu führt, dass `Nerdamer` und `mathsteps`
+von Gleichungen unterschiedlich durch und wenn eine Gleichung dazu führt, dass `Nerdamer` und `mathsteps` gemeinsam
 Vereinfachungen durchführen, kann es in seltenen Fällen zu Fehlern führen, da das jeweils andere Programm
-Probleme mit dem Syntax der Gleichung hat und diese dann nicht optimal Vereinfacht. 
+Probleme mit dem Syntax der ausgegebenen Gleichung hat und diese dann nicht optimal vereinfacht. 
 
 Bei der Verwendung von Wurzeln und Potenzen kann es dazu führen, dass sich `Nerdamer` bei der Gleichungslösung
 verfängt, wenn die Vereinfachung nicht optimal durchgeführt wird. Dadurch kann es sein, dass eine Gleichung
-eigentlich optimal gelößt wurde, aber durch unzureichende Vereinfachung von `Nerdamer` es dem Nutzer nicht so
+eigentlich optimal gelöst wurde, aber durch unzureichende Vereinfachung von `Nerdamer` es dem Nutzer nicht so
 kommuniziert wird.
 
-Außerdem können Gleichungen, in denen die Zielvariable mit unterschiedlichen Expontenten vorkommen, nicht 
-gelößt werden. In der Oberfäche des Programmes ist es nicht möglich, dass der Nutzer zu einer optimalen Lösung,
-mit einem optimalen Lösungsweg, kommen kann. *(Hier kannst du vllt noch hinschreiben warum es nicht geht. Mir fällt
+Außerdem können Gleichungen, in denen die Zielvariable mit unterschiedlichen Exponenten vorkommen, nicht 
+gelöst werden. In der Oberfläche des Programmes ist es nicht möglich, dass der Nutzer zu einer optimalen Lösung
+mit einem optimalen Lösungsweg kommen kann. *(Hier kannst du vllt noch hinschreiben warum es nicht geht. Mir fällt
 nichts richtig ein wie ich es gut beschreiben kann)*
 
-Komplexere Gleichungen können zu Problemen im Feedback- und Tippbacksystem führen. Dazu zählen Gleichungen die komplexere
+Komplexere Gleichungen können zu Problemen im Feedback- und Tippbacksystem führen. Dazu zählen Gleichungen, die komplexere
 Werte beim Umformungsschritt als "x/y" umfassen. Sobald umfangreichere Umformungsschritte notwendig sind, wird es
-sehr schwer aus dem von `mathstep` generierten `step`-Array die entsprechenden Werte auszulesen. Dadurch dass
-`mathsteps` keine Dokumentation besitzt ist es problematisch den genauen Aufbau des `step`-Arrays zu durchschauen
+sehr schwer, aus dem von `mathstep` generierten `step`-Array die entsprechenden Werte auszulesen. Dadurch, dass
+`mathsteps` keine Dokumentation besitzt, ist es problematisch, den genauen Aufbau des `step`-Arrays zu durchschauen
 und die korrekten Datenpunkte anzusprechen. Deshalb wird in dem Fall die Feedback- und Tippfunktion eingestellt,
 um falsches Feedback zu vermeiden. Das Lösen von weniger komplexe Gleichungen kann jedoch problemlos mit dem 
 Feedback- und Tippsystem begleitet werden.
 
-Die letzte bekannt Limitation ist, dass es beim Lösen von Gleichungen mit Wurzeln und Potenzen eine sehr geringe
-Wahrscheinlichkeit gibt, dass das Feedbackystem ein falsches Feedback zu einem Umformungsschritt zurück gibt.
+Die letzte bekannte Limitation ist, dass es beim Lösen von Gleichungen mit Wurzeln und Potenzen eine sehr geringe
+Wahrscheinlichkeit gibt, dass das Feedbacksystem ein falsches Feedback zu einem Umformungsschritt zurückgibt.
 *(Wenn du weißt, warum das passieren kann, kannst du ja hier noch hinzufügen)*
 
 Bei den bekannten Limitationen ist zu erkennen, das besonders komplexere Gleichungen und Gleichungen mit Wurzeln
-und Potenzen zu Problemen führen können. Dadurch, dass das Programm für Schüler der Klassenstufen 5-7 entwicklet
+und Potenzen zu Problemen führen können. Dadurch, dass das Programm für Schüler der Klassenstufen 5-7 entwickelt
 wurde, sollte es zu keinen großen Problemen in der tatsächlichen Ausführung kommen, jedoch müsste das Programm
 noch erweitert und verbessert werden, falls es auch komplett problemlos für weiterführende Klassenstufen 
 funktionieren soll.
 
 Das Programm kann noch ein einigen Stellen verbessert werden. Vorerst sollten alle bekannten Limitationen 
-behoben werden. Ein optimaler Weg wäre die hybride Verwendung von `Nerdamer` und `mathsteps` zu vermeiden. 
+behoben werden. Ein optimaler Weg wäre, die hybride Verwendung von `Nerdamer` und `mathsteps` zu vermeiden. 
 `Nerdamer` wird nur für Gleichungen mit Wurzeln und Potenzen benötigt. Somit könnte `mathsteps` um diese 
-Funktionalität erweitert werden. Es handelt sich dabei um ein OpenSource Projekt von Google, was jedoch 
-mitlerweile inaktiv ist. Änderungen müssen somit also lokal über ein Fork stattfinden, jedoch wäre es möglich
-die vorhandene Codebasis zu verwenden, um Erweiterungen durch zu führen. Optimal wäre es, wenn `mathsteps` auch
-Gleichungen mit Wurzeln und Potenzen handhaben, also Umformungschritte generieren und Gleichungen 
-vereinfach, kann. Dann wäre es möglich ausschließlich `mathsteps` zu verwenden und die Probleme von der 
-hybriden Verwendung könnten behoben werden. Bei der Entwicklung könnte auch eine rubuste und umfangreiche 
+Funktionalität erweitert werden. Es handelt sich dabei um ein Open Source Projekt von Google, was jedoch
+mittlerweile  inaktiv ist. Änderungen müssen somit also lokal über ein Fork stattfinden, jedoch wäre es möglich,
+die vorhandene Codebasis zu verwenden, um Erweiterungen durchzuführen. Optimal wäre es, wenn `mathsteps` auch
+Gleichungen mit Wurzeln und Potenzen handhaben kann. Also Umformungsschritte generieren und Gleichungen 
+vereinfachen kann. Dann wäre es möglich, ausschließlich `mathsteps` zu verwenden und die Probleme von der 
+hybriden Verwendung könnten behoben werden. Bei der Entwicklung könnte auch eine robuste und umfangreiche 
 Dokumentation hinzugefügt werden, damit die Benutzung verständlicher und einfacher wird. Somit wäre es dann 
-auch leichter möglich komplexere Gleichungen mit dem Feedback- und Tippsystem zu unterstützen. 
+auch leichter möglich, komplexere Gleichungen mit dem Feedback- und Tippsystem zu unterstützen. 
 
 Sobald alle Probleme behoben sind, kann das Programm noch um ein System erweitert werden, was das Lösen von 
 Gleichungssystemen ermöglich. Hierbei sollte das gleiche Prinzip angewandt werden, dass der Nutzer die 
 Möglichkeit hat, die einzelnen Umformungsschritte selbst einzugeben und Feedback zu erhalten. Keine der
-vorhandenen Bibliotheken unterstützt das Schrittweise lösen von Gleichungssystemen, also müsste die Funktionalität
+vorhandenen Bibliotheken unterstützt das schrittweise Lösen von Gleichungssystemen, also müsste die Funktionalität
 selbst hinzugefügt werden. Auch hier würde es sich anbieten, `mathsteps` zu erweitern und auf den bereits 
-vorhanden Grundlagen auf zu bauen. Wenn `mathsteps` (oder auch eine andere Bibliothek) es ermöglicht
-bei Eingabe des Gleichungssystem eine schrittweise Lösung zu generieren, müsste nurnoch eine benutzerfreundliche
-Oberfläche angelegt werden, welche der Nutzer verwenden kann, um eigenen Eingaben zu tätigen und Feedback zu erhalten.
+vorhandenen Grundlagen auf zu bauen. Wenn `mathsteps` (oder auch eine andere Bibliothek) es ermöglicht,
+bei Eingabe des Gleichungssystems eine schrittweise Lösung zu generieren, müsste nur noch eine benutzerfreundliche
+Oberfläche angelegt werden, welche der Nutzer verwenden kann, um eigenen Eingaben zu tätigen und Feedback zu 
+erhalten.
 
 
 -- später Löschen --
