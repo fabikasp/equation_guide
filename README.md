@@ -132,7 +132,38 @@ befindlichen Funktionen angefertigt. Die genannten Unit-Tests liegen im Verzeich
 ## Limitierungen und Ausblick
 
 Die Funktionalitäten der Website beinhalten ein paar Limitierungen. Eine davon ist
-auf die hybride Nutzung von `Nerdamer` und `mathsteps` zurückzuführen (ist das noch so?)...
+auf die hybride Nutzung von `Nerdamer` und `mathsteps` zurückzuführen. Beide Programme führen die Vereinfachung
+von Gleichungen unterschiedlich durch und wenn eine Gleichung dazu führt, dass `Nerdamer` und `mathsteps`
+Vereinfachungen durchführen, kann es in seltenen Fällen zu Fehlern führen, da das jeweils andere Programm
+Probleme mit dem Syntax der Gleichung hat und diese dann nicht optimal Vereinfacht. 
+
+Bei der Verwendung von Wurzeln und Potenzen kann es dazu führen, dass sich `Nerdamer` bei der Gleichungslösung
+verfängt, wenn die Vereinfachung nicht optimal durchgeführt wird. Dadurch kann es sein, dass eine Gleichung
+eigentlich optimal gelößt wurde, aber durch unzureichende Vereinfachung von `Nerdamer` es dem Nutzer nicht so
+kommuniziert wird.
+
+Außerdem können Gleichungen, in denen die Zielvariable mit unterschiedlichen Expontenten vorkommen, nicht 
+gelößt werden. In der Oberfäche des Programmes ist es nicht möglich, dass der Nutzer zu einer optimalen Lösung,
+mit einem optimalen Lösungsweg, kommen kann. *(Hier kannst du vllt noch hinschreiben warum es nicht geht. Mir fällt
+nichts richtig ein wie ich es gut beschreiben kann)*
+
+Komplexere Gleichungen können zu Problemen im Feedback- und Tippbacksystem führen. Dazu zählen Gleichungen die komplexere
+Werte beim Umformungsschritt als "x/y" umfassen. Sobald umfangreichere Umformungsschritte notwendig sind, wird es
+sehr schwer aus dem von `mathstep` generierten `step`-Array die entsprechenden Werte auszulesen. Dadurch dass
+`mathsteps` keine Dokumentation besitzt ist es problematisch den genauen Aufbau des `step`-Arrays zu durchschauen
+und die korrekten Datenpunkte anzusprechen. Deshalb wird in dem Fall die Feedback- und Tippfunktion eingestellt,
+um falsches Feedback zu vermeiden. Das Lösen von weniger komplexe Gleichungen kann jedoch problemlos mit dem 
+Feedback- und Tippsystem begleitet werden.
+
+Die letzte bekannt Limitation ist, dass es beim Lösen von Gleichungen mit Wurzeln und Potenzen eine sehr geringe
+Wahrscheinlichkeit gibt, dass das Feedbackystem ein falsches Feedback zu einem Umformungsschritt zurück gibt.
+*(Wenn du weißt, warum das passieren kann, kannst du ja hier noch hinzufügen)*
+
+Bei den bekannten Limitationen ist zu erkennen, das besonders komplexere Gleichungen und Gleichungen mit Wurzeln
+und Potenzen zu Problemen führen können. Dadurch, dass das Programm für Schüler der Klassenstufen 5-7 entwicklet
+wurde, sollte es zu keinen großen Problemen in der tatsächlichen Ausführung kommen, jedoch müsste das Programm
+noch erweitert und verbessert werden, falls es auch komplett problemlos für weiterführende Klassenstufen 
+funktionieren soll.
 
 -- später Löschen --
 - Known Bugs (siehe Bugs in Trello)
