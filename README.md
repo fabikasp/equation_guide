@@ -100,6 +100,11 @@ zur Verfügung gestellt werden. Somit können die `NPM`-Module problemlos in der
 Im Fall von `mathsteps` ist `Browserify` zwingend notwenig, da es nicht als Script im Brwoser eingefügt werden
 kann. Zusätzlich wurde `Nerdamer` auch mit Hilfe von `Browserify` eingebunden. 
 
+Zusätzlich stellt `Browserify` auch noch eine "watch modus" in Form von 
+[watchify](https://github.com/browserify/watchify) zur Verfügung. Dieser ermöglich es auf eine
+bestimmte Datei oder mehreren zu schauen und bei Änderungen automatisch die Bundle-Datei neu zu bauen.
+Somit muss das Bundle nicht nach jeder Änderung manuell gebaut werden.
+
 ### Nerdamer
 
 [Nerdamer](https://nerdamer.com/) ist eine JavaScript-Bibliothek zur Auswertung
@@ -164,6 +169,28 @@ und Potenzen zu Problemen führen können. Dadurch, dass das Programm für Schü
 wurde, sollte es zu keinen großen Problemen in der tatsächlichen Ausführung kommen, jedoch müsste das Programm
 noch erweitert und verbessert werden, falls es auch komplett problemlos für weiterführende Klassenstufen 
 funktionieren soll.
+
+Das Programm kann noch ein einigen Stellen verbessert werden. Vorerst sollten alle bekannten Limitationen 
+behoben werden. Ein optimaler Weg wäre die hybride Verwendung von `Nerdamer` und `mathsteps` zu vermeiden. 
+`Nerdamer` wird nur für Gleichungen mit Wurzeln und Potenzen benötigt. Somit könnte `mathsteps` um diese 
+Funktionalität erweitert werden. Es handelt sich dabei um ein OpenSource Projekt von Google, was jedoch 
+mitlerweile inaktiv ist. Änderungen müssen somit also lokal über ein Fork stattfinden, jedoch wäre es möglich
+die vorhandene Codebasis zu verwenden, um Erweiterungen durch zu führen. Optimal wäre es, wenn `mathsteps` auch
+Gleichungen mit Wurzeln und Potenzen handhaben, also Umformungschritte generieren und Gleichungen 
+vereinfach, kann. Dann wäre es möglich ausschließlich `mathsteps` zu verwenden und die Probleme von der 
+hybriden Verwendung könnten behoben werden. Bei der Entwicklung könnte auch eine rubuste und umfangreiche 
+Dokumentation hinzugefügt werden, damit die Benutzung verständlicher und einfacher wird. Somit wäre es dann 
+auch leichter möglich komplexere Gleichungen mit dem Feedback- und Tippsystem zu unterstützen. 
+
+Sobald alle Probleme behoben sind, kann das Programm noch um ein System erweitert werden, was das Lösen von 
+Gleichungssystemen ermöglich. Hierbei sollte das gleiche Prinzip angewandt werden, dass der Nutzer die 
+Möglichkeit hat, die einzelnen Umformungsschritte selbst einzugeben und Feedback zu erhalten. Keine der
+vorhandenen Bibliotheken unterstützt das Schrittweise lösen von Gleichungssystemen, also müsste die Funktionalität
+selbst hinzugefügt werden. Auch hier würde es sich anbieten, `mathsteps` zu erweitern und auf den bereits 
+vorhanden Grundlagen auf zu bauen. Wenn `mathsteps` (oder auch eine andere Bibliothek) es ermöglicht
+bei Eingabe des Gleichungssystem eine schrittweise Lösung zu generieren, müsste nurnoch eine benutzerfreundliche
+Oberfläche angelegt werden, welche der Nutzer verwenden kann, um eigenen Eingaben zu tätigen und Feedback zu erhalten.
+
 
 -- später Löschen --
 - Known Bugs (siehe Bugs in Trello)
