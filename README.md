@@ -47,8 +47,7 @@ Zur Ausführung der implementierten Unit-Tests muss der Befehl `npm test` im
 Repository-Verzeichnis ausgeführt werden.
 
 ## Werkzeuge und Softwarearchitektur
-
-**HTML, CSS und Bootstrap**
+### HTML, CSS und Bootstrap
 
 Für die Strukturierung und Gestaltung der DOM-Elemente werden HTML sowie CSS und
 das CSS-Framework Bootstrap verwendet. Die Landing-Page, die sofort zur Hauptseite
@@ -60,7 +59,7 @@ Im Verzeichnis [vendor](./src/stylesheets/vendor) ist die zur Nutzung von Bootst
 die gesamte Website auf unterschiedliche Bildschirmgrößen abstimmen zu können, wird zusätzlich die Datei
 [equation-guide-styles.css](./src/stylesheets/equation-guide-styles.css) genutzt.
 
-**JavaScript und jQuery**
+### JavaScript und jQuery
 
 Zur Umsetzung der Funktionalitäten der DOM-Elemente werden JavaScript und jQuery
 verwendet. Weder eine zusätzliche Bibliothek noch ein zusätzliches Framework
@@ -79,11 +78,29 @@ angezeigt werden, befinden sich in der Datei [templates.js](./src/scripts/templa
 und werden bei Bedarf in der Datei [event-handlers.js](./src/scripts/event-handlers.js)
 in den DOM geladen.
 
-**Browserify**
+### mathsteps
 
-**mathsteps**
+[Mathsteps](https://github.com/google/mathsteps) ist ein `NPM`-Modul, welches zum Vereinfachen und Lösen von
+Gleichungen verwendet werden kann. Zusätzlich gibt es ein `step`-Array aus, welche Informationen zu jeden
+Lösungschritt angibt. Dieses Array wurde verwendet, um Informationen für die optimalen Umformungsschritte
+zu entnehmen. Außerdem wurde `mathsteps` auch zum Vereinfach von Gleichungen verwendet. Es kann jedoch keine
+Wurzeln und Potenzen handhaben, deshalb wird es nur bei einfach Gleichungen benutzt. 
 
-**Nerdamer**
+### Browserify
+
+Bei [Browserify](https://browserify.org/) handelt es sich um ein JavaScript Bundler Tool,
+welches es ermöglicht Backend Module von [NPM](https://www.npmjs.com/) in einer Frontend-Umgebung
+zu verwenden. Dabei durchsucht `Browserify` die [functions.js](./src/scripts/functions.js) nach `require()` 
+Aufrufen und analysiert diese. Nachfolgend wird ein Bundle erstellt, welches alle Funktionalitäten der
+[functions.js](./src/scripts/functions.js) Datei enthält, aber auch zusätzliche die Funktionalitäten der erforderten 
+`NPM`-Module. Diese Bundle-Datei kann dann mit Hilfe eines `<script>` tags dem Browser
+zur Verfügung gestellt werden. Somit können die `NPM`-Module problemlos in der 
+[functions.js](./src/scripts/functions.js) Datei verwendet und im Browser ausgeführt werden.
+
+Im Fall von `mathsteps` ist `Browserify` zwingend notwenig, da es nicht als Script im Brwoser eingefügt werden
+kann. Zusätzlich wurde `Nerdamer` auch mit Hilfe von `Browserify` eingebunden. 
+
+### Nerdamer
 
 [Nerdamer](https://nerdamer.com/) ist eine JavaScript-Bibliothek zur Auswertung
 mathematischer Ausdrücke, Gleichungen und Gleichungssysteme. Im Gegensatz zu
@@ -98,7 +115,7 @@ und Tipplogik für Gleichungen dieser Art höhere Anforderungen mit sich. Die Lo
 beinhaltet u.a. das Zählen von Operanden vor und nach einer Umformung sowie das
 Ermitteln der Notwendigkeit des Wurzelziehens oder Potenzierens als Umformungsschritt.
 
-**Jest**
+### Jest
 
 Es soll gewährleistet sein, dass die Software gewisse Anforderungen erfüllt und dass infolge
 von Änderungen am Code überprüft werden kann, ob alle Funktionalitäten der Software weiterhin korrekt
