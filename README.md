@@ -90,7 +90,7 @@ zur Verfügung gestellt werden. Somit können die `npm`-Module problemlos in der
 [functions.js](./src/scripts/functions.js) Datei verwendet und im Browser ausgeführt werden.
 
 Im Fall von `mathsteps` ist `Browserify` zwingend notwendig, da es nicht als Skript im Browser eingefügt werden
-kann. Zusätzlich wurde `Nerdamer` auch mithilfe von `Browserify` eingebunden.
+kann. Zusätzlich wurde `Nerdamer` mithilfe von `Browserify` eingebunden.
 
 Weiterhin stellt `Browserify` einen "watch modus" in Form von [watchify](https://github.com/browserify/watchify)
 zur Verfügung. Dieser ermöglich es, eine bestimmte oder mehrere Dateien zu überwachen und bei Änderungen automatisch
