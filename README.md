@@ -137,7 +137,7 @@ dass eine der beiden Bibliotheken Probleme mit der Syntax der von der anderen Bi
 hat und diese dann nicht optimal vereinfachen kann.
 
 Bei der Verwendung von Wurzeln und Potenzen kann es dazu kommen, dass sich `Nerdamer` bei der Vereinfachung
-von Gleichungen verfängt. In diesem Fall verhindert die suboptimale Vereinfachung von `Nerdamer`, dass der Nutzer
+von Gleichungen verfängt. In diesem Fall verhindert die suboptimale Vereinfachung von `Nerdamer`, dass NutzerInnen
 die Gleichung lösen kann.
 
 Außerdem können Gleichungen, in denen die Zielvariable mit unterschiedlichen Exponenten vorkommt, nicht
@@ -156,7 +156,7 @@ von weniger komplexen Gleichungen umgehen.
 
 Die letzte bekannte Limitierung ist, dass es beim Lösen von Gleichungen, die Wurzeln und Potenzen enthalten, eine geringe
 Wahrscheinlichkeit gibt, dass das Feedbacksystem ein falsches Feedback zu einem Umformungsschritt zurückgibt. So kann es
-beispielsweise passieren, dass dem Nutzer ein negatives Feedback ausgespielt wird, obwohl er einen optimalen Umformungsschritt
+beispielsweise passieren, dass NutzerInnen ein negatives Feedback ausgespielt wird, obwohl er einen optimalen Umformungsschritt
 durchgeführt hat. Das ist auf das o.g. Problem zurückzuführen, dass `Nerdamer` keine schrittweise Lösung von
 Gleichungen anbietet und Umformungsschritte somit manuell ausgewertet werden müssen. Dabei kann es z.B. beim
 Zählen von Operanden zu Fehlern kommen.
@@ -178,12 +178,12 @@ und somit die Probleme der hybriden Verwendung zu beseitigen. Weiterhin könnte 
 Dokumentation für `mathsteps` bereitgestellt werden, um die Benutzung verständlicher und einfacher zu gestalten.
 
 Sobald alle Probleme behoben sind, kann das Programm noch um ein System erweitert werden, welches das Lösen von
-Gleichungssystemen ermöglicht. Hierbei sollte das gleiche Prinzip angewandt werden, sodass der Nutzer die
+Gleichungssystemen ermöglicht. Hierbei sollte das gleiche Prinzip angewandt werden, sodass NutzerInnen die
 Möglichkeit hat, die einzelnen Umformungsschritte selbst einzugeben und darauf Feedback und Tipps zu erhalten. Die Bibliothek
 `Nerdamer` ist fähig, Gleichungssysteme einfachen Niveaus zu lösen. Allerdings unterstützt keine der
 vorhandenen Bibliotheken das schrittweise Lösen von Gleichungssystemen. Dementsprechend müsste das Feedback- und Tippsystem
 für Gleichungssysteme selbstständig entworfen und entwickelt werden. Auch hier würde es sich anbieten, `mathsteps` zu erweitern
 und auf den bereits vorhandenen Grundlagen aufzubauen. Wenn es `mathsteps` oder eine ähnliche Bibliothek ermöglichen,
 bei Eingabe des Gleichungssystems eine schrittweise Lösung zu generieren, müsste nur noch eine zur aktuellen Version
-ähnliche, benutzerfreundliche Oberfläche angelegt werden, worüber der Nutzer Gleichungssysteme mithilfe von Feedback und
-Tipps lösen kann.
+ähnliche, benutzerfreundliche Oberfläche angelegt werden, worüber NutzerInnen Gleichungssysteme mithilfe von Feedback und
+Tipps lösen können.
