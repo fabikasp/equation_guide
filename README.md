@@ -92,17 +92,18 @@ zur Verfügung gestellt werden. Somit können die `npm`-Module problemlos in der
 Im Fall von `mathsteps` ist `Browserify` zwingend notwendig, da es nicht als Skript im Browser eingefügt werden
 kann. Zusätzlich wurde `Nerdamer` mithilfe von `Browserify` eingebunden.
 
-Weiterhin stellt `Browserify` einen "Watch Modus" in Form von [watchify](https://github.com/browserify/watchify)
-zur Verfügung. Dieser ermöglich es, eine bestimmte oder mehrere Dateien zu überwachen und bei Änderungen automatisch
-die Bundle-Datei aktualisiert. Somit muss das Bundle nicht nach jeder Änderung manuell gebaut werden.
+Weiterhin stellt `Browserify` einen "Watch-Modus" in Form von [watchify](https://github.com/browserify/watchify)
+zur Verfügung. Dieser ermöglicht es, eine bestimmte oder mehrere Dateien zu überwachen und bei Änderungen automatisch
+die Bundle-Datei zu aktualisieren. Somit muss das Bundle nicht nach jeder Änderung manuell gebaut werden.
 
 ### mathsteps
 
 [Mathsteps](https://github.com/google/mathsteps) ist ein `npm`-Modul, welches zum Vereinfachen und Lösen von
 Gleichungen verwendet werden kann. Zusätzlich gibt es ein `step`-Array aus, welches Informationen zu jedem
 Lösungsschritt angibt. Dieses Array wurde verwendet, um Informationen über die optimalen Umformungsschritte
-zu entnehmen. Außerdem wurde `mathsteps` auch zum Vereinfachen von Gleichungen genutzt. Allerdings kann
-die Bibliothek keine Wurzeln und Potenzen handhaben, weshalb sie nur bei einfachen Gleichungen benutzt wird.
+zu entnehmen und daraus Feedback und Tipps zu generieren. Außerdem wurde `mathsteps` auch zum Vereinfachen von
+Gleichungen genutzt. Allerdings kann die Bibliothek keine Wurzeln und Potenzen handhaben, weshalb sie nur
+bei einfachen Gleichungen benutzt wird.
 
 ### Nerdamer
 
@@ -138,7 +139,7 @@ hat und diese dann nicht optimal vereinfachen kann.
 
 Bei der Verwendung von Wurzeln und Potenzen kann es dazu kommen, dass sich `Nerdamer` bei der Vereinfachung
 von Gleichungen verfängt. In diesem Fall verhindert die suboptimale Vereinfachung von `Nerdamer`, dass NutzerInnen
-die Gleichung lösen kann.
+die Gleichung lösen können.
 
 Außerdem können Gleichungen, in denen die Zielvariable mit unterschiedlichen Exponenten vorkommt, nicht
 gelöst werden. Dies trifft beispielsweise auf die Gleichung `2x^2+x=16` zu. Die Bibliothek `Nerdamer` kann
@@ -156,19 +157,19 @@ von weniger komplexen Gleichungen umgehen.
 
 Die letzte bekannte Limitierung ist, dass es beim Lösen von Gleichungen, die Wurzeln und Potenzen enthalten, eine geringe
 Wahrscheinlichkeit gibt, dass das Feedbacksystem ein falsches Feedback zu einem Umformungsschritt zurückgibt. So kann es
-beispielsweise passieren, dass NutzerInnen ein negatives Feedback ausgespielt wird, obwohl er einen optimalen Umformungsschritt
-durchgeführt hat. Das ist auf das o.g. Problem zurückzuführen, dass `Nerdamer` keine schrittweise Lösung von
+beispielsweise passieren, dass NutzerInnen ein negatives Feedback ausgespielt wird, obwohl ein optimaler Umformungsschritt
+durchgeführt wurde. Das ist auf das o.g. Problem zurückzuführen, dass `Nerdamer` keine schrittweise Lösung von
 Gleichungen anbietet und Umformungsschritte somit manuell ausgewertet werden müssen. Dabei kann es z.B. beim
 Zählen von Operanden zu Fehlern kommen.
 
-Bei den bekannten Limitationen sticht heraus, dass vorrangig komplexere Gleichungen und Gleichungen mit Wurzeln
+Bei den bekannten Limitationen sticht heraus, dass vorrangig umfangreichere Gleichungen und Gleichungen mit Wurzeln
 und Potenzen zu Problemen führen können. Dadurch, dass das Programm für SchülerInnen der ersten Sekundarstufe entwickelt
 wurde, sollte es zu keinen großen Problemen in der tatsächlichen Ausführung kommen. Jedoch müsste das Programm
 noch erweitert und verbessert werden, falls es auch problemlos für Gleichungen auf dem Niveau der zweiten Sekundarstufe
 funktionieren soll.
 
 Wie zu erkennen ist, weist das Programm teilweise Verbesserungspotentiale auf. Im Rahmen von Weiterentwicklungen
-des EquationGuide sollten zunächst alle bekannten Limitationen behoben werden. Ein optimaler Schritt wäre es, die
+des EquationGuide' sollten zunächst alle bekannten Limitationen behoben werden. Ein optimaler Schritt wäre es, die
 hybride Verwendung von `Nerdamer` und `mathsteps` zu vermeiden. `Nerdamer` wird nur für Gleichungen mit Wurzeln und Potenzen benötigt.
 Somit könnte `mathsteps` um diese Funktionalität erweitert werden. Es handelt sich dabei um ein Open Source Projekt von Google, das jedoch
 mittlerweile  inaktiv ist. Somit müssten Änderungen an `mathsteps` lokal über ein Fork stattfinden. Wenn `mathsteps`
@@ -177,9 +178,9 @@ vereinfachen könnte, wäre es möglich, ausschließlich `mathsteps` zu verwende
 und somit die Probleme der hybriden Verwendung zu beseitigen. Weiterhin könnte eine robuste und umfangreiche
 Dokumentation für `mathsteps` bereitgestellt werden, um die Benutzung verständlicher und einfacher zu gestalten.
 
-Sobald alle Probleme behoben sind, kann das Programm noch um ein System erweitert werden, welches das Lösen von
-Gleichungssystemen ermöglicht. Hierbei sollte das gleiche Prinzip angewandt werden, sodass NutzerInnen die
-Möglichkeit hat, die einzelnen Umformungsschritte selbst einzugeben und darauf Feedback und Tipps zu erhalten. Die Bibliothek
+Sobald alle Verbesserungspotentiale ausgeschöpft wurden, kann das Programm noch um ein System erweitert werden, welches das Lösen von
+Gleichungssystemen ermöglicht. Hierbei sollte das gleiche Prinzip wie in der aktuellen Version angewandt werden, sodass NutzerInnen die
+Möglichkeit haben, die einzelnen Umformungsschritte selbst einzugeben und dafür Feedback und Tipps zu erhalten. Die Bibliothek
 `Nerdamer` ist fähig, Gleichungssysteme einfachen Niveaus zu lösen. Allerdings unterstützt keine der
 vorhandenen Bibliotheken das schrittweise Lösen von Gleichungssystemen. Dementsprechend müsste das Feedback- und Tippsystem
 für Gleichungssysteme selbstständig entworfen und entwickelt werden. Auch hier würde es sich anbieten, `mathsteps` zu erweitern
