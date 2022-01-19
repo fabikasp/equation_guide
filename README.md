@@ -163,10 +163,7 @@ Gleichungen anbietet und Umformungsschritte somit manuell ausgewertet werden mü
 Zählen von Operanden zu Fehlern kommen.
 
 Bei den bekannten Limitationen sticht heraus, dass vorrangig umfangreichere Gleichungen und Gleichungen mit Wurzeln
-und Potenzen zu Problemen führen können. Dadurch, dass das Programm für SchülerInnen der ersten Sekundarstufe entwickelt
-wurde, sollte es zu keinen großen Problemen in der tatsächlichen Ausführung kommen. Jedoch müsste das Programm
-noch erweitert und verbessert werden, falls es auch problemlos für Gleichungen auf dem Niveau der zweiten Sekundarstufe
-funktionieren soll.
+und Potenzen zu Problemen führen können. Dadurch, dass das Programm primär für SchülerInnen niedriger Klassenstufen entwickelt wurde, sollte es zu keinen großen Problemen in der tatsächlichen Ausführung kommen. Jedoch müsste das Programm noch erweitert und verbessert werden, falls es auch problemlos für Gleichungen auf dem Niveau höherer Klassenstufen funktionieren soll.
 
 Wie zu erkennen ist, weist das Programm teilweise Verbesserungspotentiale auf. Im Rahmen von Weiterentwicklungen
 des EquationGuide' sollten zunächst alle bekannten Limitationen behoben werden. Ein optimaler Schritt wäre es, die
