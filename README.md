@@ -54,7 +54,7 @@ das CSS-Framework Bootstrap verwendet. Die Landing-Page, die sofort zur Hauptsei
 weiterleitet, befindet sich in der Datei [index.html](./index.html). Die Hauptseite
 ist in [equation-guide.html](./src/view/equation-guide.html) gespeichert. Die zur
 Gestaltung notwendigen Dateien befinden sich im Verzeichnis [stylesheets](./src/stylesheets).
-Im Verzeichnis [vendor](./src/stylesheets/vendor) ist die zur Nutzung von Bootstrap notwendige
+Im Unterverzeichnis [vendor](./src/stylesheets/vendor) ist die zur Nutzung von Bootstrap notwendige
 *.css-Datei abgelegt. Um individuelle, von Bootstrap unabhängige Gestaltungen anwenden und
 die gesamte Website auf unterschiedliche Bildschirmgrößen abstimmen zu können, wird zusätzlich die Datei
 [equation-guide-styles.css](./src/stylesheets/equation-guide-styles.css) genutzt.
@@ -69,10 +69,10 @@ befinden sich im Verzeichnis [scripts](./src/scripts). Im Unterverzeichnis
 notwendigen *.js-Dateien zu finden. In der Datei [event-handlers.js](./src/scripts/event-handlers.js)
 sind alle Event-Handler implementiert, um auf relevante DOM-Ereignisse wie z.B.
 auf das Drücken des `Start`-Buttons reagieren zu können. Um auf einfache Art und Weise
-auf DOM-Elemente zuzugreifen, findet jQuery Anwendung. Die infolge eines DOM-Ereignisses
-auszuführende Logik ist in der Datei [functions.js](./src/scripts/functions.js)
+auf DOM-Elemente zuzugreifen und DOM-Ereignisse zu verarbeiten, findet jQuery Anwendung.
+Die infolge von DOM-Ereignissen auszuführenden Logiken sind in der Datei [functions.js](./src/scripts/functions.js)
 implementiert. Dazu gehören u.a. die Validierung der Startgleichung und von Umformungsschritten,
-die Feedback- und Tippgenerierung oder die Vereinfachung und Formatierung von
+die Feedback- und Tippgenerierung sowie die Vereinfachung und Formatierung von
 Zwischen- oder Endergebnissen. Dynamische DOM-Elemente, die nicht über die gesamte Laufzeit der Website
 angezeigt werden, befinden sich in der Datei [templates.js](./src/scripts/templates.js)
 und werden bei Bedarf in der Datei [event-handlers.js](./src/scripts/event-handlers.js)
@@ -101,9 +101,8 @@ die Bundle-Datei zu aktualisieren. Somit muss das Bundle nicht nach jeder Änder
 [Mathsteps](https://github.com/google/mathsteps) ist ein `npm`-Modul, welches zum Vereinfachen und Lösen von
 Gleichungen verwendet werden kann. Zusätzlich gibt es ein `step`-Array aus, welches Informationen zu jedem
 Lösungsschritt angibt. Dieses Array wurde verwendet, um Informationen über die optimalen Umformungsschritte
-zu entnehmen und daraus Feedback und Tipps zu generieren. Außerdem wurde `mathsteps` auch zum Vereinfachen von
-Gleichungen genutzt. Allerdings kann die Bibliothek keine Wurzeln und Potenzen handhaben, weshalb sie nur
-bei einfachen Gleichungen benutzt wird.
+zu entnehmen und daraus Feedback und Tipps zu generieren. Leider kann die Bibliothek keine Wurzeln und Potenzen
+handhaben, weshalb sie nur bei einfachen Gleichungen benutzt wird.
 
 ### Nerdamer
 
