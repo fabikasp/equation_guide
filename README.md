@@ -185,7 +185,7 @@ bei Eingabe des Gleichungssystems eine schrittweise Lösung zu generieren, müss
 ähnliche, benutzerfreundliche Oberfläche angelegt werden, worüber NutzerInnen Gleichungssysteme mithilfe von Feedback und
 Tipps lösen können.
 
-## Verwendete Bibliotheken
+## Verwendete Software
 
 <table>
   <tr>
