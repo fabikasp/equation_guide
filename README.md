@@ -1,6 +1,6 @@
 # EquationGuide
 
-Website for solving equations step by step getting feedback and tips.
+Website for solving equations step by step with feedback and tips.
 
 ## Installation
 
