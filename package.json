@@ -21,8 +21,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "ssh://git@gitlab.imn.htwk-leipzig.de:2244/fkaspare/equationguide.git"
+    "url": "https://github.com/fabikasp/equation_guide.git"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "Fabian Kasparek and Luca Pohl",
+  "license": "MIT License"
 }
