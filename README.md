@@ -2,7 +2,7 @@
 
 Website zur schrittweisen Gleichungslösung mittels selbstgewählter Umformungsschritte.
 
-## Installation
+## Ausführung
 
 1. [Node.js](https://nodejs.org/en/download/) downloaden, um http-server nutzen zu können
 2. `npm install` im geklonten Repository ausführen
